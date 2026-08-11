@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core/pbiviz.json",
+  "visual": {
+    "name": "Asymmetric Matrix",
+    "displayName": "Asymmetric Matrix",
+    "guid": "asymmetricMatrixTCVIZ",
+    "visualClassName": "Visual",
+    "version": "1.0.0.0",
+    "description": "Scatter plot with configurable asymmetric zones — different number of vertical dividers above and below the horizontal reference line.",
+    "supportUrl": "https://tcviz.github.io/asymmetric-matrix/support.html",
+    "gitHubUrl": "https://github.com/tcviz/asymmetric-matrix",
+    "privacyTermsLink": "https://tcviz.github.io/asymmetric-matrix/privacy.html"
+  },
+  "apiVersion": "5.11.0",
+  "author": {
+    "name": "TCViz",
+    "email": "tinocallarisa@gmail.com"
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "stringResources": []
+}

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Asymmetric Matrix — Infographic</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:   #FAF9F5;
+  --bg2:  #EDE9DE;
+  --bd:   #F5F3ED;
+  --line: #DAD9D4;
+  --t1:   #3D3929;
+  --t2:   #535146;
+  --t3:   #83827D;
+  --acc:  #C96442;
+  --accd: #B05730;
+  --acc2: #9C87F5;
+  --acc2l:#DBD3F0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: var(--t1); }
+
+#download-btn {
+  position: fixed; top: 12px; left: 12px; z-index: 9999;
+  background: var(--acc); color: #fff; border: none; border-radius: 6px;
+  padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'Segoe UI', sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+#download-btn:hover { background: var(--accd); }
+
+#infographic { width: 1366px; background: var(--bg); display: flex; flex-direction: column; }
+
+/* HEADER */
+.hdr {
+  background: var(--t1); padding: 22px 40px 22px 36px;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; min-height: 110px;
+}
+.hdr-title h1 { font-size: 30px; font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: -0.5px; }
+.hdr-title h1 span { color: var(--acc); }
+.hdr-title p { font-size: 13px; color: #B0AFA8; margin-top: 5px; line-height: 1.4; }
+.hdr-tag {
+  background: var(--acc); color: #fff; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 6px;
+}
+
+/* USE CASES */
+.use-cases {
+  background: var(--bd); border-bottom: 1px solid var(--line); padding: 16px 36px;
+  display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 20px; min-height: 90px;
+}
+.use-cases-label {
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-size: 9px; font-weight: 700; letter-spacing: 2.5px; color: var(--t3);
+  text-transform: uppercase; white-space: nowrap;
+}
+.use-cases-grid { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.use-case-item { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 72px; }
+.use-case-item .icon { width: 26px; height: 26px; color: var(--acc); stroke: var(--acc); }
+.use-case-item span { font-size: 10px; color: var(--t2); text-align: center; line-height: 1.3; }
+.use-case-callout {
+  background: var(--acc); color: #fff; border-radius: 8px;
+  padding: 10px 16px; font-size: 12px; font-weight: 600; line-height: 1.4; max-width: 210px; text-align: center;
+}
+.use-case-callout em { font-style: normal; opacity: 0.85; font-weight: 400; font-size: 11px; display: block; margin-top: 3px; }
+
+/* MAIN BODY */
+.main-body {
+  display: grid; grid-template-columns: 1fr 210px 1fr; gap: 0;
+  padding: 20px 36px; background: var(--bg); align-items: start; min-height: 230px;
+}
+.tier-card { border-radius: 10px; padding: 16px 18px; border: 2px solid var(--line); }
+.tier-card.free { border-color: var(--acc); }
+.tier-card.pro  { border-color: var(--acc2); }
+.tier-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.tier-label::before { content: ''; width: 28px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+.free-lbl { color: var(--acc); }
+.free-lbl::before { background: var(--acc); }
+.pro-lbl  { color: var(--acc2); }
+.pro-lbl::before  { background: var(--acc2); }
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.feature-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--t2); line-height: 1.3; }
+.feature-list li .icon { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
+.free .feature-list li .icon { stroke: var(--acc); }
+.pro  .feature-list li .icon { stroke: var(--acc2); }
+
+/* CENTER */
+.center-col { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 8px; }
+.am-circle {
+  width: 100px; height: 100px; border-radius: 50%; background: var(--t1);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.am-circle .am-letters { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 28px; color: var(--acc); line-height: 1; }
+.am-circle .am-sub { font-size: 9px; color: #B0AFA8; letter-spacing: 1px; margin-top: 2px; }
+.stat-pills { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.stat-pill {
+  background: var(--bg2); border-radius: 20px; padding: 5px 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+}
+.stat-pill .stat-val { font-size: 15px; font-weight: 700; color: var(--t1); line-height: 1; }
+.stat-pill .stat-lbl { font-size: 10px; color: var(--t3); text-align: right; line-height: 1.2; }
+
+/* WORKFLOW */
+.workflow {
+  background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding: 16px 36px; min-height: 90px;
+}
+.workflow-title { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--t3); margin-bottom: 12px; }
+.workflow-steps { display: flex; align-items: center; gap: 0; }
+.w-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.w-num {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--t1); color: #fff;
+  font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.w-num.pro-step { background: var(--acc2); }
+.w-text { font-size: 11px; color: var(--t2); text-align: center; line-height: 1.3; max-width: 110px; }
+.pro-badge {
+  background: var(--acc2l); color: var(--acc2); font-size: 9px; font-weight: 700;
+  border-radius: 3px; padding: 1px 5px; display: inline-block; margin-top: 2px;
+}
+.w-arrow { color: var(--line); flex-shrink: 0; padding: 0 2px; padding-bottom: 18px; }
+.w-arrow .icon { width: 18px; height: 18px; stroke: var(--line); }
+.workflow-tagline { text-align: center; font-style: italic; font-size: 11px; color: var(--t3); margin-top: 8px; }
+
+/* BOTTOM GRID */
+.bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); min-height: 150px; flex: 1; }
+.bg-col { padding: 16px 20px; border-right: 1px solid var(--line); }
+.bg-col:last-child { border-right: none; }
+.bg-col-title { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.bg-col-title .icon { width: 13px; height: 13px; stroke: var(--acc); }
+.bg-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.bg-list li { font-size: 11.5px; color: var(--t2); line-height: 1.35; display: flex; align-items: flex-start; gap: 6px; }
+.bg-list li::before { content: '›'; color: var(--acc); font-size: 13px; flex-shrink: 0; line-height: 1.2; }
+.fp-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.fp-table tr { border-bottom: 1px solid var(--line); }
+.fp-table tr:last-child { border-bottom: none; }
+.fp-table td { padding: 4px 2px; color: var(--t2); vertical-align: top; }
+.fp-table td:first-child { color: var(--t1); font-weight: 600; padding-right: 8px; white-space: nowrap; }
+.fp-table .pro-dot { color: var(--acc2); font-size: 9px; font-weight: 700; }
+
+/* FOOTER */
+.footer { background: var(--t1); padding: 12px 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.footer-links { display: flex; gap: 20px; align-items: center; }
+.footer-links a { font-size: 11px; color: #B0AFA8; text-decoration: none; }
+.footer-links .sep { color: #555; font-size: 11px; }
+.footer-tagline { font-size: 11px; color: #6B6A64; font-style: italic; }
+
+/* SVG icon base — all icons use stroke, no fill */
+.icon { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  #download-btn { display: none; }
+  body { background: none; }
+  #infographic { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hidden SVG symbol definitions -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic-scatter" viewBox="0 0 24 24">
+    <circle cx="6" cy="16" r="2.5"/><circle cx="14" cy="8" r="2"/><circle cx="19" cy="18" r="3"/><circle cx="9" cy="11" r="1.5"/>
+  </symbol>
+  <symbol id="ic-briefcase" viewBox="0 0 24 24">
+    <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/>
+  </symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24">
+    <circle cx="9" cy="7" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="7" r="2.5"/><path d="M15 20c0-2.2 1.3-4 3-4s3 1.8 3 4"/>
+  </symbol>
+  <symbol id="ic-trending" viewBox="0 0 24 24">
+    <polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/>
+  </symbol>
+  <symbol id="ic-bulb" viewBox="0 0 24 24">
+    <path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.2-3 5.2V16H9v-1.8C7.2 13.2 6 11.2 6 9a6 6 0 0 1 6-6z"/>
+  </symbol>
+  <symbol id="ic-target" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+  </symbol>
+  <symbol id="ic-strategy" viewBox="0 0 24 24">
+    <path d="M3 17l3-6 4 3 2-7 2 7 4-3 3 6H3z"/><rect x="3" y="17" width="18" height="2" rx="1"/>
+  </symbol>
+  <symbol id="ic-alert" viewBox="0 0 24 24">
+    <path d="M12 2L2 21h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ic-rocket" viewBox="0 0 24 24">
+    <path d="M12 3c2.5 0 7 3.5 7 9a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5c0-5.5 4.5-9 7-9z"/>
+    <path d="M9 17v2a2 2 0 0 0 6 0v-2"/>
+    <line x1="9" y1="12" x2="15" y2="12"/>
+  </symbol>
+  <symbol id="ic-settings" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.18V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+  </symbol>
+  <symbol id="ic-chevron" viewBox="0 0 24 24">
+    <polyline points="9 18 15 12 9 6"/>
+  </symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+  <symbol id="ic-star" viewBox="0 0 24 24">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </symbol>
+</svg>
+
+<button id="download-btn" onclick="downloadPNG()">⬇ Download PNG</button>
+
+<div id="infographic">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="148" height="64">
+      <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#B05730"/><stop offset="0.55" stop-color="#C96442"/><stop offset="1" stop-color="#9C87F5"/>
+      </linearGradient></defs>
+      <g transform="translate(40,46)">
+        <rect x="22" y="20" width="150" height="150" rx="30" fill="none" stroke="url(#g)" stroke-width="11"/>
+        <g fill="url(#g)">
+          <rect x="42" y="110" width="20" height="58" rx="5"/>
+          <rect x="70" y="86" width="20" height="82" rx="5"/>
+          <rect x="98" y="62" width="20" height="106" rx="5"/>
+          <rect x="126" y="38" width="20" height="130" rx="5"/>
+        </g>
+      </g>
+      <text x="258" y="246" font-family="Poppins,sans-serif" font-weight="700" font-size="196" letter-spacing="-4">
+        <tspan fill="url(#g)">tc</tspan><tspan fill="#FAF9F5">viz</tspan>
+      </text>
+      <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#83827D">VISUALS TO POWER BI</text>
+    </svg>
+
+    <div class="hdr-title">
+      <div class="hdr-tag">POWER BI CUSTOM VISUAL</div>
+      <h1><span>Asymmetric</span> Matrix</h1>
+      <p>A scatter plot where the number of zones above the reference line<br>can differ from the zones below — independently configured.</p>
+    </div>
+
+    <!-- Mini scatter illustration -->
+    <svg viewBox="0 0 190 90" xmlns="http://www.w3.org/2000/svg" width="190" height="90">
+      <rect x="2" y="2"   width="55" height="40" rx="3" fill="#E8F4FD" opacity="0.6"/>
+      <rect x="59" y="2"  width="55" height="40" rx="3" fill="#FEF9E7" opacity="0.6"/>
+      <rect x="116" y="2" width="72" height="40" rx="3" fill="#EAFAF1" opacity="0.6"/>
+      <rect x="2" y="48"  width="85" height="40" rx="3" fill="#FDF2F8" opacity="0.6"/>
+      <rect x="89" y="48" width="99" height="40" rx="3" fill="#F0F3F4" opacity="0.6"/>
+      <line x1="2" y1="46" x2="188" y2="46" stroke="#C96442" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <line x1="57"  y1="2" x2="57"  y2="44" stroke="#AAAAAA" stroke-width="1" stroke-dasharray="4,2"/>
+      <line x1="114" y1="2" x2="114" y2="44" stroke="#AAAAAA" stroke-width="1" stroke-dasharray="4,2"/>
+      <line x1="87"  y1="48" x2="87" y2="88" stroke="#9C87F5" stroke-width="1.2" stroke-dasharray="4,2"/>
+      <text x="29"  y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone A</text>
+      <text x="86"  y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone B</text>
+      <text x="152" y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone C</text>
+      <text x="44"  y="72" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone D</text>
+      <text x="138" y="72" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone E</text>
+      <rect x="79" y="55" width="16" height="9" rx="2" fill="#DBD3F0"/>
+      <text x="87" y="62.5" font-family="Segoe UI,sans-serif" font-size="6" fill="#9C87F5" text-anchor="middle" font-weight="700">PRO</text>
+      <circle cx="22"  cy="14" r="4.5" fill="#C96442" opacity="0.85"/>
+      <circle cx="40"  cy="30" r="3.5" fill="#C96442" opacity="0.75"/>
+      <circle cx="80"  cy="18" r="5"   fill="#535146" opacity="0.85"/>
+      <circle cx="100" cy="32" r="3"   fill="#9C87F5" opacity="0.85"/>
+      <circle cx="140" cy="10" r="4"   fill="#535146" opacity="0.85"/>
+      <circle cx="160" cy="25" r="6"   fill="#C96442" opacity="0.7"/>
+      <circle cx="170" cy="38" r="3.5" fill="#9C87F5" opacity="0.8"/>
+      <circle cx="30"  cy="65" r="4"   fill="#535146" opacity="0.85"/>
+      <circle cx="60"  cy="75" r="5"   fill="#C96442" opacity="0.8"/>
+      <circle cx="110" cy="60" r="3.5" fill="#9C87F5" opacity="0.85"/>
+      <circle cx="150" cy="78" r="4.5" fill="#535146" opacity="0.75"/>
+      <circle cx="170" cy="62" r="3"   fill="#C96442" opacity="0.85"/>
+      <rect x="1" y="1" width="187" height="88" rx="4" fill="none" stroke="#DAD9D4" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- USE CASES -->
+  <div class="use-cases">
+    <div class="use-cases-label">Use Cases</div>
+    <div class="use-cases-grid">
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-scatter"/></svg>
+        <span>Performance vs Risk</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-briefcase"/></svg>
+        <span>Portfolio Analysis</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-users"/></svg>
+        <span>Customer Segmentation</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-trending"/></svg>
+        <span>Sales Prioritization</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-bulb"/></svg>
+        <span>Product Positioning</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-target"/></svg>
+        <span>KPI Scatter Analysis</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-strategy"/></svg>
+        <span>Strategic Planning</span>
+      </div>
+      <div class="use-case-item">
+        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-alert"/></svg>
+        <span>Risk Classification</span>
+      </div>
+    </div>
+    <div class="use-case-callout">
+      When zones above the midpoint<br>need <strong>different logic</strong> than below
+      <em>The 2×2 constraint — finally broken</em>
+    </div>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="main-body">
+
+    <div class="tier-card free">
+      <div class="tier-label free-lbl">Free</div>
+      <ul class="feature-list">
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Scatter plot with asymmetric zones</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Horizontal Y-reference line (value, color, style)</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Up to 4 vertical dividers <strong>above</strong> Y-ref (5 zones)</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>1 zone below Y-ref</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Zone labels, colors &amp; opacity per zone</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Category color grouping</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Bubble size field</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Tooltips — up to 10 extra fields</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Cross-filter on zone click (toggle)</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Gridlines, tick size, color &amp; decimals</li>
+      </ul>
+    </div>
+
+    <div class="center-col">
+      <div class="am-circle">
+        <div class="am-letters">AM</div>
+        <div class="am-sub">BY TCVIZ</div>
+      </div>
+      <div class="stat-pills">
+        <div class="stat-pill">
+          <div class="stat-val">5</div>
+          <div class="stat-lbl">max upper<br>zones</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-val" style="color:var(--acc2)">5</div>
+          <div class="stat-lbl">max lower zones<br><span style="color:var(--acc2);font-weight:700">Pro</span></div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-val">10</div>
+          <div class="stat-lbl">tooltip<br>fields</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-val">30K</div>
+          <div class="stat-lbl">data<br>points</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-card pro">
+      <div class="tier-label pro-lbl">Pro</div>
+      <ul class="feature-list">
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Everything in Free, plus:</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Up to 4 vertical dividers <strong>below</strong> Y-ref (lower asymmetry)</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>X &amp; Y axis titles with configurable font size</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Fixed axis range — stable during cross-filtering</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Data labels displayed above each point</li>
+        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Zone count cards — click to cross-filter</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="workflow">
+    <div class="workflow-title">How to set it up</div>
+    <div class="workflow-steps">
+      <div class="w-step">
+        <div class="w-num">1</div>
+        <div class="w-text">Add X Value &amp; Y Value fields</div>
+      </div>
+      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
+      <div class="w-step">
+        <div class="w-num">2</div>
+        <div class="w-text">Set Y-reference line value</div>
+      </div>
+      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
+      <div class="w-step">
+        <div class="w-num">3</div>
+        <div class="w-text">Configure upper zones &amp; dividers</div>
+      </div>
+      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
+      <div class="w-step">
+        <div class="w-num pro-step">4</div>
+        <div class="w-text">Add lower dividers independently<br><span class="pro-badge">PRO</span></div>
+      </div>
+      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
+      <div class="w-step">
+        <div class="w-num">5</div>
+        <div class="w-text">Label zones &amp; set colors</div>
+      </div>
+      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
+      <div class="w-step">
+        <div class="w-num">6</div>
+        <div class="w-text">Click any zone to cross-filter</div>
+      </div>
+    </div>
+    <div class="workflow-tagline">"Design your zone logic. The chart follows — not the other way around."</div>
+  </div>
+
+  <!-- BOTTOM GRID -->
+  <div class="bottom-grid">
+    <div class="bg-col">
+      <div class="bg-col-title">
+        <svg class="icon" width="13" height="13" stroke="var(--acc)"><use href="#ic-rocket"/></svg>
+        Key Benefits
+      </div>
+      <ul class="bg-list">
+        <li>Break free from the symmetric 2×2 constraint</li>
+        <li>Upper and lower thresholds are fully independent</li>
+        <li>Zone click cross-filters the entire report page</li>
+        <li>Bubble size field for a 3rd data dimension</li>
+        <li>Up to 10 tooltip fields for rich hover context</li>
+        <li>No external dependencies — fast, lightweight SVG</li>
+        <li>Works in Desktop, Service, Embedded &amp; Mobile</li>
+      </ul>
+    </div>
+    <div class="bg-col">
+      <div class="bg-col-title">
+        <svg class="icon" width="13" height="13" stroke="var(--acc)"><use href="#ic-bulb"/></svg>
+        Tips
+      </div>
+      <ul class="bg-list">
+        <li>Sketch your zone layout on paper before setting values</li>
+        <li>Keep zone opacity at 30–50% so points stay readable</li>
+        <li>Use a traffic-light color scheme (green / yellow / red)</li>
+        <li>Enable Fixed axis range (Pro) for stable presentations</li>
+        <li>Add 2–3 tooltip measures — Revenue, Margin, Region</li>
+        <li>Data labels work best with fewer than 30 points</li>
+        <li>Set tick decimals to 0 for whole-number axes</li>
+      </ul>
+    </div>
+    <div class="bg-col">
+      <div class="bg-col-title">
+        <svg class="icon" width="13" height="13" stroke="var(--acc)"><use href="#ic-settings"/></svg>
+        Format Pane
+      </div>
+      <table class="fp-table">
+        <tr><td>Reference Lines</td><td>Y ref value, color, style</td></tr>
+        <tr><td>Upper Zones</td><td>0–4 dividers, labels, colors, opacity</td></tr>
+        <tr><td>Lower Zones</td><td>Zone 1 config · 0–4 dividers <span class="pro-dot">PRO</span></td></tr>
+        <tr><td>Axes</td><td>Tick size/color/decimals · Titles &amp; fixed range <span class="pro-dot">PRO</span></td></tr>
+        <tr><td>Data Points</td><td>Radius, opacity · Data labels <span class="pro-dot">PRO</span></td></tr>
+        <tr><td>Zone Cards</td><td>Count badges per zone <span class="pro-dot">PRO</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="70" height="30">
+      <defs><linearGradient id="gf" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#B05730"/><stop offset="0.55" stop-color="#C96442"/><stop offset="1" stop-color="#9C87F5"/>
+      </linearGradient></defs>
+      <g transform="translate(40,46)">
+        <rect x="22" y="20" width="150" height="150" rx="30" fill="none" stroke="url(#gf)" stroke-width="11"/>
+        <g fill="url(#gf)">
+          <rect x="42" y="110" width="20" height="58" rx="5"/>
+          <rect x="70" y="86" width="20" height="82" rx="5"/>
+          <rect x="98" y="62" width="20" height="106" rx="5"/>
+          <rect x="126" y="38" width="20" height="130" rx="5"/>
+        </g>
+      </g>
+      <text x="258" y="246" font-family="Poppins,sans-serif" font-weight="700" font-size="196" letter-spacing="-4">
+        <tspan fill="url(#gf)">tc</tspan><tspan fill="#FAF9F5">viz</tspan>
+      </text>
+      <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#6B6A64">VISUALS TO POWER BI</text>
+    </svg>
+    <div class="footer-tagline">Asymmetric Matrix v1.0.0.0</div>
+    <div class="footer-links">
+      <a href="https://www.youtube.com/watch?v=6JP75Mn-g2Y">▶ Video</a>
+      <span class="sep">·</span>
+      <a href="https://tcviz.github.io/asymmetric-matrix/support.html">Support</a>
+      <span class="sep">·</span>
+      <a href="https://tcviz.github.io/asymmetric-matrix/privacy.html">Privacy</a>
+      <span class="sep">·</span>
+      <a href="https://tcviz.github.io/asymmetric-matrix/terms.html">Terms</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/tcviz/asymmetric-matrix">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function downloadPNG() {
+  const btn = document.getElementById('download-btn');
+  btn.textContent = '⏳ Rendering…'; btn.disabled = true;
+  html2canvas(document.getElementById('infographic'), {
+    scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#FAF9F5'
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = 'asymmetric-matrix-infographic.png';
+    a.href = canvas.toDataURL('image/png'); a.click();
+    btn.textContent = '⬇ Download PNG'; btn.disabled = false;
+  }).catch(() => { btn.textContent = '⬇ Download PNG'; btn.disabled = false; });
+}
+</script>
+</body>
+</html>

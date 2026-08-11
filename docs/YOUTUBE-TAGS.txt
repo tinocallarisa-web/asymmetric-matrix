@@ -1,0 +1,24 @@
+YOUTUBE TAGS — Asymmetric Matrix
+=================================
+
+MAIN BLOCK (≤ 500 chars — pega esto directamente en YouTube)
+-------------------------------------------------------------
+Power BI custom visual, asymmetric matrix, scatter plot Power BI, Power BI visuals, matrix analysis, quadrant chart, zone chart, Power BI AppSource, TCViz, data visualization, Power BI tutorial, custom visual tutorial, Power BI scatter, cross-filter Power BI, business intelligence
+
+
+EXTENDED TAGS
+-------------
+Power BI, custom visual Power BI, asymmetric matrix Power BI, scatter plot Power BI, Power BI AppSource visual, Power BI visuals tutorial, matrix chart Power BI, quadrant analysis Power BI, zone analysis Power BI, Power BI cross-filter, Power BI scatter chart, TCViz, data visualization Power BI, Power BI 2x2 matrix, performance matrix Power BI, risk matrix Power BI, Power BI custom chart, portfolio analysis Power BI, Power BI tutorial 2026, asymmetric zones, bubble chart Power BI, Power BI format pane, Power BI Pro visual, business intelligence dashboard, Power BI report design
+
+
+TAGS BY VIDEO FOCUS
+-------------------
+
+Setup / tutorial:
+Power BI tutorial, scatter plot tutorial, Power BI format pane, Power BI field wells, how to use Power BI visuals, Power BI custom visual setup
+
+Free vs Pro:
+Power BI Pro visual, Power BI AppSource license, Power BI free vs Pro, Power BI visual license, IVisualLicenseManager
+
+Business use cases:
+risk matrix, performance matrix, portfolio analysis, quadrant analysis, strategic planning Power BI, KPI scatter chart

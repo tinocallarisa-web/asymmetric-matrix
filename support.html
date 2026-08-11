@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — Asymmetric Matrix by TCViz</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; max-width: 760px; margin: 40px auto; padding: 0 24px; color: #3D3929; line-height: 1.7; }
+  h1 { color: #C96442; } h2 { color: #535146; margin-top: 2em; }
+  code { background: #EDE9DE; padding: 1px 5px; border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid #DAD9D4; padding: 8px 12px; }
+  th { background: #EDE9DE; }
+  a { color: #C96442; }
+  .pro { color: #9C87F5; font-size: 0.8em; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Asymmetric Matrix — Support</h1>
+<p>by <strong>TCViz</strong> &nbsp;·&nbsp; <a href="https://github.com/tcviz/asymmetric-matrix/issues">Report an issue</a> &nbsp;·&nbsp; <a href="https://tcviz.github.io/asymmetric-matrix/CHANGELOG.md">Changelog</a></p>
+
+<h2>Quick Start</h2>
+<ol>
+  <li>Add the visual to your Power BI report from AppSource.</li>
+  <li>Drag a numeric field to <strong>X Value</strong> and another to <strong>Y Value</strong>.</li>
+  <li>Optionally add a text/category field to <strong>Category</strong> for color grouping.</li>
+  <li>In the Format Pane → <strong>Reference Lines</strong>, set the Y Reference Value to split the plot horizontally.</li>
+  <li>Under <strong>Upper Zones</strong>, set the number of vertical dividers (0–4) and their X values.</li>
+  <li><span class="pro">PRO</span> Under <strong>Lower Zones</strong>, add independent vertical dividers below the Y-ref for a truly asymmetric layout.</li>
+</ol>
+
+<h2>Field Wells</h2>
+<table>
+  <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+  <tr><td>Category</td><td>Dimension</td><td>Groups points by color (optional)</td></tr>
+  <tr><td>X Value</td><td>Measure</td><td>Horizontal axis value (required)</td></tr>
+  <tr><td>Y Value</td><td>Measure</td><td>Vertical axis value (required)</td></tr>
+  <tr><td>Size</td><td>Measure</td><td>Bubble size — optional; without it all bubbles use the default radius</td></tr>
+  <tr><td>Tooltips</td><td>Measure (up to 10)</td><td>Extra fields shown in tooltip on hover</td></tr>
+</table>
+
+<h2>Format Pane Reference</h2>
+<table>
+  <tr><th>Section</th><th>Key options</th><th>Tier</th></tr>
+  <tr><td>Reference Lines</td><td>Y ref value, color, style (solid / dashed / dotted)</td><td>Free</td></tr>
+  <tr><td>Upper Zones</td><td>Number of vertical lines (0–4), their X values and colors; zone labels, colors, opacity; label font size &amp; background</td><td>Free</td></tr>
+  <tr><td>Lower Zones</td><td>1 zone label, color &amp; opacity (Free); up to 4 independent vertical dividers + full zone config (Pro)</td><td>Free / <span class="pro">PRO</span></td></tr>
+  <tr><td>Axes</td><td>Tick size, tick color, gridlines, tick decimals (Free); X &amp; Y axis titles, fixed axis range (Pro)</td><td>Free / <span class="pro">PRO</span></td></tr>
+  <tr><td>Data Points</td><td>Default radius, opacity; data labels on each point (Pro)</td><td>Free / <span class="pro">PRO</span></td></tr>
+  <tr><td>Zone Cards</td><td>Show count badge per zone</td><td><span class="pro">PRO</span></td></tr>
+</table>
+
+<h2>Interaction</h2>
+<p>Click any zone background to cross-filter other visuals — all points in that zone are selected and the rest of the report responds. Click the same zone again to deselect (toggle). Clicking outside any zone clears the selection.</p>
+
+<h2>FAQ</h2>
+<p><strong>Why is the upper zone layout different from the lower?</strong><br>
+That is the core concept of the Asymmetric Matrix: the number of vertical divisions above and below the Y-reference line can be completely independent. Configure Upper Zones and Lower Zones separately in the Format Pane. Full lower asymmetry requires a Pro license.</p>
+
+<p><strong>Can I use a negative Y reference value?</strong><br>
+Yes. The Y ref accepts any numeric value, including negative numbers and decimals.</p>
+
+<p><strong>The axis range jumps when I filter the report. How do I keep it stable?</strong><br>
+Enable <em>Fixed axis range</em> in Format Pane → Axes (Pro feature). The axis domain expands to cover all data seen since the last full data reload, but never shrinks.</p>
+
+<p><strong>My zone cards are not showing.</strong><br>
+Zone Cards require a Pro license. Once enabled, turn them on in Format Pane → Zone Cards → Show zone cards.</p>
+
+<p><strong>Data labels are not appearing on my points.</strong><br>
+Data labels require a Pro license. Enable them in Format Pane → Data Points → Data labels.</p>
+
+<p><strong>How do I add an X or Y axis title?</strong><br>
+Axis titles are a Pro feature. With a Pro license, the title fields appear in Format Pane → Axes.</p>
+
+<h2>Video tutorial</h2>
+<p><a href="https://www.youtube.com/watch?v=6JP75Mn-g2Y">Watch on YouTube →</a></p>
+
+<h2>Contact &amp; Issues</h2>
+<p><a href="https://github.com/tcviz/asymmetric-matrix/issues">GitHub Issues</a> &nbsp;·&nbsp; <a href="mailto:tinocallarisa@gmail.com">tinocallarisa@gmail.com</a></p>
+</body>
+</html>

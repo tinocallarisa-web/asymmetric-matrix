@@ -1,0 +1,88 @@
+Asymmetric Matrix for Power BI — Full walkthrough (Free & Pro)
+
+A standard 2×2 matrix forces equal zones on both sides. The Asymmetric Matrix breaks that constraint: define a different number of vertical zones above and below the horizontal reference line — three above, two below, four above, one below — whatever your analysis actually needs.
+
+In this video I walk through the complete setup, from adding your first fields to configuring asymmetric lower zones, axis titles, fixed axes, data labels, and zone count cards.
+
+━━━━━━━━━━━━━━━━━━━━
+CHAPTERS
+━━━━━━━━━━━━━━━━━━━━
+
+0:00 Introduction — what makes this different from a 2×2
+0:00 Adding the visual from AppSource
+0:00 Mapping X Value and Y Value
+0:00 Setting the Y-reference line
+0:00 Configuring upper zones (Free)
+0:00 Zone labels, colors and opacity
+0:00 Category grouping and bubble size
+0:00 Tooltips and cross-filter
+0:00 Lower zones — 1 zone in Free vs asymmetric in Pro
+0:00 Axis titles (Pro)
+0:00 Fixed axis range (Pro)
+0:00 Data labels on points (Pro)
+0:00 Zone count cards (Pro)
+0:00 Free vs Pro summary
+
+(Replace 0:00 with your actual timestamps)
+
+━━━━━━━━━━━━━━━━━━━━
+FREE vs PRO
+━━━━━━━━━━━━━━━━━━━━
+
+Free includes:
+✅ Scatter plot with up to 5 upper zones
+✅ Horizontal Y-reference line (value, color, style)
+✅ Category color grouping
+✅ Bubble size field
+✅ Tooltips (up to 10 fields)
+✅ Cross-filter on zone click
+
+Pro adds:
+⭐ Lower zone asymmetry (up to 5 independent zones below)
+⭐ Axis titles (X & Y)
+⭐ Fixed axis range (stable during cross-filtering)
+⭐ Data labels on points
+⭐ Zone count cards
+
+━━━━━━━━━━━━━━━━━━━━
+LINKS
+━━━━━━━━━━━━━━━━━━━━
+
+AppSource: [link]
+Support & documentation: https://tcviz.github.io/asymmetric-matrix/support.html
+Privacy policy: https://tcviz.github.io/asymmetric-matrix/privacy.html
+Terms of use: https://tcviz.github.io/asymmetric-matrix/terms.html
+GitHub: https://github.com/tcviz/asymmetric-matrix
+Issues: https://github.com/tcviz/asymmetric-matrix/issues
+
+━━━━━━━━━━━━━━━━━━━━
+PRIVACY
+━━━━━━━━━━━━━━━━━━━━
+
+The visual processes only the data fields you add to its field wells. No external HTTP requests, no local file access, no cookies, no data sent outside your Power BI environment.
+
+━━━━━━━━━━━━━━━━━━━━
+
+#PowerBI #CustomVisual #DataVisualization #TCViz #AsymmetricMatrix #PowerBIVisuals #BusinessIntelligence #DataAnalytics #ScatterPlot #MatrixAnalysis
+
+
+━━━━━━━━━━━━━━━━━━━━
+SHORT VERSION (for Shorts / LinkedIn)
+━━━━━━━━━━━━━━━━━━━━
+
+Standard 2×2 matrix too rigid for your data? The Asymmetric Matrix for Power BI lets you define a different number of zones above and below the reference line. Three above, two below. Four above, one below. Drop your data, set your thresholds, and let the zones do the work.
+
+Available on Microsoft AppSource. Free + Pro tiers.
+
+#PowerBI #DataVisualization #CustomVisual #TCViz
+
+
+━━━━━━━━━━━━━━━━━━━━
+5 ALTERNATIVE TITLES
+━━━━━━━━━━━━━━━━━━━━
+
+1. Asymmetric Matrix for Power BI — Beyond the 2×2 | Full Tutorial
+2. Power BI Custom Visual: Scatter Plot with Asymmetric Zones (Free & Pro)
+3. Break the 2×2 — Asymmetric Matrix Visual for Power BI
+4. How to Create an Asymmetric Zone Chart in Power BI | TCViz Tutorial
+5. Asymmetric Matrix Power BI Visual — Setup, Zones, Cross-filter & Pro Features
