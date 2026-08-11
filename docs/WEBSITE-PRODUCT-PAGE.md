@@ -149,7 +149,7 @@ Pro features are unlocked via the official Power BI `IVisualLicenseManager` API.
 
 ### Privacy
 
-No external HTTP requests. No local file access. No cookies. No persistent storage outside the `.pbix` file. See full privacy policy: https://tcviz.github.io/asymmetric-matrix/privacy.html
+No external HTTP requests. No local file access. No cookies. No persistent storage outside the `.pbix` file. See full privacy policy: https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html
 
 ### Dependencies
 
@@ -161,9 +161,9 @@ Works in all environments that support Power BI Visuals API 5.x: Power BI Deskto
 
 ### Support
 
-- Issues: https://github.com/tcviz/asymmetric-matrix/issues
+- Issues: https://github.com/tinocallarisa-web/asymmetric-matrix/issues
 - Email: tinocallarisa@gmail.com
-- Support page: https://tcviz.github.io/asymmetric-matrix/support.html
+- Support page: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
 
 ---
 

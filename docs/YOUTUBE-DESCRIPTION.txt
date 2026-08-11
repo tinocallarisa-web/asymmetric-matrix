@@ -49,9 +49,9 @@ LINKS
 ━━━━━━━━━━━━━━━━━━━━
 
 AppSource: [link]
-Support & documentation: https://tcviz.github.io/asymmetric-matrix/support.html
-Privacy policy: https://tcviz.github.io/asymmetric-matrix/privacy.html
-Terms of use: https://tcviz.github.io/asymmetric-matrix/terms.html
+Support & documentation: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
+Privacy policy: https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html
+Terms of use: https://tinocallarisa-web.github.io/asymmetric-matrix/terms.html
 GitHub: https://github.com/tcviz/asymmetric-matrix
 Issues: https://github.com/tcviz/asymmetric-matrix/issues
 
