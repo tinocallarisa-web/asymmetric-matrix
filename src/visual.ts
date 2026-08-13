@@ -133,6 +133,9 @@ export class Visual implements IVisual {
         // Tooltip via event delegation
         this.container.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e));
         this.container.addEventListener("mouseleave", ()              => this.onMouseLeave());
+
+        // Context menu (right-click) — required for AppSource certification
+        this.container.addEventListener("contextmenu", (e: MouseEvent) => this.onContextMenu(e));
     }
 
     // ── Update ────────────────────────────────────────────────────────────────
@@ -682,6 +685,34 @@ export class Visual implements IVisual {
         if (this.tooltipService) {
             this.tooltipService.hide({ immediately: false, isTouchEvent: false });
         }
+    }
+
+    // ── Context menu ──────────────────────────────────────────────────────────
+
+    private onContextMenu(e: MouseEvent): void {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = e.target as SVGElement;
+        const ptEl   = target.closest ? (target.closest("[data-idx]") as SVGElement) : null;
+
+        if (ptEl) {
+            const idx = parseInt(ptEl.getAttribute("data-idx") ?? "-1", 10);
+            const pt  = this.lastPoints[idx];
+            if (pt) {
+                this.selectionManager.showContextMenu(pt.selectionId, {
+                    x: e.clientX,
+                    y: e.clientY
+                });
+                return;
+            }
+        }
+
+        // Right-click on zone background, zone label, or empty plot area
+        this.selectionManager.showContextMenu(null as any, {
+            x: e.clientX,
+            y: e.clientY
+        });
     }
 
     // ── Format Pane ───────────────────────────────────────────────────────────
