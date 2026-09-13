@@ -6,17 +6,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:   #FAF9F5;
-  --bg2:  #EDE9DE;
-  --bd:   #F5F3ED;
-  --line: #DAD9D4;
-  --t1:   #3D3929;
-  --t2:   #535146;
-  --t3:   #83827D;
-  --acc:  #C96442;
-  --accd: #B05730;
-  --acc2: #9C87F5;
-  --acc2l:#DBD3F0;
+  --bg:#FAF9F5;  --bg2:#EDE9DE;  --bd:#F5F3ED;  --line:#DAD9D4;
+  --t1:#3D3929;  --t2:#535146;   --t3:#83827D;
+  --acc:#2B6CB0; --accd:#1F4E80; --acc2:#3E9C5B; --acc2l:#D9EFE0;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: var(--t1); }
@@ -24,136 +16,95 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
 #download-btn {
   position: fixed; top: 12px; left: 12px; z-index: 9999;
   background: var(--acc); color: #fff; border: none; border-radius: 6px;
-  padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
-  font-family: 'Segoe UI', sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  padding: 8px 16px; font: 700 13px 'Segoe UI', sans-serif; cursor: pointer;
 }
 #download-btn:hover { background: var(--accd); }
+#fit-check { position: fixed; top: 12px; right: 12px; z-index: 10000; background: #B00020; color: #fff; font: 700 13px 'Segoe UI', sans-serif; padding: 6px 12px; border-radius: 6px; }
 
-#infographic { width: 1366px; background: var(--bg); display: flex; flex-direction: column; }
+#infographic { width: 1366px; height: 768px; overflow: hidden; background: var(--bg); color: var(--t1); display: flex; flex-direction: column; padding: 12px 36px 8px; }
 
 /* HEADER */
-.hdr {
-  background: var(--t1); padding: 22px 40px 22px 36px;
-  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; min-height: 110px;
-}
-.hdr-title h1 { font-size: 30px; font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: -0.5px; }
+.hdr { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; margin-bottom: 8px; }
+.hdr-title h1 { font-size: 28px; font-weight: 700; color: var(--t1); line-height: 1.1; }
 .hdr-title h1 span { color: var(--acc); }
-.hdr-title p { font-size: 13px; color: #B0AFA8; margin-top: 5px; line-height: 1.4; }
-.hdr-tag {
-  background: var(--acc); color: #fff; font-size: 11px; font-weight: 700;
-  letter-spacing: 1.5px; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 6px;
-}
+.hdr-title p { font-size: 13px; color: var(--t3); margin-top: 4px; line-height: 1.4; }
+.hdr-tag { background: var(--acc); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; padding: 2px 10px; border-radius: 20px; display: inline-block; margin-bottom: 4px; }
 
 /* USE CASES */
-.use-cases {
-  background: var(--bd); border-bottom: 1px solid var(--line); padding: 16px 36px;
-  display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 20px; min-height: 90px;
-}
-.use-cases-label {
-  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
-  font-size: 9px; font-weight: 700; letter-spacing: 2.5px; color: var(--t3);
-  text-transform: uppercase; white-space: nowrap;
-}
-.use-cases-grid { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.use-case-item { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 72px; }
-.use-case-item .icon { width: 26px; height: 26px; color: var(--acc); stroke: var(--acc); }
-.use-case-item span { font-size: 10px; color: var(--t2); text-align: center; line-height: 1.3; }
-.use-case-callout {
-  background: var(--acc); color: #fff; border-radius: 8px;
-  padding: 10px 16px; font-size: 12px; font-weight: 600; line-height: 1.4; max-width: 210px; text-align: center;
-}
-.use-case-callout em { font-style: normal; opacity: 0.85; font-weight: 400; font-size: 11px; display: block; margin-top: 3px; }
+.use-cases { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 6px 20px; display: grid; grid-template-columns: 16px 1fr auto; align-items: center; gap: 16px; margin-bottom: 8px; }
+.use-cases-label { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--t3); text-transform: uppercase; white-space: nowrap; }
+.use-cases-grid { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+.use-case-item { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 84px; }
+.use-case-item .icon { width: 20px; height: 20px; color: var(--acc); stroke: var(--acc); }
+.use-case-item span { font-size: 11px; color: var(--t2); text-align: center; line-height: 1.2; }
+.use-case-callout { background: var(--acc); color: #fff; border-radius: 10px; padding: 6px 14px; font-size: 12px; font-weight: 700; line-height: 1.3; max-width: 230px; text-align: center; }
+.use-case-callout em { font-style: normal; opacity: 0.9; font-weight: 400; font-size: 11px; display: block; margin-top: 1px; }
 
 /* MAIN BODY */
-.main-body {
-  display: grid; grid-template-columns: 1fr 210px 1fr; gap: 0;
-  padding: 20px 36px; background: var(--bg); align-items: start; min-height: 230px;
-}
-.tier-card { border-radius: 10px; padding: 16px 18px; border: 2px solid var(--line); }
+.main-body { display: grid; grid-template-columns: 1fr 210px 1fr; gap: 20px; margin-bottom: 8px; align-items: stretch; }
+.tier-card { border-radius: 10px; padding: 10px 22px; border: 2px solid var(--line); background: #fff; }
 .tier-card.free { border-color: var(--acc); }
 .tier-card.pro  { border-color: var(--acc2); }
-.tier-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
-}
-.tier-label::before { content: ''; width: 28px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+.tier-label { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
 .free-lbl { color: var(--acc); }
-.free-lbl::before { background: var(--acc); }
 .pro-lbl  { color: var(--acc2); }
-.pro-lbl::before  { background: var(--acc2); }
-.feature-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.feature-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--t2); line-height: 1.3; }
-.feature-list li .icon { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 1px; }
+.feature-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--t2); line-height: 1.35; }
+.feature-list li .icon { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; }
 .free .feature-list li .icon { stroke: var(--acc); }
 .pro  .feature-list li .icon { stroke: var(--acc2); }
 
 /* CENTER */
-.center-col { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 8px; }
-.am-circle {
-  width: 100px; height: 100px; border-radius: 50%; background: var(--t1);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.am-circle .am-letters { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 28px; color: var(--acc); line-height: 1; }
-.am-circle .am-sub { font-size: 9px; color: #B0AFA8; letter-spacing: 1px; margin-top: 2px; }
-.stat-pills { display: flex; flex-direction: column; gap: 6px; width: 100%; }
-.stat-pill {
-  background: var(--bg2); border-radius: 20px; padding: 5px 12px;
-  display: flex; align-items: center; justify-content: space-between; gap: 6px;
-}
-.stat-pill .stat-val { font-size: 15px; font-weight: 700; color: var(--t1); line-height: 1; }
-.stat-pill .stat-lbl { font-size: 10px; color: var(--t3); text-align: right; line-height: 1.2; }
+.center-col { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.am-circle { width: 104px; height: 104px; border-radius: 50%; background: linear-gradient(135deg, var(--acc), var(--acc2)); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+.am-circle .am-letters { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 28px; color: #fff; line-height: 1; }
+.am-circle .am-sub { font-size: 9px; color: #fff; letter-spacing: 1px; margin-top: 2px; }
+.stat-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
+.stat-pill { background: var(--bd); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; text-align: center; }
+.stat-pill .stat-val { font-size: 16px; font-weight: 700; color: var(--acc); line-height: 1.1; }
+.stat-pill .stat-lbl { font-size: 9px; color: var(--t3); text-transform: uppercase; letter-spacing: .5px; line-height: 1.2; }
 
 /* WORKFLOW */
-.workflow {
-  background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  padding: 16px 36px; min-height: 90px;
-}
-.workflow-title { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--t3); margin-bottom: 12px; }
-.workflow-steps { display: flex; align-items: center; gap: 0; }
-.w-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
-.w-num {
-  width: 32px; height: 32px; border-radius: 50%; background: var(--t1); color: #fff;
-  font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
+.workflow { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 6px 20px; margin-bottom: 8px; }
+.workflow-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 3px; }
+.workflow-steps { display: flex; align-items: center; gap: 8px; }
+.w-step { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+.w-num { width: 24px; height: 24px; border-radius: 50%; background: var(--acc); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .w-num.pro-step { background: var(--acc2); }
-.w-text { font-size: 11px; color: var(--t2); text-align: center; line-height: 1.3; max-width: 110px; }
-.pro-badge {
-  background: var(--acc2l); color: var(--acc2); font-size: 9px; font-weight: 700;
-  border-radius: 3px; padding: 1px 5px; display: inline-block; margin-top: 2px;
-}
-.w-arrow { color: var(--line); flex-shrink: 0; padding: 0 2px; padding-bottom: 18px; }
-.w-arrow .icon { width: 18px; height: 18px; stroke: var(--line); }
-.workflow-tagline { text-align: center; font-style: italic; font-size: 11px; color: var(--t3); margin-top: 8px; }
+.w-text { font-size: 12px; color: var(--t2); text-align: center; line-height: 1.25; }
+.pro-badge { background: var(--acc2l); color: var(--acc2); font-size: 9px; font-weight: 700; border-radius: 3px; padding: 0 5px; display: inline-block; margin-top: 1px; }
+.w-arrow { color: var(--t3); flex-shrink: 0; }
+.w-arrow .icon { width: 16px; height: 16px; stroke: var(--t3); }
+.workflow-tagline { text-align: center; font-style: italic; font-size: 11px; color: var(--t3); margin-top: 3px; }
 
 /* BOTTOM GRID */
-.bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); min-height: 150px; flex: 1; }
-.bg-col { padding: 16px 20px; border-right: 1px solid var(--line); }
-.bg-col:last-child { border-right: none; }
-.bg-col-title { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-.bg-col-title .icon { width: 13px; height: 13px; stroke: var(--acc); }
-.bg-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; flex: 1; }
+.bg-col { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 7px 16px; }
+.bg-col-title { font-size: 13px; font-weight: 700; color: var(--acc); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.bg-col-title .icon { width: 14px; height: 14px; stroke: var(--acc); }
+.bg-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
 .bg-list li { font-size: 11.5px; color: var(--t2); line-height: 1.35; display: flex; align-items: flex-start; gap: 6px; }
-.bg-list li::before { content: '›'; color: var(--acc); font-size: 13px; flex-shrink: 0; line-height: 1.2; }
+.bg-list li::before { content: '›'; color: var(--acc); font-size: 13px; flex-shrink: 0; line-height: 1.1; }
 .fp-table { width: 100%; border-collapse: collapse; font-size: 11px; }
 .fp-table tr { border-bottom: 1px solid var(--line); }
 .fp-table tr:last-child { border-bottom: none; }
-.fp-table td { padding: 4px 2px; color: var(--t2); vertical-align: top; }
+.fp-table td { padding: 2px 2px; color: var(--t2); vertical-align: top; }
 .fp-table td:first-child { color: var(--t1); font-weight: 600; padding-right: 8px; white-space: nowrap; }
 .fp-table .pro-dot { color: var(--acc2); font-size: 9px; font-weight: 700; }
 
 /* FOOTER */
-.footer { background: var(--t1); padding: 12px 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.footer-links { display: flex; gap: 20px; align-items: center; }
-.footer-links a { font-size: 11px; color: #B0AFA8; text-decoration: none; }
-.footer-links .sep { color: #555; font-size: 11px; }
-.footer-tagline { font-size: 11px; color: #6B6A64; font-style: italic; }
+.footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--line); }
+.footer-links { display: flex; gap: 12px; align-items: center; }
+.footer-links a { font-size: 12px; color: var(--t3); text-decoration: none; }
+.footer-links .sep { color: var(--line); font-size: 11px; }
+.footer-tagline { font-size: 12px; color: var(--t3); font-style: italic; }
 
 /* SVG icon base — all icons use stroke, no fill */
 .icon { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
 
 @media print {
   @page { size: A4 landscape; margin: 0; }
-  #download-btn { display: none; }
+  #download-btn, #fit-check { display: none; }
   body { background: none; }
   #infographic { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
@@ -215,7 +166,7 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
   <div class="hdr">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="148" height="64">
       <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0" stop-color="#B05730"/><stop offset="0.55" stop-color="#C96442"/><stop offset="1" stop-color="#9C87F5"/>
+        <stop offset="0" stop-color="#1F4E80"/><stop offset="0.55" stop-color="#2B6CB0"/><stop offset="1" stop-color="#3E9C5B"/>
       </linearGradient></defs>
       <g transform="translate(40,46)">
         <rect x="22" y="20" width="150" height="150" rx="30" fill="none" stroke="url(#g)" stroke-width="11"/>
@@ -227,7 +178,7 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
         </g>
       </g>
       <text x="258" y="246" font-family="Poppins,sans-serif" font-weight="700" font-size="196" letter-spacing="-4">
-        <tspan fill="url(#g)">tc</tspan><tspan fill="#FAF9F5">viz</tspan>
+        <tspan fill="url(#g)">tc</tspan><tspan fill="#3D3929">viz</tspan>
       </text>
       <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#83827D">VISUALS TO POWER BI</text>
     </svg>
@@ -245,29 +196,29 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
       <rect x="116" y="2" width="72" height="40" rx="3" fill="#EAFAF1" opacity="0.6"/>
       <rect x="2" y="48"  width="85" height="40" rx="3" fill="#FDF2F8" opacity="0.6"/>
       <rect x="89" y="48" width="99" height="40" rx="3" fill="#F0F3F4" opacity="0.6"/>
-      <line x1="2" y1="46" x2="188" y2="46" stroke="#C96442" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <line x1="2" y1="46" x2="188" y2="46" stroke="#2B6CB0" stroke-width="1.5" stroke-dasharray="5,3"/>
       <line x1="57"  y1="2" x2="57"  y2="44" stroke="#AAAAAA" stroke-width="1" stroke-dasharray="4,2"/>
       <line x1="114" y1="2" x2="114" y2="44" stroke="#AAAAAA" stroke-width="1" stroke-dasharray="4,2"/>
-      <line x1="87"  y1="48" x2="87" y2="88" stroke="#9C87F5" stroke-width="1.2" stroke-dasharray="4,2"/>
+      <line x1="87"  y1="48" x2="87" y2="88" stroke="#3E9C5B" stroke-width="1.2" stroke-dasharray="4,2"/>
       <text x="29"  y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone A</text>
       <text x="86"  y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone B</text>
       <text x="152" y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone C</text>
       <text x="44"  y="72" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone D</text>
       <text x="138" y="72" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone E</text>
-      <rect x="79" y="55" width="16" height="9" rx="2" fill="#DBD3F0"/>
-      <text x="87" y="62.5" font-family="Segoe UI,sans-serif" font-size="6" fill="#9C87F5" text-anchor="middle" font-weight="700">PRO</text>
-      <circle cx="22"  cy="14" r="4.5" fill="#C96442" opacity="0.85"/>
-      <circle cx="40"  cy="30" r="3.5" fill="#C96442" opacity="0.75"/>
-      <circle cx="80"  cy="18" r="5"   fill="#535146" opacity="0.85"/>
-      <circle cx="100" cy="32" r="3"   fill="#9C87F5" opacity="0.85"/>
-      <circle cx="140" cy="10" r="4"   fill="#535146" opacity="0.85"/>
-      <circle cx="160" cy="25" r="6"   fill="#C96442" opacity="0.7"/>
-      <circle cx="170" cy="38" r="3.5" fill="#9C87F5" opacity="0.8"/>
-      <circle cx="30"  cy="65" r="4"   fill="#535146" opacity="0.85"/>
-      <circle cx="60"  cy="75" r="5"   fill="#C96442" opacity="0.8"/>
-      <circle cx="110" cy="60" r="3.5" fill="#9C87F5" opacity="0.85"/>
-      <circle cx="150" cy="78" r="4.5" fill="#535146" opacity="0.75"/>
-      <circle cx="170" cy="62" r="3"   fill="#C96442" opacity="0.85"/>
+      <rect x="79" y="55" width="16" height="9" rx="2" fill="#D9EFE0"/>
+      <text x="87" y="62.5" font-family="Segoe UI,sans-serif" font-size="6" fill="#3E9C5B" text-anchor="middle" font-weight="700">PRO</text>
+      <circle cx="22"  cy="14" r="4.5" fill="#2B6CB0" opacity="0.85"/>
+      <circle cx="40"  cy="30" r="3.5" fill="#2B6CB0" opacity="0.75"/>
+      <circle cx="80"  cy="18" r="5"   fill="#D9A441" opacity="0.85"/>
+      <circle cx="100" cy="32" r="3"   fill="#3E9C5B" opacity="0.85"/>
+      <circle cx="140" cy="10" r="4"   fill="#D9A441" opacity="0.85"/>
+      <circle cx="160" cy="25" r="6"   fill="#2B6CB0" opacity="0.7"/>
+      <circle cx="170" cy="38" r="3.5" fill="#3E9C5B" opacity="0.8"/>
+      <circle cx="30"  cy="65" r="4"   fill="#D9A441" opacity="0.85"/>
+      <circle cx="60"  cy="75" r="5"   fill="#2B6CB0" opacity="0.8"/>
+      <circle cx="110" cy="60" r="3.5" fill="#3E9C5B" opacity="0.85"/>
+      <circle cx="150" cy="78" r="4.5" fill="#D9A441" opacity="0.75"/>
+      <circle cx="170" cy="62" r="3"   fill="#2B6CB0" opacity="0.85"/>
       <rect x="1" y="1" width="187" height="88" rx="4" fill="none" stroke="#DAD9D4" stroke-width="1"/>
     </svg>
   </div>
@@ -462,7 +413,7 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
   <div class="footer">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="70" height="30">
       <defs><linearGradient id="gf" x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0" stop-color="#B05730"/><stop offset="0.55" stop-color="#C96442"/><stop offset="1" stop-color="#9C87F5"/>
+        <stop offset="0" stop-color="#1F4E80"/><stop offset="0.55" stop-color="#2B6CB0"/><stop offset="1" stop-color="#3E9C5B"/>
       </linearGradient></defs>
       <g transform="translate(40,46)">
         <rect x="22" y="20" width="150" height="150" rx="30" fill="none" stroke="url(#gf)" stroke-width="11"/>
@@ -474,9 +425,9 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
         </g>
       </g>
       <text x="258" y="246" font-family="Poppins,sans-serif" font-weight="700" font-size="196" letter-spacing="-4">
-        <tspan fill="url(#gf)">tc</tspan><tspan fill="#FAF9F5">viz</tspan>
+        <tspan fill="url(#gf)">tc</tspan><tspan fill="#3D3929">viz</tspan>
       </text>
-      <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#6B6A64">VISUALS TO POWER BI</text>
+      <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#83827D">VISUALS TO POWER BI</text>
     </svg>
     <div class="footer-tagline">Asymmetric Matrix v1.0.0.0</div>
     <div class="footer-links">
@@ -500,7 +451,7 @@ function downloadPNG() {
   const btn = document.getElementById('download-btn');
   btn.textContent = '⏳ Rendering…'; btn.disabled = true;
   html2canvas(document.getElementById('infographic'), {
-    scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#FAF9F5'
+    width: 1366, height: 768, scale: 1, useCORS: true, allowTaint: true, backgroundColor: '#FAF9F5'
   }).then(canvas => {
     const a = document.createElement('a');
     a.download = 'asymmetric-matrix-infographic.png';
@@ -508,6 +459,21 @@ function downloadPNG() {
     btn.textContent = '⬇ Download PNG'; btn.disabled = false;
   }).catch(() => { btn.textContent = '⬇ Download PNG'; btn.disabled = false; });
 }
+</script>
+<div id="fit-check" hidden></div>
+<script>
+(function () {
+  function check() {
+    var el = document.getElementById('infographic');
+    var h = el.scrollHeight, b = document.getElementById('fit-check');
+    if (h > 768) { b.textContent = 'OVERFLOW: ' + (h - 768) + 'px'; b.hidden = false; document.title = 'OVERFLOW'; }
+    else { b.hidden = true; document.title = 'FIT'; }
+  }
+  window.addEventListener('load', function () {
+    var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    ready.then(function () { setTimeout(check, 100); });
+  });
+})();
 </script>
 </body>
 </html>
