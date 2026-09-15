@@ -1,7 +1,7 @@
 {
   "name": "asymmetric-matrix",
   "description": "Asymmetric Matrix — scatter plot with configurable asymmetric zones",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "TCViz <support@tcviz.com>",
   "license": "MIT",
   "scripts": {
@@ -9,17 +9,23 @@
     "start": "pbiviz start",
     "package": "pbiviz package",
     "build-test": "node build-test.js",
-    "lint": "pbiviz package --no-minify"
+    "eslint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "devDependencies": {
+    "eslint": "^9.39.5",
+    "eslint-plugin-powerbi-visuals": "^1.1.1",
     "typescript": "^5.0.0"
   },
   "dependencies": {
     "powerbi-visuals-api": "^5.11.0",
-    "powerbi-visuals-tools": "^5.5.0"
+    "powerbi-visuals-tools": "^7.2.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/tinocallarisa-web/asymmetric-matrix"
+  },
+  "overrides": {
+    "qs": "^6.16.0",
+    "uuid": "^11.1.1"
   }
 }

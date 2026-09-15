@@ -5,7 +5,7 @@
     "displayName": "Asymmetric Matrix",
     "guid": "asymmetricMatrixTCVIZ",
     "visualClassName": "Visual",
-    "version": "1.0.0.3",
+    "version": "1.0.1.0",
     "description": "Scatter plot with configurable asymmetric zones — different number of vertical dividers above and below the horizontal reference line.",
     "supportUrl": "https://tinocallarisa-web.github.io/asymmetric-matrix/support.html",
     "gitHubUrl": "https://github.com/tinocallarisa-web/asymmetric-matrix",

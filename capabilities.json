@@ -137,7 +137,7 @@
           "type": { "bool": true }
         },
         "lineCount": {
-          "displayName": "Number of vertical lines (below)",
+          "displayName": "Number of vertical lines (below) (Pro)",
           "type": { "numeric": true }
         },
         "line1Value":  { "displayName": "Line 1 value",  "type": { "numeric": true } },
@@ -173,14 +173,14 @@
     "axes": {
       "displayName": "Axes",
       "properties": {
-        "xTitle":       { "displayName": "X axis title",         "type": { "text": true } },
-        "yTitle":       { "displayName": "Y axis title",         "type": { "text": true } },
+        "xTitle":       { "displayName": "X axis title (Pro)",         "type": { "text": true } },
+        "yTitle":       { "displayName": "Y axis title (Pro)",         "type": { "text": true } },
         "tickSize":     { "displayName": "Tick font size",       "type": { "numeric": true } },
         "tickColor":    { "displayName": "Tick color",           "type": { "fill": { "solid": { "color": true } } } },
         "showGridlines":{ "displayName": "Show gridlines",       "type": { "bool": true } },
         "tickDecimals": { "displayName": "Tick decimals (−1=auto)", "type": { "numeric": true } },
-        "titleSize":    { "displayName": "Axis title font size",  "type": { "numeric": true } },
-        "fixedAxes":    { "displayName": "Fixed axis range",       "type": { "bool": true } }
+        "titleSize":    { "displayName": "Axis title font size (Pro)",  "type": { "numeric": true } },
+        "fixedAxes":    { "displayName": "Fixed axis range (Pro)",       "type": { "bool": true } }
       }
     },
 

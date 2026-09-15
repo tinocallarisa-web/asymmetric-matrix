@@ -1,0 +1,41 @@
+Asymmetric Matrix 1.0.1.0 - GUID asymmetricMatrixTCVIZ
+Full notes: docs/CERTIFICATION-NOTES.md, branch "certification" of
+github.com/tinocallarisa-web/asymmetric-matrix
+
+WHAT CHANGED
+1.0.0.3 is published. Licence: spIdentifier was compared with the offer id, so Pro never
+unlocked; now Plan ID "pro" as full Service ID or Plan ID, Active and Warning, unsupported
+environments honoured, requested once and deferred. Purchase path: notifyFeatureBlocked
+(en/es, <500 chars) + notifyLicenseRequired(General). Pro options no longer hidden: always
+visible, labelled "(Pro)". Chart rebuilt with createElementNS/textContent: no innerHTML.
+supportsKeyboardFocus now implemented (Tab/arrows, Enter/Space, Escape, Shift+F10, ARIA).
+High contrast and allowInteractions honoured. npm audit 0, eslint 0 errors. No property
+name or default changed.
+
+PRO PREVIEW (watermark, per the publishing guidelines)
+Free user in edit mode, licence resolved, supported environment: Pro options render with
+a "Pro preview" watermark on paid features only. Reading view, before the licence
+resolves, or where it cannot be read: free result, no watermark.
+
+PRIVACY
+No network calls, no telemetry, no storage. Only the dataView. privileges is [].
+
+FREE VS PRO
+Free: scatter, Y-ref line, up to 4 upper dividers, 1 lower zone, labels/colors, category,
+size, tooltips, cross-filter, highlight, keyboard, high contrast, landing page.
+Pro: lower dividers (asymmetry below), axis titles, fixed axis range, data labels, zone cards.
+
+TEST - FREE (no plan)
+1. No fields: landing page. X Value + Y Value: points render.
+2. Click a zone: other visuals cross-filter; click again clears.
+3. Tab into the visual, arrows between zones, Enter selects, Escape clears.
+4. Edit mode: Lower Zones > lines (below) (Pro) = 2: zones with watermark, licence banner.
+   Turn off: clears. Reading view: free result, no watermark.
+
+TEST - PRO (active plan)
+Lower zones, axis titles, fixed range, data labels and zone cards render; no watermark.
+
+Rendering events on every path of update(). Known warning: Format Pane (classic API).
+
+Video https://www.youtube.com/watch?v=6JP75Mn-g2Y
+Support/privacy/terms: tinocallarisa-web.github.io/asymmetric-matrix/
