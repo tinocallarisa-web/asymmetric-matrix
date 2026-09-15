@@ -93,7 +93,7 @@ export const DEFAULT_SETTINGS: VisualSettings = {
         showGridlines: true,
         tickDecimals: -1,
         titleSize: 12,
-        fixedAxes: true,
+        fixedAxes: false,
     },
     dataPoints: {
         radius: 6,
@@ -198,7 +198,7 @@ export function parseSettings(dataView: powerbi.DataView): VisualSettings {
             showGridlines: bool(ax, "showGridlines", true),
             tickDecimals: Math.max(-1, Math.min(5, Math.round(num(ax, "tickDecimals", -1)))),
             titleSize:    Math.max(8, Math.min(24, num(ax, "titleSize", 12))),
-            fixedAxes:    bool(ax, "fixedAxes", true),
+            fixedAxes:    bool(ax, "fixedAxes", false),
         },
         dataPoints: {
             radius:     num(dp, "radius", 6),

@@ -130,12 +130,12 @@ export class Visual implements IVisual {
         // Zone click via event delegation
         this.container.addEventListener("click", (e: MouseEvent) => this.onContainerClick(e));
 
+        // Context menu (right-click) via event delegation
+        this.container.addEventListener("contextmenu", (e: MouseEvent) => this.onContextMenu(e));
+
         // Tooltip via event delegation
         this.container.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e));
         this.container.addEventListener("mouseleave", ()              => this.onMouseLeave());
-
-        // Context menu (right-click) — required for AppSource certification
-        this.container.addEventListener("contextmenu", (e: MouseEvent) => this.onContextMenu(e));
     }
 
     // ── Update ────────────────────────────────────────────────────────────────
@@ -627,6 +627,34 @@ export class Visual implements IVisual {
         const zoneEl = target.closest ? (target.closest("[data-zone]") as SVGElement) : null;
         const ptEl   = target.closest ? (target.closest("[data-idx]")  as SVGElement) : null;
 
+        // ── Click on individual data point bubble ─────────────────────────────
+        // ptEl is non-null when the user clicks directly on a circle; zoneEl is
+        // null because circles carry data-idx but not data-zone.  Without this
+        // branch the click was silently ignored and selectionManager.select()
+        // was never called, causing the "does not filter outwards" rejection.
+        if (ptEl && !zoneEl) {
+            const idx = parseInt(ptEl.getAttribute("data-idx") ?? "-1", 10);
+            const pt  = this.lastPoints[idx];
+            if (pt && this.lastSettings) {
+                const zKey = pointZoneKey(pt, this.lastSettings);
+                if (this.selectedZoneKey === zKey) {
+                    // Toggle off
+                    this.selectedZoneKey = null;
+                    this.selectionManager.clear();
+                } else {
+                    // Select the whole zone this point belongs to
+                    this.selectedZoneKey = zKey;
+                    const ids = this.lastPoints
+                        .filter(p => pointZoneKey(p, this.lastSettings!) === zKey)
+                        .map(p => p.selectionId);
+                    this.selectionManager.select(ids, false);
+                }
+                this.render(this.lastPoints, this.lastSettings, this.lastViewport);
+            }
+            return;
+        }
+
+        // ── Click on zone background rect / label / card ───────────────────────
         if (zoneEl) {
             const key = zoneEl.getAttribute("data-zone");
             if (this.selectedZoneKey === key) {
@@ -639,6 +667,9 @@ export class Visual implements IVisual {
                     .map(pt => pt.selectionId);
                 if (ids.length > 0) {
                     this.selectionManager.select(ids, false);
+                } else {
+                    // Zone exists but contains no data points — clear any prior selection
+                    this.selectionManager.clear();
                 }
             }
 
@@ -648,6 +679,7 @@ export class Visual implements IVisual {
             return;
         }
 
+        // ── Click on empty chart area ──────────────────────────────────────────
         if (!zoneEl && !ptEl) {
             this.selectedZoneKey = null;
             this.selectionManager.clear();
@@ -655,6 +687,34 @@ export class Visual implements IVisual {
                 this.render(this.lastPoints, this.lastSettings, this.lastViewport);
             }
         }
+    }
+
+    // ── Context menu handler ──────────────────────────────────────────────────
+
+    private onContextMenu(e: MouseEvent): void {
+        e.preventDefault();
+        const target = e.target as SVGElement;
+        const ptEl   = target.closest ? (target.closest("[data-idx]")  as SVGElement) : null;
+        const zoneEl = target.closest ? (target.closest("[data-zone]") as SVGElement) : null;
+
+        let sid: ISelectionId | null = null;
+
+        if (ptEl) {
+            const idx = parseInt(ptEl.getAttribute("data-idx") ?? "-1", 10);
+            const pt  = this.lastPoints[idx];
+            if (pt) sid = pt.selectionId;
+        } else if (zoneEl && this.lastSettings) {
+            const key  = zoneEl.getAttribute("data-zone");
+            const first = this.lastPoints.find(
+                p => pointZoneKey(p, this.lastSettings!) === key
+            );
+            if (first) sid = first.selectionId;
+        }
+
+        this.selectionManager.showContextMenu(
+            sid ?? ({} as ISelectionId),
+            { x: e.clientX, y: e.clientY }
+        );
     }
 
     // ── Tooltip handlers ─────────────────────────────────────────────────────
@@ -685,34 +745,6 @@ export class Visual implements IVisual {
         if (this.tooltipService) {
             this.tooltipService.hide({ immediately: false, isTouchEvent: false });
         }
-    }
-
-    // ── Context menu ──────────────────────────────────────────────────────────
-
-    private onContextMenu(e: MouseEvent): void {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const target = e.target as SVGElement;
-        const ptEl   = target.closest ? (target.closest("[data-idx]") as SVGElement) : null;
-
-        if (ptEl) {
-            const idx = parseInt(ptEl.getAttribute("data-idx") ?? "-1", 10);
-            const pt  = this.lastPoints[idx];
-            if (pt) {
-                this.selectionManager.showContextMenu(pt.selectionId, {
-                    x: e.clientX,
-                    y: e.clientY
-                });
-                return;
-            }
-        }
-
-        // Right-click on zone background, zone label, or empty plot area
-        this.selectionManager.showContextMenu(null as any, {
-            x: e.clientX,
-            y: e.clientY
-        });
     }
 
     // ── Format Pane ───────────────────────────────────────────────────────────

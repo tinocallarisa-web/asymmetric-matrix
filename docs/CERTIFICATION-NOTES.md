@@ -1,16 +1,16 @@
-# Certification Notes — Asymmetric Matrix v1.0.0.0
+# Certification Notes — Asymmetric Matrix v1.0.0.1
 
 ## Repository
 
 - **Certification branch:** `certification`
-- **GitHub:** https://github.com/tinocallarisa-web/asymmetric-matrix
-- **Branch URL:** https://github.com/tinocallarisa-web/asymmetric-matrix/tree/certification
+- **GitHub:** https://github.com/tcviz/asymmetric-matrix
+- **Branch URL:** https://github.com/tcviz/asymmetric-matrix/tree/certification
 
 ## Web pages (GitHub Pages — active)
 
-- **Support:** https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
-- **Privacy:** https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html
-- **Terms:** https://tinocallarisa-web.github.io/asymmetric-matrix/terms.html
+- **Support:** https://tcviz.github.io/asymmetric-matrix/support.html
+- **Privacy:** https://tcviz.github.io/asymmetric-matrix/privacy.html
+- **Terms:** https://tcviz.github.io/asymmetric-matrix/terms.html
 
 ## Demo video
 
