@@ -1,172 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Asymmetric Matrix — Infographic</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bubble &amp; Scatter Chart 1.1 — Infographic | TCViz</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.19.0/tabler-icons.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
 <style>
-:root {
-  --bg:#FAF9F5;  --bg2:#EDE9DE;  --bd:#F5F3ED;  --line:#DAD9D4;
-  --t1:#3D3929;  --t2:#535146;   --t3:#83827D;
-  --acc:#2B6CB0; --accd:#1F4E80; --acc2:#3E9C5B; --acc2l:#D9EFE0;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: var(--t1); }
+  :root {
+    --bg:#FAF9F5;  --bg2:#EDE9DE;  --bd:#F5F3ED;  --line:#DAD9D4;
+    --t1:#3D3929;  --t2:#535146;   --t3:#83827D;
+    --acc:#2B6CB0; --accd:#1F4E80; --acc2:#3E9C5B; --acc2l:#D9EFE0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: var(--t1); }
 
-#download-btn {
-  position: fixed; top: 12px; left: 12px; z-index: 9999;
-  background: var(--acc); color: #fff; border: none; border-radius: 6px;
-  padding: 8px 16px; font: 700 13px 'Segoe UI', sans-serif; cursor: pointer;
-}
-#download-btn:hover { background: var(--accd); }
-#fit-check { position: fixed; top: 12px; right: 12px; z-index: 10000; background: #B00020; color: #fff; font: 700 13px 'Segoe UI', sans-serif; padding: 6px 12px; border-radius: 6px; }
+  /* 1366 x 768 EXACTOS, como el resto de la serie: es el tamaño de imagen de la ficha de Partner Center. */
+  #infographic {
+    width: 1366px; height: 768px; overflow: hidden;
+    background: var(--bg); padding: 12px 20px 8px;
+    display: grid; grid-template-rows: 80px 96px 1fr 62px auto 24px; gap: 7px;
+  }
+  .row { min-height: 0; }
 
-#infographic { width: 1366px; height: 768px; overflow: hidden; background: var(--bg); color: var(--t1); display: flex; flex-direction: column; padding: 12px 36px 8px; }
+  /* 1. Header */
+  .header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; }
+  .header h1 { font-size: 31px; margin: 0 0 2px; letter-spacing: -0.5px; }
+  .header h1 em { font-style: normal; color: var(--accd); }
+  .header p { margin: 0; font-size: 14px; color: var(--t2); }
+  .header .formerly { font-size: 11px; color: var(--t3); margin-top: 2px; }
 
-/* HEADER */
-.hdr { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; margin-bottom: 8px; }
-.hdr-title h1 { font-size: 28px; font-weight: 700; color: var(--t1); line-height: 1.1; }
-.hdr-title h1 span { color: var(--acc); }
-.hdr-title p { font-size: 13px; color: var(--t3); margin-top: 4px; line-height: 1.4; }
-.hdr-tag { background: var(--acc); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; padding: 2px 10px; border-radius: 20px; display: inline-block; margin-bottom: 4px; }
+  /* 2. Use cases */
+  .uses { display: grid; grid-template-columns: 26px 1fr 300px; gap: 14px; align-items: center;
+          background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 7px 14px; }
+  .vlabel { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 700;
+            letter-spacing: 2.5px; color: var(--t3); text-align: center; }
+  .use-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .use { text-align: center; font-size: 10.5px; color: var(--t2); line-height: 1.25; }
+  .use i { display: block; font-size: 21px; color: var(--accd); margin-bottom: 3px; }
+  .callout { background: var(--acc); color: #fff; border-radius: 8px; padding: 7px 12px; font-size: 11.5px; line-height: 1.35; }
+  .callout strong { display: block; font-size: 13px; margin-bottom: 2px; }
 
-/* USE CASES */
-.use-cases { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 6px 20px; display: grid; grid-template-columns: 16px 1fr auto; align-items: center; gap: 16px; margin-bottom: 8px; }
-.use-cases-label { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--t3); text-transform: uppercase; white-space: nowrap; }
-.use-cases-grid { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
-.use-case-item { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 84px; }
-.use-case-item .icon { width: 20px; height: 20px; color: var(--acc); stroke: var(--acc); }
-.use-case-item span { font-size: 11px; color: var(--t2); text-align: center; line-height: 1.2; }
-.use-case-callout { background: var(--acc); color: #fff; border-radius: 10px; padding: 6px 14px; font-size: 12px; font-weight: 700; line-height: 1.3; max-width: 230px; text-align: center; }
-.use-case-callout em { font-style: normal; opacity: 0.9; font-weight: 400; font-size: 11px; display: block; margin-top: 1px; }
+  /* 3. Body: Free | centre | Pro */
+  .body { display: grid; grid-template-columns: 1fr 200px 1fr; gap: 14px; }
+  .tier { border: 2px solid var(--acc); border-radius: 10px; padding: 8px 16px; background: #fff; }
+  .tier.pro { border-color: var(--acc2); }
+  .tier h2 { margin: 0 0 2px; font-size: 17px; color: var(--accd); display: flex; align-items: baseline; gap: 8px; }
+  .tier.pro h2 { color: var(--acc2); }
+  .tier h2 span { font-size: 11px; font-weight: 600; color: var(--t3); letter-spacing: 0.5px; }
+  .tier .lead { margin: 0 0 4px; font-size: 11px; color: var(--t2); line-height: 1.35; }
+  .tier ul { margin: 0; padding: 0; list-style: none; }
+  .tier li { font-size: 11px; color: var(--t1); line-height: 1.38; padding-left: 17px; position: relative; }
+  .tier li::before { content: "\ea5e"; font-family: 'tabler-icons'; position: absolute; left: 0; color: var(--acc); font-size: 12px; }
+  .tier.pro li::before { color: var(--acc2); }
 
-/* MAIN BODY */
-.main-body { display: grid; grid-template-columns: 1fr 210px 1fr; gap: 20px; margin-bottom: 8px; align-items: stretch; }
-.tier-card { border-radius: 10px; padding: 10px 22px; border: 2px solid var(--line); background: #fff; }
-.tier-card.free { border-color: var(--acc); }
-.tier-card.pro  { border-color: var(--acc2); }
-.tier-label { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
-.free-lbl { color: var(--acc); }
-.pro-lbl  { color: var(--acc2); }
-.feature-list { list-style: none; display: flex; flex-direction: column; gap: 1px; }
-.feature-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--t2); line-height: 1.35; }
-.feature-list li .icon { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; }
-.free .feature-list li .icon { stroke: var(--acc); }
-.pro  .feature-list li .icon { stroke: var(--acc2); }
+  .centre { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .circle { width: 112px; height: 112px; border-radius: 50%; color: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--acc), var(--acc2)); flex-shrink: 0; }
+  .circle .n { font-size: 32px; font-weight: 700; color: #fff; line-height: 1; }
+  .circle .l { font-size: 9px; color: #fff; letter-spacing: 1px; margin-top: 3px; text-align: center; }
+  .pill { width: 100%; background: var(--bd); border: 1px solid var(--line); border-radius: 7px;
+          padding: 5px 9px; font-size: 10.5px; color: var(--t2); display: flex; justify-content: space-between; gap: 6px; }
+  .pill b { color: var(--t1); }
 
-/* CENTER */
-.center-col { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
-.am-circle { width: 104px; height: 104px; border-radius: 50%; background: linear-gradient(135deg, var(--acc), var(--acc2)); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
-.am-circle .am-letters { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 28px; color: #fff; line-height: 1; }
-.am-circle .am-sub { font-size: 9px; color: #fff; letter-spacing: 1px; margin-top: 2px; }
-.stat-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
-.stat-pill { background: var(--bd); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; text-align: center; }
-.stat-pill .stat-val { font-size: 16px; font-weight: 700; color: var(--acc); line-height: 1.1; }
-.stat-pill .stat-lbl { font-size: 9px; color: var(--t3); text-transform: uppercase; letter-spacing: .5px; line-height: 1.2; }
+  /* 4. Workflow */
+  .flow { display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .steps { display: flex; align-items: stretch; gap: 0; }
+  .step { flex: 1; background: var(--bd); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; text-align: center; }
+  .step .k { font-size: 9px; font-weight: 700; color: var(--acc); letter-spacing: 1px; }
+  .step .v { font-size: 11px; color: var(--t1); line-height: 1.25; margin-top: 1px; }
+  .arrow { display: flex; align-items: center; color: var(--t3); font-size: 15px; padding: 0 3px; }
+  .tagline { text-align: center; font-size: 11px; font-style: italic; color: var(--t3); }
 
-/* WORKFLOW */
-.workflow { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 6px 20px; margin-bottom: 8px; }
-.workflow-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 3px; }
-.workflow-steps { display: flex; align-items: center; gap: 8px; }
-.w-step { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
-.w-num { width: 24px; height: 24px; border-radius: 50%; background: var(--acc); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.w-num.pro-step { background: var(--acc2); }
-.w-text { font-size: 12px; color: var(--t2); text-align: center; line-height: 1.25; }
-.pro-badge { background: var(--acc2l); color: var(--acc2); font-size: 9px; font-weight: 700; border-radius: 3px; padding: 0 5px; display: inline-block; margin-top: 1px; }
-.w-arrow { color: var(--t3); flex-shrink: 0; }
-.w-arrow .icon { width: 16px; height: 16px; stroke: var(--t3); }
-.workflow-tagline { text-align: center; font-style: italic; font-size: 11px; color: var(--t3); margin-top: 3px; }
+  /* 5. Bottom grid */
+  .bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .panel { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 7px 14px; }
+  .panel h3 { margin: 0 0 4px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--acc); }
+  .panel ul { margin: 0; padding-left: 15px; }
+  .panel li { font-size: 10.5px; color: var(--t2); line-height: 1.32; margin-bottom: 1px; }
+  .panel table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  .panel td { padding: 1px 0; color: var(--t2); vertical-align: top; }
+  .panel td.c { color: var(--t1); font-weight: 600; width: 94px; }
 
-/* BOTTOM GRID */
-.bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; flex: 1; }
-.bg-col { background: var(--bd); border: 1px solid var(--line); border-radius: 10px; padding: 7px 16px; }
-.bg-col-title { font-size: 13px; font-weight: 700; color: var(--acc); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.bg-col-title .icon { width: 14px; height: 14px; stroke: var(--acc); }
-.bg-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
-.bg-list li { font-size: 11.5px; color: var(--t2); line-height: 1.35; display: flex; align-items: flex-start; gap: 6px; }
-.bg-list li::before { content: '›'; color: var(--acc); font-size: 13px; flex-shrink: 0; line-height: 1.1; }
-.fp-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-.fp-table tr { border-bottom: 1px solid var(--line); }
-.fp-table tr:last-child { border-bottom: none; }
-.fp-table td { padding: 2px 2px; color: var(--t2); vertical-align: top; }
-.fp-table td:first-child { color: var(--t1); font-weight: 600; padding-right: 8px; white-space: nowrap; }
-.fp-table .pro-dot { color: var(--acc2); font-size: 9px; font-weight: 700; }
+  /* 6. Footer */
+  .footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 5px; }
+  .footer .links { font-size: 10.5px; color: var(--t3); }
+  .footer .links b { color: var(--t2); font-weight: 600; }
 
-/* FOOTER */
-.footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--line); }
-.footer-links { display: flex; gap: 12px; align-items: center; }
-.footer-links a { font-size: 12px; color: var(--t3); text-decoration: none; }
-.footer-links .sep { color: var(--line); font-size: 11px; }
-.footer-tagline { font-size: 12px; color: var(--t3); font-style: italic; }
+  /* Controles FUERA de #infographic: html2canvas captura ese elemento. */
+  .tools { width: 1366px; margin: 14px auto 40px; display: flex; align-items: center; gap: 14px; }
+  .tools button { font: 600 14px 'Segoe UI', system-ui, sans-serif; padding: 10px 20px;
+                  background: var(--accd); color: #fff; border: 0; border-radius: 7px; cursor: pointer; }
+  #warn { font: 13px 'Segoe UI', system-ui, sans-serif; color: #fff; background: #8B2C2C; padding: 8px 14px; border-radius: 6px; display: none; }
 
-/* SVG icon base — all icons use stroke, no fill */
-.icon { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-
-@media print {
-  @page { size: A4 landscape; margin: 0; }
-  #download-btn, #fit-check { display: none; }
-  body { background: none; }
-  #infographic { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-}
+  @media print {
+    @page { size: A4 landscape; margin: 0; }
+    body { background: #fff; }
+    .tools { display: none; }
+    #infographic { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Hidden SVG symbol definitions -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-  <symbol id="ic-scatter" viewBox="0 0 24 24">
-    <circle cx="6" cy="16" r="2.5"/><circle cx="14" cy="8" r="2"/><circle cx="19" cy="18" r="3"/><circle cx="9" cy="11" r="1.5"/>
-  </symbol>
-  <symbol id="ic-briefcase" viewBox="0 0 24 24">
-    <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/>
-  </symbol>
-  <symbol id="ic-users" viewBox="0 0 24 24">
-    <circle cx="9" cy="7" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="7" r="2.5"/><path d="M15 20c0-2.2 1.3-4 3-4s3 1.8 3 4"/>
-  </symbol>
-  <symbol id="ic-trending" viewBox="0 0 24 24">
-    <polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/>
-  </symbol>
-  <symbol id="ic-bulb" viewBox="0 0 24 24">
-    <path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.2-3 5.2V16H9v-1.8C7.2 13.2 6 11.2 6 9a6 6 0 0 1 6-6z"/>
-  </symbol>
-  <symbol id="ic-target" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
-  </symbol>
-  <symbol id="ic-strategy" viewBox="0 0 24 24">
-    <path d="M3 17l3-6 4 3 2-7 2 7 4-3 3 6H3z"/><rect x="3" y="17" width="18" height="2" rx="1"/>
-  </symbol>
-  <symbol id="ic-alert" viewBox="0 0 24 24">
-    <path d="M12 2L2 21h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="none"/>
-  </symbol>
-  <symbol id="ic-rocket" viewBox="0 0 24 24">
-    <path d="M12 3c2.5 0 7 3.5 7 9a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5c0-5.5 4.5-9 7-9z"/>
-    <path d="M9 17v2a2 2 0 0 0 6 0v-2"/>
-    <line x1="9" y1="12" x2="15" y2="12"/>
-  </symbol>
-  <symbol id="ic-settings" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="3"/>
-    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.18V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-  </symbol>
-  <symbol id="ic-chevron" viewBox="0 0 24 24">
-    <polyline points="9 18 15 12 9 6"/>
-  </symbol>
-  <symbol id="ic-check" viewBox="0 0 24 24">
-    <polyline points="20 6 9 17 4 12"/>
-  </symbol>
-  <symbol id="ic-star" viewBox="0 0 24 24">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </symbol>
-</svg>
-
-<button id="download-btn" onclick="downloadPNG()">⬇ Download PNG</button>
-
 <div id="infographic">
 
-  <!-- HEADER -->
-  <div class="hdr">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="148" height="64">
+  <!-- 1. HEADER -->
+  <div class="row header">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="160" height="70">
       <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0" stop-color="#1F4E80"/><stop offset="0.55" stop-color="#2B6CB0"/><stop offset="1" stop-color="#3E9C5B"/>
+        <stop offset="0" stop-color="#1F4E80"/>
+        <stop offset="0.55" stop-color="#2B6CB0"/>
+        <stop offset="1" stop-color="#3E9C5B"/>
       </linearGradient></defs>
       <g transform="translate(40,46)">
         <rect x="22" y="20" width="150" height="150" rx="30" fill="none" stroke="url(#g)" stroke-width="11"/>
@@ -183,237 +129,156 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
       <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#83827D">VISUALS TO POWER BI</text>
     </svg>
 
-    <div class="hdr-title">
-      <div class="hdr-tag">POWER BI CUSTOM VISUAL</div>
-      <h1><span>Asymmetric</span> Matrix</h1>
-      <p>A scatter plot where the number of zones above the reference line<br>can differ from the zones below — independently configured.</p>
+    <div>
+      <h1>Bubble &amp; Scatter Chart — the <em>zones</em> you segment by</h1>
+      <p>Quadrants at the average, named zones, and different dividers above and below the line. Click a bubble or a zone to filter the report.</p>
+      <div class="formerly">Formerly Asymmetric Matrix — same visual, existing reports keep working.</div>
     </div>
 
-    <!-- Mini scatter illustration -->
-    <svg viewBox="0 0 190 90" xmlns="http://www.w3.org/2000/svg" width="190" height="90">
-      <rect x="2" y="2"   width="55" height="40" rx="3" fill="#E8F4FD" opacity="0.6"/>
-      <rect x="59" y="2"  width="55" height="40" rx="3" fill="#FEF9E7" opacity="0.6"/>
-      <rect x="116" y="2" width="72" height="40" rx="3" fill="#EAFAF1" opacity="0.6"/>
-      <rect x="2" y="48"  width="85" height="40" rx="3" fill="#FDF2F8" opacity="0.6"/>
-      <rect x="89" y="48" width="99" height="40" rx="3" fill="#F0F3F4" opacity="0.6"/>
-      <line x1="2" y1="46" x2="188" y2="46" stroke="#2B6CB0" stroke-width="1.5" stroke-dasharray="5,3"/>
-      <line x1="57"  y1="2" x2="57"  y2="44" stroke="#AAAAAA" stroke-width="1" stroke-dasharray="4,2"/>
-      <line x1="114" y1="2" x2="114" y2="44" stroke="#AAAAAA" stroke-width="1" stroke-dasharray="4,2"/>
-      <line x1="87"  y1="48" x2="87" y2="88" stroke="#3E9C5B" stroke-width="1.2" stroke-dasharray="4,2"/>
-      <text x="29"  y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone A</text>
-      <text x="86"  y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone B</text>
-      <text x="152" y="27" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone C</text>
-      <text x="44"  y="72" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone D</text>
-      <text x="138" y="72" font-family="Segoe UI,sans-serif" font-size="7" fill="#83827D" text-anchor="middle">Zone E</text>
-      <rect x="79" y="55" width="16" height="9" rx="2" fill="#D9EFE0"/>
-      <text x="87" y="62.5" font-family="Segoe UI,sans-serif" font-size="6" fill="#3E9C5B" text-anchor="middle" font-weight="700">PRO</text>
-      <circle cx="22"  cy="14" r="4.5" fill="#2B6CB0" opacity="0.85"/>
-      <circle cx="40"  cy="30" r="3.5" fill="#2B6CB0" opacity="0.75"/>
-      <circle cx="80"  cy="18" r="5"   fill="#D9A441" opacity="0.85"/>
-      <circle cx="100" cy="32" r="3"   fill="#3E9C5B" opacity="0.85"/>
-      <circle cx="140" cy="10" r="4"   fill="#D9A441" opacity="0.85"/>
-      <circle cx="160" cy="25" r="6"   fill="#2B6CB0" opacity="0.7"/>
-      <circle cx="170" cy="38" r="3.5" fill="#3E9C5B" opacity="0.8"/>
-      <circle cx="30"  cy="65" r="4"   fill="#D9A441" opacity="0.85"/>
-      <circle cx="60"  cy="75" r="5"   fill="#2B6CB0" opacity="0.8"/>
-      <circle cx="110" cy="60" r="3.5" fill="#3E9C5B" opacity="0.85"/>
-      <circle cx="150" cy="78" r="4.5" fill="#D9A441" opacity="0.75"/>
-      <circle cx="170" cy="62" r="3"   fill="#2B6CB0" opacity="0.85"/>
-      <rect x="1" y="1" width="187" height="88" rx="4" fill="none" stroke="#DAD9D4" stroke-width="1"/>
+    <!-- Mini gráfico ilustrativo: línea Y, un divisor arriba y dos abajo -->
+    <svg viewBox="0 0 190 100" width="152" height="80" role="img" aria-label="Bubble chart with one divider above the Y line and two below">
+      <rect x="2" y="2" width="186" height="46" fill="#E6F4EA"/>
+      <rect x="2" y="2" width="96" height="46" fill="#FDECEA"/>
+      <rect x="2" y="48" width="60" height="50" fill="#F3F2F1"/>
+      <rect x="62" y="48" width="66" height="50" fill="#FFF4CE"/>
+      <rect x="128" y="48" width="60" height="50" fill="#DCEBF7"/>
+      <line x1="2" y1="48" x2="188" y2="48" stroke="#8A8886" stroke-width="1.5"/>
+      <line x1="98" y1="2" x2="98" y2="48" stroke="#83827D" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="62" y1="48" x2="62" y2="98" stroke="#83827D" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="128" y1="48" x2="128" y2="98" stroke="#83827D" stroke-width="1" stroke-dasharray="4 2"/>
+      <g fill-opacity="0.85" stroke="#fff" stroke-width="1">
+        <circle cx="30" cy="30" r="6" fill="#2B6CB0"/><circle cx="70" cy="18" r="9" fill="#3E9C5B"/>
+        <circle cx="120" cy="24" r="12" fill="#2B6CB0"/><circle cx="160" cy="14" r="7" fill="#3E9C5B"/>
+        <circle cx="35" cy="72" r="5" fill="#3E9C5B"/><circle cx="92" cy="80" r="10" fill="#2B6CB0"/>
+        <circle cx="150" cy="66" r="8" fill="#3E9C5B"/><circle cx="170" cy="86" r="5" fill="#2B6CB0"/>
+      </g>
     </svg>
   </div>
 
-  <!-- USE CASES -->
-  <div class="use-cases">
-    <div class="use-cases-label">Use Cases</div>
-    <div class="use-cases-grid">
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-scatter"/></svg>
-        <span>Performance vs Risk</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-briefcase"/></svg>
-        <span>Portfolio Analysis</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-users"/></svg>
-        <span>Customer Segmentation</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-trending"/></svg>
-        <span>Sales Prioritization</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-bulb"/></svg>
-        <span>Product Positioning</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-target"/></svg>
-        <span>KPI Scatter Analysis</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-strategy"/></svg>
-        <span>Strategic Planning</span>
-      </div>
-      <div class="use-case-item">
-        <svg class="icon" width="26" height="26" stroke="var(--acc)"><use href="#ic-alert"/></svg>
-        <span>Risk Classification</span>
-      </div>
+  <!-- 2. USE CASES -->
+  <div class="row uses">
+    <div class="vlabel">USE CASES</div>
+    <div class="use-grid">
+      <div class="use"><i class="ti ti-users"></i>Customer portfolio:<br />sales × margin</div>
+      <div class="use"><i class="ti ti-building-store"></i>Channel<br />strategy</div>
+      <div class="use"><i class="ti ti-package"></i>Product mix<br />and pricing</div>
+      <div class="use"><i class="ti ti-list-check"></i>Project<br />prioritisation</div>
+      <div class="use"><i class="ti ti-alert-triangle"></i>Risk register:<br />likelihood × impact</div>
+      <div class="use"><i class="ti ti-truck"></i>Supplier<br />review</div>
+      <div class="use"><i class="ti ti-map-pin"></i>Store and region<br />performance</div>
     </div>
-    <div class="use-case-callout">
-      When zones above the midpoint<br>need <strong>different logic</strong> than below
-      <em>The 2×2 constraint — finally broken</em>
+    <div class="callout">
+      <strong>Why reference lines are not enough</strong>
+      Lines alone leave the zones to the reader: no names, no colours, no count
+      per zone, no click on a zone to filter.
     </div>
   </div>
 
-  <!-- MAIN BODY -->
-  <div class="main-body">
-
-    <div class="tier-card free">
-      <div class="tier-label free-lbl">Free</div>
-      <ul class="feature-list">
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Scatter plot with asymmetric zones</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Horizontal Y-reference line (value, color, style)</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Up to 4 vertical dividers <strong>above</strong> Y-ref (5 zones)</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>1 zone below Y-ref</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Zone labels, colors &amp; opacity per zone</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Category color grouping</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Bubble size field</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Tooltips — up to 10 extra fields</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Cross-filter on zone click (toggle)</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc)"><use href="#ic-check"/></svg>Gridlines, tick size, color &amp; decimals</li>
+  <!-- 3. BODY -->
+  <div class="row body">
+    <div class="tier">
+      <h2>Free <span>NO PURCHASE, NO WATERMARK</span></h2>
+      <p class="lead">The whole chart: bubbles, zones, quadrants and every interaction.</p>
+      <ul>
+        <li>Y line at a fixed value, the <b>average</b> or the <b>median</b></li>
+        <li>Up to 4 dividers; <b>quadrants</b> in one click, or one zone below</li>
+        <li>Up to 5 named, coloured zones per half</li>
+        <li>Bubble area by Size; colour by legend, category or zone, with fx</li>
+        <li><b>Now free:</b> data labels without overlap and axis titles</li>
+        <li>Log scale X / Y, the measure's own number format</li>
+        <li>Legend with the share of each group, inside the selected zone</li>
+        <li>5 style templates, setup tips, on-object formatting, 12 languages</li>
+        <li>Click a bubble, zone or group to filter; bookmarks, keyboard, high contrast</li>
       </ul>
     </div>
 
-    <div class="center-col">
-      <div class="am-circle">
-        <div class="am-letters">AM</div>
-        <div class="am-sub">BY TCVIZ</div>
+    <div class="centre">
+      <div class="circle">
+        <div class="n">5 + 5</div>
+        <div class="l">ZONES ABOVE<br />AND BELOW</div>
       </div>
-      <div class="stat-pills">
-        <div class="stat-pill">
-          <div class="stat-val">5</div>
-          <div class="stat-lbl">max upper<br>zones</div>
-        </div>
-        <div class="stat-pill">
-          <div class="stat-val" style="color:var(--acc2)">5</div>
-          <div class="stat-lbl">max lower zones<br><span style="color:var(--acc2);font-weight:700">Pro</span></div>
-        </div>
-        <div class="stat-pill">
-          <div class="stat-val">10</div>
-          <div class="stat-lbl">tooltip<br>fields</div>
-        </div>
-        <div class="stat-pill">
-          <div class="stat-val">30K</div>
-          <div class="stat-lbl">data<br>points</div>
-        </div>
-      </div>
+      <div class="pill"><span>Network calls</span><b>zero</b></div>
+      <div class="pill"><span>Languages</span><b>12</b></div>
+      <div class="pill"><span>Rows</span><b>30,000</b></div>
+      <div class="pill"><span>Data roles</span><b>6</b></div>
     </div>
 
-    <div class="tier-card pro">
-      <div class="tier-label pro-lbl">Pro</div>
-      <ul class="feature-list">
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Everything in Free, plus:</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Up to 4 vertical dividers <strong>below</strong> Y-ref (lower asymmetry)</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>X &amp; Y axis titles with configurable font size</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Fixed axis range — stable during cross-filtering</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Data labels displayed above each point</li>
-        <li><svg class="icon" width="14" height="14" stroke="var(--acc2)"><use href="#ic-star"/></svg>Zone count cards — click to cross-filter</li>
+    <div class="tier pro">
+      <h2>Pro <span>PRO PREVIEW WHILE YOU EDIT</span></h2>
+      <p class="lead">Segmentation that is not forced to be symmetric, and the numbers behind it.</p>
+      <ul>
+        <li><b>Own lower dividers</b>: a different number and position of dividers below the line — asymmetric zones</li>
+        <li><b>Zone table</b>: legend group × zone, as % of row, % of column, points or sum of Size; click a cell to filter</li>
+        <li><b>Trend line</b> with R², a curve on log axes</li>
+        <li><b>Zone counts</b> on each zone, with optional %</li>
+        <li><b>Fixed axis range</b>: the scale holds while you change slicers</li>
       </ul>
+      <p class="lead" style="margin-top:8px"><b>Pro preview:</b> without a licence, while you edit, the Pro settings you
+        turn on are drawn on your data under a watermark. Readers see the free chart. Zones live only inside the visual,
+        so the zone table cannot be built anywhere else in the report.</p>
     </div>
-
   </div>
 
-  <!-- WORKFLOW -->
-  <div class="workflow">
-    <div class="workflow-title">How to set it up</div>
-    <div class="workflow-steps">
-      <div class="w-step">
-        <div class="w-num">1</div>
-        <div class="w-text">Add X Value &amp; Y Value fields</div>
-      </div>
-      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
-      <div class="w-step">
-        <div class="w-num">2</div>
-        <div class="w-text">Set Y-reference line value</div>
-      </div>
-      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
-      <div class="w-step">
-        <div class="w-num">3</div>
-        <div class="w-text">Configure upper zones &amp; dividers</div>
-      </div>
-      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
-      <div class="w-step">
-        <div class="w-num pro-step">4</div>
-        <div class="w-text">Add lower dividers independently<br><span class="pro-badge">PRO</span></div>
-      </div>
-      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
-      <div class="w-step">
-        <div class="w-num">5</div>
-        <div class="w-text">Label zones &amp; set colors</div>
-      </div>
-      <div class="w-arrow"><svg class="icon" width="18" height="18" stroke="var(--line)"><use href="#ic-chevron"/></svg></div>
-      <div class="w-step">
-        <div class="w-num">6</div>
-        <div class="w-text">Click any zone to cross-filter</div>
-      </div>
+  <!-- 4. WORKFLOW -->
+  <div class="row flow">
+    <div class="steps">
+      <div class="step"><div class="k">1 · CATEGORY</div><div class="v">One bubble per customer or project</div></div>
+      <div class="arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="step"><div class="k">2 · X · Y</div><div class="v">Two measures to compare</div></div>
+      <div class="arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="step"><div class="k">3 · SIZE · LEGEND</div><div class="v">Bubble area and colour by group</div></div>
+      <div class="arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="step"><div class="k">4 · QUADRANTS</div><div class="v">At the average, in one click</div></div>
+      <div class="arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="step"><div class="k">5 · ZONES</div><div class="v">Name them, colour them</div></div>
+      <div class="arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="step"><div class="k">6 · TEMPLATE</div><div class="v">One click, five looks</div></div>
+      <div class="arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="step"><div class="k">7 · CLICK</div><div class="v">A bubble or a zone filters the page</div></div>
     </div>
-    <div class="workflow-tagline">"Design your zone logic. The chart follows — not the other way around."</div>
+    <div class="tagline">Two measures, one picture: where each item stands and which zone it falls in.</div>
   </div>
 
-  <!-- BOTTOM GRID -->
-  <div class="bottom-grid">
-    <div class="bg-col">
-      <div class="bg-col-title">
-        <svg class="icon" width="13" height="13" stroke="var(--acc)"><use href="#ic-rocket"/></svg>
-        Key Benefits
-      </div>
-      <ul class="bg-list">
-        <li>Break free from the symmetric 2×2 constraint</li>
-        <li>Upper and lower thresholds are fully independent</li>
-        <li>Zone click cross-filters the entire report page</li>
-        <li>Bubble size field for a 3rd data dimension</li>
-        <li>Up to 10 tooltip fields for rich hover context</li>
-        <li>No external dependencies — fast, lightweight SVG</li>
-        <li>Works in Desktop, Service, Embedded &amp; Mobile</li>
+  <!-- 5. BOTTOM GRID -->
+  <div class="row bottom">
+    <div class="panel">
+      <h3>Key benefits</h3>
+      <ul>
+        <li><b>The zones are on the chart.</b> Nobody has to imagine where the quadrants are.</li>
+        <li><b>They follow the data.</b> Lines at the average or median move with every filter.</li>
+        <li><b>A click answers "who".</b> A bubble or a zone filters every other visual on the page.</li>
+        <li><b>It stays inside Power BI.</b> No telemetry, no endpoints, no CDN.</li>
       </ul>
     </div>
-    <div class="bg-col">
-      <div class="bg-col-title">
-        <svg class="icon" width="13" height="13" stroke="var(--acc)"><use href="#ic-bulb"/></svg>
-        Tips
-      </div>
-      <ul class="bg-list">
-        <li>Sketch your zone layout on paper before setting values</li>
-        <li>Keep zone opacity at 30–50% so points stay readable</li>
-        <li>Use a traffic-light color scheme (green / yellow / red)</li>
-        <li>Enable Fixed axis range (Pro) for stable presentations</li>
-        <li>Add 2–3 tooltip measures — Revenue, Margin, Region</li>
-        <li>Data labels work best with fewer than 30 points</li>
-        <li>Set tick decimals to 0 for whole-number axes</li>
+    <div class="panel">
+      <h3>Tips</h3>
+      <ul>
+        <li>Use a <b>measure</b> for ratios: <i>DIVIDE(SUM(Margin), SUM(Sales))</i>. A % column gets summed per bubble.</li>
+        <li><b>Average and median</b> count each bubble once: for a weighted reference, type a fixed value.</li>
+        <li><b>Log scale</b> needs every value on that axis above 0; a line at 0 sits on the edge.</li>
+        <li>Coming from Asymmetric Matrix 1.0? Lower half → <b>One zone</b> and Colour by → <b>Each category</b>.</li>
       </ul>
     </div>
-    <div class="bg-col">
-      <div class="bg-col-title">
-        <svg class="icon" width="13" height="13" stroke="var(--acc)"><use href="#ic-settings"/></svg>
-        Format Pane
-      </div>
-      <table class="fp-table">
-        <tr><td>Reference Lines</td><td>Y ref value, color, style</td></tr>
-        <tr><td>Upper Zones</td><td>0–4 dividers, labels, colors, opacity</td></tr>
-        <tr><td>Lower Zones</td><td>Zone 1 config · 0–4 dividers <span class="pro-dot">PRO</span></td></tr>
-        <tr><td>Axes</td><td>Tick size/color/decimals · Titles &amp; fixed range <span class="pro-dot">PRO</span></td></tr>
-        <tr><td>Data Points</td><td>Radius, opacity · Data labels <span class="pro-dot">PRO</span></td></tr>
-        <tr><td>Zone Cards</td><td>Count badges per zone <span class="pro-dot">PRO</span></td></tr>
+    <div class="panel">
+      <h3>Format pane</h3>
+      <table>
+        <tr><td class="c">Style template</td><td>Five looks, setup tips</td></tr>
+        <tr><td class="c">Bubbles</td><td>Colour by, fx, size, border, data labels</td></tr>
+        <tr><td class="c">Legend</td><td>Position, font, share of each group</td></tr>
+        <tr><td class="c">Y line · Zones</td><td>Fixed, average, median · dividers, labels</td></tr>
+        <tr><td class="c">Axes</td><td>Log scale, decimals, titles · fixed range (Pro)</td></tr>
+        <tr><td class="c">Pro cards</td><td>Trend line · Zone table · Zone counts</td></tr>
       </table>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <div class="footer">
+  <!-- 6. FOOTER -->
+  <div class="row footer">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 362" width="70" height="30">
       <defs><linearGradient id="gf" x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0" stop-color="#1F4E80"/><stop offset="0.55" stop-color="#2B6CB0"/><stop offset="1" stop-color="#3E9C5B"/>
+        <stop offset="0" stop-color="#1F4E80"/>
+        <stop offset="0.55" stop-color="#2B6CB0"/>
+        <stop offset="1" stop-color="#3E9C5B"/>
       </linearGradient></defs>
       <g transform="translate(40,46)">
         <rect x="22" y="20" width="150" height="150" rx="30" fill="none" stroke="url(#gf)" stroke-width="11"/>
@@ -427,51 +292,52 @@ body { background: #888; font-family: 'Segoe UI', system-ui, sans-serif; color: 
       <text x="258" y="246" font-family="Poppins,sans-serif" font-weight="700" font-size="196" letter-spacing="-4">
         <tspan fill="url(#gf)">tc</tspan><tspan fill="#3D3929">viz</tspan>
       </text>
-      <text x="264" y="306" font-family="Poppins,sans-serif" font-weight="500" font-size="31" letter-spacing="6.5" fill="#83827D">VISUALS TO POWER BI</text>
     </svg>
-    <div class="footer-tagline">Asymmetric Matrix v1.0.0.0</div>
-    <div class="footer-links">
-      <a href="https://www.youtube.com/watch?v=6JP75Mn-g2Y">▶ Video</a>
-      <span class="sep">·</span>
-      <a href="https://tinocallarisa-web.github.io/asymmetric-matrix/support.html">Support</a>
-      <span class="sep">·</span>
-      <a href="https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html">Privacy</a>
-      <span class="sep">·</span>
-      <a href="https://tinocallarisa-web.github.io/asymmetric-matrix/terms.html">Terms</a>
-      <span class="sep">·</span>
-      <a href="https://github.com/tinocallarisa-web/asymmetric-matrix">GitHub</a>
+    <div class="links">
+      <b>Video</b> www.youtube.com/watch?v=5esHnUDLUok &nbsp;·&nbsp;
+      <b>Support</b> tinocallarisa-web.github.io/asymmetric-matrix/support.html &nbsp;·&nbsp;
+      <b>Privacy</b> /privacy.html &nbsp;·&nbsp;
+      <b>Terms</b> /terms.html &nbsp;·&nbsp;
+      <b>GitHub</b> github.com/tinocallarisa-web/asymmetric-matrix
     </div>
   </div>
 
 </div>
 
+<div class="tools">
+  <button id="dl">Download PNG (1366 × 768)</button>
+  <span id="warn"></span>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-function downloadPNG() {
-  const btn = document.getElementById('download-btn');
-  btn.textContent = '⏳ Rendering…'; btn.disabled = true;
-  html2canvas(document.getElementById('infographic'), {
-    width: 1366, height: 768, scale: 1, useCORS: true, allowTaint: true, backgroundColor: '#FAF9F5'
-  }).then(canvas => {
-    const a = document.createElement('a');
-    a.download = 'asymmetric-matrix-infographic.png';
-    a.href = canvas.toDataURL('image/png'); a.click();
-    btn.textContent = '⬇ Download PNG'; btn.disabled = false;
-  }).catch(() => { btn.textContent = '⬇ Download PNG'; btn.disabled = false; });
-}
-</script>
-<div id="fit-check" hidden></div>
-<script>
 (function () {
-  function check() {
-    var el = document.getElementById('infographic');
-    var h = el.scrollHeight, b = document.getElementById('fit-check');
-    if (h > 768) { b.textContent = 'OVERFLOW: ' + (h - 768) + 'px'; b.hidden = false; document.title = 'OVERFLOW'; }
-    else { b.hidden = true; document.title = 'FIT'; }
+  var el = document.getElementById("infographic");
+  // overflow:hidden recorta sin avisar: comparar la altura real con los 768 fijos.
+  function checkOverflow() {
+    var warn = document.getElementById("warn");
+    var over = el.scrollHeight - 768;
+    if (over > 1) {
+      warn.style.display = "inline-block";
+      warn.textContent = "Content overflows by " + over + "px and is being cropped silently. Trim before exporting.";
+      document.title = "OVERFLOW";
+    } else {
+      warn.style.display = "none";
+      document.title = "FIT";
+    }
   }
-  window.addEventListener('load', function () {
-    var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-    ready.then(function () { setTimeout(check, 100); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(checkOverflow);
+  window.addEventListener("load", checkOverflow);
+
+  document.getElementById("dl").addEventListener("click", function () {
+    checkOverflow();
+    html2canvas(el, { width: 1366, height: 768, scale: 1, backgroundColor: "#FAF9F5" })
+      .then(function (canvas) {
+        var a = document.createElement("a");
+        a.download = "bubble-scatter-chart-infographic-1366x768.png";
+        a.href = canvas.toDataURL("image/png");
+        a.click();
+      });
   });
 })();
 </script>

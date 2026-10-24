@@ -1,92 +1,566 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Support — Asymmetric Matrix by TCViz</title>
-<style>
-  body { font-family: 'Segoe UI', sans-serif; max-width: 760px; margin: 40px auto; padding: 0 24px; color: #3D3929; line-height: 1.7; }
-  h1 { color: #C96442; } h2 { color: #535146; margin-top: 2em; }
-  code, kbd { background: #EDE9DE; padding: 1px 5px; border-radius: 3px; }
-  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
-  th, td { border: 1px solid #DAD9D4; padding: 8px 12px; vertical-align: top; }
-  th { background: #EDE9DE; }
-  a { color: #C96442; }
-  .pro { color: #9C87F5; font-size: 0.8em; font-weight: 600; }
-  .meta { color: #83827D; font-size: 0.9em; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bubble &amp; Scatter Chart — Support | TCViz</title>
+  <meta name="description" content="Bubble &amp; Scatter Chart for Power BI (formerly Asymmetric Matrix): scatter and bubble chart with quadrants and zones. Fields, Free and Pro, Pro preview, every format card, interaction, use cases and FAQ." />
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #333; line-height: 1.7; }
+    h1   { color: #0078D4; margin-bottom: 4px; }
+    h2   { margin-top: 2.2em; color: #1a1a2e; border-bottom: 2px solid #e0e0e0; padding-bottom: 6px; }
+    h3   { margin-top: 1.4em; color: #333; }
+    .card { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 16px 20px; margin: 16px 0; }
+    .note { background: #EEF5FC; border-left: 4px solid #2B6CB0; border-radius: 4px; padding: 10px 16px; margin: 16px 0; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+    .badge { display: inline-block; background: #0078D4; color: #fff; font-size: .72rem; padding: 1px 7px; border-radius: 10px; margin-left: 4px; vertical-align: middle; }
+    .badge.pro { background: #3E9C5B; }
+    nav { margin-bottom: 32px; font-size: .95rem; }
+    nav a { color: #0078D4; text-decoration: none; margin-right: 18px; white-space: nowrap; }
+    nav a:hover { text-decoration: underline; }
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.12); margin: 20px 0 32px; background: #f4f4f4; }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    details { border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; background: #fff; }
+    details summary { font-weight: 600; cursor: pointer; color: #1a1a2e; }
+    details p, details ul, details ol { margin-top: 10px; }
+    .tbl-wrap { overflow-x: auto; margin: 12px 0 20px; }
+    table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+    th, td { border-bottom: 1px solid #e0e0e0; padding: 6px 10px; text-align: left; vertical-align: top; }
+    th { background: #f4f4f4; color: #1a1a2e; }
+    .muted { color: #777; font-size: .9rem; }
+    kbd { background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 3px; padding: 1px 5px; font-size: .85em; font-family: inherit; }
+    #faq-search { width: 100%; box-sizing: border-box; padding: 9px 12px; border: 1px solid #c8c6c4; border-radius: 6px; font: inherit; margin: 6px 0 16px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: .9rem; color: #888; }
+  </style>
 </head>
 <body>
-<h1>Asymmetric Matrix — Support</h1>
-<p class="meta">Version 1.0.1.0 &nbsp;·&nbsp; Last updated: September 15, 2026 &nbsp;·&nbsp; by <strong>TCViz</strong></p>
-<p><a href="https://github.com/tinocallarisa-web/asymmetric-matrix/issues">Report an issue</a> &nbsp;·&nbsp; <a href="https://github.com/tinocallarisa-web/asymmetric-matrix/blob/main/CHANGELOG.md">Changelog</a> &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=6JP75Mn-g2Y">Video</a></p>
 
-<h2>Quick Start</h2>
-<ol>
-  <li>Add the visual to your Power BI report from AppSource. With no fields yet it shows a getting-started page.</li>
-  <li>Drag a numeric field to <strong>X Value</strong> and another to <strong>Y Value</strong>.</li>
-  <li>Optionally add a text/category field to <strong>Category</strong> for color grouping.</li>
-  <li>In the Format Pane → <strong>Reference Lines</strong>, set the Y Reference Value to split the plot horizontally.</li>
-  <li>Under <strong>Upper Zones</strong>, set the number of vertical dividers (0–4) and their X values.</li>
-  <li><span class="pro">PRO</span> Under <strong>Lower Zones</strong>, add independent vertical dividers below the Y-ref for a truly asymmetric layout.</li>
-</ol>
+  <h1>Bubble &amp; Scatter Chart — Support</h1>
+  <p><strong>Publisher:</strong> TCViz &nbsp;|&nbsp;
+     <strong>Email:</strong> <a href="mailto:support@tcviz.com">support@tcviz.com</a> &nbsp;|&nbsp;
+     <strong>Version:</strong> 1.1.0.0 &nbsp;|&nbsp;
+     <strong>Price:</strong> free, with an optional Pro plan &nbsp;|&nbsp;
+     <span class="muted">docs updated 24 Oct 2026</span></p>
 
-<h2>Field Wells</h2>
-<table>
-  <tr><th>Field</th><th>Type</th><th>Description</th></tr>
-  <tr><td>Category</td><td>Dimension</td><td>Groups points by color (optional)</td></tr>
-  <tr><td>X Value</td><td>Measure</td><td>Horizontal axis value (required)</td></tr>
-  <tr><td>Y Value</td><td>Measure</td><td>Vertical axis value (required)</td></tr>
-  <tr><td>Size</td><td>Measure</td><td>Bubble size — optional; without it all bubbles use the default radius</td></tr>
-  <tr><td>Tooltips</td><td>Measure (up to 10)</td><td>Extra fields shown in tooltip on hover</td></tr>
-</table>
-<p>Up to 30,000 rows are loaded.</p>
+  <div class="note">
+    <strong>Formerly Asymmetric Matrix.</strong> Version 1.1 renames the visual to <em>Bubble &amp; Scatter Chart</em>.
+    It is the same visual (same ID), so reports made with Asymmetric Matrix keep working and keep their settings.
+    See <a href="#from-1-0">Coming from Asymmetric Matrix 1.0</a>.
+  </div>
 
-<h2>Format Pane Reference</h2>
-<table>
-  <tr><th>Section</th><th>Key options</th><th>Tier</th></tr>
-  <tr><td>Reference Lines</td><td>Y ref value, color, style (solid / dashed / dotted)</td><td>Free</td></tr>
-  <tr><td>Upper Zones</td><td>Number of vertical lines (0–4), their X values and colors; zone labels, colors, opacity; label font size &amp; background</td><td>Free</td></tr>
-  <tr><td>Lower Zones</td><td>Zone label, color &amp; opacity (Free); <em>Number of vertical lines (below) (Pro)</em> — up to 4 independent dividers</td><td>Free / <span class="pro">PRO</span></td></tr>
-  <tr><td>Axes</td><td>Tick size, tick color, gridlines, tick decimals (Free); X &amp; Y axis titles, title font size, fixed axis range (Pro)</td><td>Free / <span class="pro">PRO</span></td></tr>
-  <tr><td>Data Points</td><td>Default radius, opacity; data labels on each point (Pro)</td><td>Free / <span class="pro">PRO</span></td></tr>
-  <tr><td>Zone Cards (Pro)</td><td>Show count badge per zone</td><td><span class="pro">PRO</span></td></tr>
-</table>
-<p>All options are always visible in the Format Pane; paid ones are marked <strong>(Pro)</strong>. While you edit a report without a licence, Pro options you turn on are shown working under a <strong>Pro preview</strong> watermark and Power BI shows how to get a licence. In reading view, in published reports, and where Power BI cannot check licences (Publish to Web, embedding, PDF/PowerPoint export), the free result is shown, without a watermark.</p>
+  <nav>
+    <a href="#quick-start">Quick start</a>
+    <a href="#fields">Fields</a>
+    <a href="#zones">Lines and zones</a>
+    <a href="#free-pro">Free and Pro</a>
+    <a href="#templates">Templates</a>
+    <a href="#format">Format pane</a>
+    <a href="#interaction">Interaction</a>
+    <a href="#use-cases">Use cases</a>
+    <a href="#faq">FAQ</a>
+    <a href="changelog.html">Changelog</a>
+    <a href="#contact">Contact</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </nav>
 
-<h2>Interaction</h2>
-<p>Click any zone background, or a point, to cross-filter other visuals — all points in that zone are selected and the rest of the report responds. Click the same zone again to deselect (toggle). Clicking outside any zone clears the selection. Right-click opens the Power BI context menu.</p>
+  <p>Bubble &amp; Scatter Chart plots two measures against each other — one bubble per customer, product or project — and
+     divides the plot into zones you define: a horizontal <strong>Y line</strong> and up to four vertical
+     <strong>dividers</strong>. The Y line and divider 1 can sit at a fixed value, the average or the median; the other
+     dividers take fixed values. Bubbles can be sized by a third measure
+     and coloured by group. Click a bubble, a zone or a group to filter the rest of the report.</p>
+  <p>The native Power BI scatter chart draws the points. This visual adds the segmentation you read them with: named,
+     coloured zones; quadrants that follow the average as filters change; and, in Pro, a different set of dividers
+     below the line than above it, plus a table that counts each group in each zone.</p>
 
-<h2>Keyboard and accessibility</h2>
-<table>
-  <tr><th>Key</th><th>Action</th></tr>
-  <tr><td><kbd>Tab</kbd>, arrow keys</td><td>Move between zones</td></tr>
-  <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Select or deselect the focused zone</td></tr>
-  <tr><td><kbd>Escape</kbd></td><td>Clear the selection</td></tr>
-  <tr><td><kbd>Shift</kbd>+<kbd>F10</kbd> or the Menu key</td><td>Open the context menu for the focused zone</td></tr>
-</table>
-<p>Each zone announces its label and number of points to screen readers. In Windows high contrast mode the visual uses the theme colors and marks the selected zone with a thicker border.</p>
+  <!-- VIDEO -->
+  <h2>Overview video</h2>
+  <div class="video-wrap">
+    <iframe src="https://www.youtube.com/embed/5esHnUDLUok" title="Bubble &amp; Scatter Chart for Power BI" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <p class="muted">Also on YouTube: <a href="https://www.youtube.com/watch?v=5esHnUDLUok">https://www.youtube.com/watch?v=5esHnUDLUok</a></p>
 
-<h2>FAQ</h2>
-<p><strong>Why is the upper zone layout different from the lower?</strong><br>
-That is the core concept of the Asymmetric Matrix: the number of vertical divisions above and below the Y-reference line can be completely independent. Configure Upper Zones and Lower Zones separately in the Format Pane. Dividers below the Y-reference require a Pro license.</p>
+  <h2 id="whats-new">What's new in 1.1.0.0</h2>
+  <ul>
+    <li><strong>New name and a full rewrite</strong>: Bubble &amp; Scatter Chart, formerly Asymmetric Matrix.</li>
+    <li><strong>Click a bubble to filter by that point</strong> (<kbd>Ctrl</kbd> adds); clicking a zone background still selects all of its points.</li>
+    <li><strong>Legend</strong> field: colour the bubbles by group, with an optional share of each group.</li>
+    <li><strong>Quadrants by default</strong> (lower half with the same dividers as above), or one zone below the line.</li>
+    <li><strong>Average and median</strong> for the Y line and the first divider, so the quadrants move with the filters.</li>
+    <li><strong>Data labels and axis titles are now free</strong> (they were Pro in 1.0). Labels avoid overlapping automatically.</li>
+    <li><strong>Log scale</strong> on X and Y, <strong>model number format</strong>, bubble border, colour by zone or category, fx conditional formatting.</li>
+    <li><strong>Pro:</strong> zone table (legend group × zone) and trend line with R² are new.</li>
+    <li><strong>Style templates</strong>, <strong>setup tips</strong> while editing, a <strong>start screen</strong>,
+        <strong>on-object formatting</strong> and <strong>12 languages</strong>.</li>
+  </ul>
+  <p>Full details in the <a href="changelog.html">changelog</a>.</p>
 
-<p><strong>Can I use a negative Y reference value?</strong><br>
-Yes. The Y ref accepts any numeric value, including negative numbers and decimals.</p>
+  <!-- QUICK START -->
+  <h2 id="quick-start">Quick start</h2>
+  <ol>
+    <li>Add <strong>Bubble &amp; Scatter Chart</strong> from AppSource (Visualizations pane → <em>Get more visuals</em>).</li>
+    <li>Drag the item you want one bubble for — customer, product, project — into <strong>Category</strong>.</li>
+    <li>Drag two measures into <strong>X axis</strong> and <strong>Y axis</strong>. The chart appears.</li>
+    <li>Optional: a measure in <strong>Size</strong> (bubble area), a column in <strong>Legend</strong> (colour by group),
+        measures in <strong>Tooltips</strong>.</li>
+    <li>In the tips bar at the bottom, click <strong>Quadrants at the average</strong>, or pick a style template.</li>
+  </ol>
+  <p>With no fields, the visual shows a start screen with these steps, the Pro features and links to this guide, the product page and the video;
+     the links open only when you click them. While you edit, a tips bar at the bottom offers the templates,
+     “Quadrants at the average” and the “Try Pro” buttons. Hide it with ✕; it comes back from
+     <em>Format → Style template → Show setup tips</em>. It never shows in reading view or in very small tiles.</p>
 
-<p><strong>The axis range jumps when I filter the report. How do I keep it stable?</strong><br>
-Enable <em>Fixed axis range (Pro)</em> in Format Pane → Axes. The axis domain expands to cover all data seen since the last full data reload, but never shrinks.</p>
+  <!-- FIELDS -->
+  <h2 id="fields">Field wells</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Well</th><th>Accepts</th><th>What it does</th></tr>
+    <tr><td><strong>Category</strong></td><td>Column</td><td>One bubble per value: customers, products, projects. Without it (and without Legend) the whole table is a single bubble.</td></tr>
+    <tr><td><strong>Legend</strong> (optional)</td><td>Column</td><td>Colours the bubbles by group (channel, region, segment) and shows a legend. Also the rows of the zone table.</td></tr>
+    <tr><td><strong>X axis</strong></td><td>Measure (required)</td><td>Horizontal position.</td></tr>
+    <tr><td><strong>Y axis</strong></td><td>Measure (required)</td><td>Vertical position.</td></tr>
+    <tr><td><strong>Size</strong> (optional)</td><td>Measure</td><td>Bubble size. The bubble's <em>area</em> is proportional to the value, relative to the largest one. Blank, zero or negative values are drawn at the smallest size.</td></tr>
+    <tr><td><strong>Tooltips</strong> (optional)</td><td>Up to 10 measures</td><td>Extra values in the tooltip. Report page tooltips are supported.</td></tr>
+  </table></div>
+  <p>Up to 30,000 rows are loaded. Power BI aggregates X, Y and Size for each bubble with the aggregation set on each
+     field (Sum by default for a numeric column). <strong>Ratios and percentages must be measures</strong>, for example
+     <code>Margin % = DIVIDE(SUM(Sales[Margin]), SUM(Sales[Sales]))</code>: a percentage column summed per customer gives
+     a meaningless number. See the <a href="#faq">FAQ</a>.</p>
+  <p>Bubbles whose X or Y is blank are not drawn.</p>
 
-<p><strong>My zone cards or data labels are not showing.</strong><br>
-Zone Cards and data labels are Pro features. In reading view they are shown only with an active licence.</p>
+  <!-- ZONES -->
+  <h2 id="zones">Lines and zones</h2>
+  <p>The <strong>Y line</strong> splits the plot into an upper and a lower half. The <strong>upper dividers</strong> (0 to 4
+     vertical lines) split the upper half into up to five zones. The <strong>lower half</strong> has three layouts:</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Lower half</th><th>What it draws</th><th>Tier</th></tr>
+    <tr><td>Same dividers as above</td><td>The upper dividers continue below the line: with one divider, four quadrants. The default.</td><td>Free</td></tr>
+    <tr><td>One zone</td><td>The whole lower half is one zone, as in Asymmetric Matrix 1.0.</td><td>Free</td></tr>
+    <tr><td>Own dividers</td><td>A different number of dividers, at different positions, below the line — the asymmetric zones. Up to five zones per half.</td><td>Pro</td></tr>
+  </table></div>
+  <p>The Y line can sit at a <strong>fixed value</strong>, the <strong>average</strong> or the <strong>median</strong> of the
+     bubbles' Y values. Divider 1 of the upper half can do the same with X; dividers 2 to 4, and the lower dividers, take fixed
+     values. Average and median are recalculated from the bubbles currently in the visual, so they move when the report is
+     filtered.</p>
+  <p>Zones are named <em>Zone A, Zone B…</em> from left to right across the upper half, and continue in the lower half (in
+     quadrants: A and B above, C and D below). Give each one your own label and colour in the Upper zones and Lower zones cards.
+     A divider outside the data range widens the axis so its zone stays visible.</p>
 
-<p><strong>How do I add an X or Y axis title?</strong><br>
-Fill <em>X axis title (Pro)</em> and <em>Y axis title (Pro)</em> in Format Pane → Axes.</p>
+  <!-- FREE AND PRO -->
+  <h2 id="free-pro">Free and Pro</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Feature</th><th>Free</th><th>Pro</th></tr>
+    <tr><td>Scatter and bubble chart, size by field (area), up to 30,000 rows</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Colour by legend, one colour, each category or zone; fx conditional formatting; border; opacity</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Data labels with collision avoidance; axis titles</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Y line at a fixed value, the average or the median</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Up to 4 upper dividers (divider 1 at fixed, average or median); quadrants or one zone below</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Zone labels, colours, opacity; label size, colour and background</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Log scale X / Y, model number format, tick decimals</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Legend with optional share of each group</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Style templates, setup tips, start screen, on-object formatting, 12 languages</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Cross-filtering, bookmarks, highlight, context menu, keyboard, high contrast, report page tooltips</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td><strong>Own lower dividers</strong> — different dividers below the Y line (asymmetric zones)</td><td>—</td><td>Yes</td></tr>
+    <tr><td><strong>Zone table</strong> — legend group × zone, four value modes, click to filter</td><td>—</td><td>Yes</td></tr>
+    <tr><td><strong>Trend line</strong> — least squares, with R²</td><td>—</td><td>Yes</td></tr>
+    <tr><td><strong>Zone counts</strong> — number of bubbles (and %) on each zone</td><td>—</td><td>Yes</td></tr>
+    <tr><td><strong>Fixed axis range</strong> — the scale keeps the widest range seen, so filters compare on the same axes</td><td>—</td><td>Yes</td></tr>
+  </table></div>
+  <p>The free chart is never blocked or cut down: Pro adds features, it does not unlock the chart. Pro is the plan
+     <code>pro</code> of this offer on Microsoft AppSource. The licence is read through the official Power BI licensing API;
+     TCViz runs no licence server and receives no data from your report.</p>
 
-<p><strong>I bought the Pro plan. When does it activate?</strong><br>
-The visual detects the licence automatically when the report is opened or refreshed. Microsoft notes it can take up to an hour for a new licence to be recognised: refresh the browser (F5) or close and reopen Power BI Desktop. A licence is required per user.</p>
+  <h3 id="pro-preview">Pro preview</h3>
+  <p>Without a licence you can try every Pro feature on your own data:</p>
+  <ul>
+    <li><strong>While you edit</strong>, a Pro setting you turn on (in the Format pane or with a “Try Pro” button in the tips bar)
+        is drawn working, under a “Pro preview” watermark that names it, and Power BI shows its own licence notice with the
+        way to get a licence.</li>
+    <li><strong>In reading view</strong>, readers without a licence see the free result: no watermark, and none of the Pro
+        features (own lower dividers fall back to the quadrants).</li>
+    <li><strong>Where licences cannot be read</strong> (Publish to Web, embedding, export to PDF or PowerPoint), the free result
+        is drawn, with no watermark and no notice.</li>
+  </ul>
+  <p>The setting you turned on is kept. Once the licence is active, the feature works everywhere and the watermark goes.</p>
 
-<h2>Contact &amp; Issues</h2>
-<p><a href="https://github.com/tinocallarisa-web/asymmetric-matrix/issues">GitHub Issues</a> &nbsp;·&nbsp; <a href="mailto:support@tcviz.com">support@tcviz.com</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a></p>
+  <!-- TEMPLATES -->
+  <h2 id="templates">Style templates</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Template</th><th>Look</th></tr>
+    <tr><td>Classic</td><td>The default settings. Light zone colours, blue bubbles.</td></tr>
+    <tr><td>Four quadrants</td><td>Red, green, grey and yellow quadrants, dark blue bubbles. Also places the Y line and divider 1 at the average with one divider — only where you have not set the lines yourself.</td></tr>
+    <tr><td>Minimal</td><td>No zone fills and no gridlines; grey bubbles. The lines carry the segmentation.</td></tr>
+    <tr><td>Soft</td><td>Pastel zones, soft blue bubbles, light gridlines.</td></tr>
+    <tr><td>Dark background</td><td>Dark plot, darker zone colours, bright bubbles and light text, for dark report pages.</td></tr>
+  </table></div>
+  <p>A template fills in only what you have not changed yourself. When you <em>pick</em> a template, the colours and styles it
+     defines are reset so it looks as designed (this also clears a fixed bubble colour or an fx rule on bubble colour); your
+     lines — Y line, dividers, lower half layout — are never reset by a template.</p>
+
+  <!-- ON-OBJECT -->
+  <h2 id="on-object">On-object formatting</h2>
+  <p>With <em>Format</em> on, click the bubbles, data labels, axis values, axis titles, plot area, Y line, a zone, the zone
+     labels, the legend, the trend line, the zone counts or the zone table to see their main options next to them, with a link
+     to the card in the Format pane. In format mode a click chooses what to format and does not filter.</p>
+
+  <!-- FORMAT -->
+  <h2 id="format">Format pane reference</h2>
+  <h3>Style template</h3>
+  <p>Template (Classic, Four quadrants, Minimal, Soft, Dark background) · Show setup tips.</p>
+  <h3>Bubbles</h3>
+  <p><em>Colour:</em> Colour by (Auto — legend if any; One colour; Each category; Zone) · Colour (with fx) · Opacity %.<br />
+     <em>Size and border:</em> Size (no Size field) — the radius when there is no Size field, and the scale of the bubbles when
+     there is · Border colour · Border width.<br />
+     <em>Data labels:</em> Data labels (the Category value above each bubble) · Label size · Label colour.</p>
+  <p>An fx rule on Colour takes precedence over Colour by. Bubbles are drawn largest first, so small bubbles stay on top.</p>
+  <h3>Legend</h3>
+  <p>Show legend · Position (Top, Bottom) · Font size · Text colour · Show share of each group · Share of (Points, Size field).
+     The legend appears when there is a Legend field and Colour by is <em>Auto</em>.</p>
+  <h3>Y line</h3>
+  <p>Show Y line · Y line at (Fixed value, Average, Median) · Y line value (fixed only) · Y line colour · Y line style (Solid,
+     Dashed, Dotted).</p>
+  <h3>Upper zones</h3>
+  <p><em>Dividers:</em> Show divider lines · Number of dividers (0–4) · Divider 1 at (Fixed value, Average, Median) · Divider 1–4
+     value and colour.<br />
+     <em>Zones:</em> Zone 1–5 label, colour and opacity %.<br />
+     <em>Zone labels:</em> Label font size · Label colour (automatic on the background if you leave it) · Label background ·
+     Label background opacity %.</p>
+  <h3>Lower zones</h3>
+  <p><em>Dividers:</em> Lower half (Same dividers as above, One zone, Own dividers <span class="badge pro">Pro</span>). With Own
+     dividers: Show divider lines · Number of dividers (0–4) · Divider 1–4 value and colour.<br />
+     <em>Zones</em> and <em>Zone labels:</em> as in Upper zones. Only the zones that exist are listed.</p>
+  <h3>Axes</h3>
+  <p><em>Values:</em> Font · Tick label size · Tick label colour · Decimals (−1 = model format).<br />
+     <em>Plot area:</em> Log scale X · Log scale Y · Gridlines · Gridline colour · Plot background · Fixed axis range
+     <span class="badge pro">Pro</span>.<br />
+     <em>Titles:</em> Axis titles · X title · Y title (empty = the field name) · Title size · Title colour.</p>
+  <h3>Trend line <span class="badge pro">Pro</span></h3>
+  <p>Show trend line · Colour · Width · Style (Solid, Dashed, Dotted) · Show R².</p>
+  <h3>Zone table <span class="badge pro">Pro</span></h3>
+  <p>Show zone table · Values (% of row, % of column, Points, Size field) · Position (Right, Bottom) · Width / height % ·
+     Font size.</p>
+  <h3>Zone counts <span class="badge pro">Pro</span></h3>
+  <p>Show zone counts · Show % of points · Font size.</p>
+
+  <h3 id="zone-table">The zone table in detail <span class="badge pro">Pro</span></h3>
+  <p>A cross table of legend groups by zone. Rows are the Legend values plus a <em>Total</em> row (without a Legend field, one
+     row called <em>All</em>); columns are the zones plus <em>Total</em>.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Values</th><th>Each cell shows</th><th>Reads as</th></tr>
+    <tr><td>% of row (default)</td><td>The group's bubbles in that zone, as % of the group</td><td>“Where do my Online customers sit?”</td></tr>
+    <tr><td>% of column</td><td>The group's bubbles in that zone, as % of the zone</td><td>“What is this zone made of?”</td></tr>
+    <tr><td>Points</td><td>The number of bubbles</td><td>Counts</td></tr>
+    <tr><td>Size field</td><td>The sum of the Size measure, in its format</td><td>“How much revenue sits in each zone?”</td></tr>
+  </table></div>
+  <p>The table sits to the right of or below the chart and takes the space it needs, up to the Width / height % you set. Click a
+     cell to select those bubbles, a zone header to select the zone, a row header to select the group. It is hidden when the
+     visual is very small.</p>
+  <p>Zones exist only inside this visual: they can follow the average or the median and move with every filter. That is why
+     this table cannot be built with a matrix elsewhere in the report.</p>
+
+  <!-- INTERACTION -->
+  <h2 id="interaction">Interaction</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Action</th><th>Result</th></tr>
+    <tr><td>Click a bubble</td><td>Filters the report by that point. <kbd>Ctrl</kbd>+click adds or removes bubbles. Click the only selected bubble again to clear.</td></tr>
+    <tr><td>Click a zone background</td><td>Selects every bubble in the zone. Click it again to clear.</td></tr>
+    <tr><td>Click a legend item</td><td>Selects that group. <kbd>Ctrl</kbd> adds groups.</td></tr>
+    <tr><td>Click a zone table cell, zone header or row</td><td>Selects those bubbles, that zone or that group (Pro).</td></tr>
+    <tr><td>Click an empty area</td><td>Clears the selection.</td></tr>
+    <tr><td>Right-click</td><td>Power BI context menu.</td></tr>
+    <tr><td>Hover</td><td>Tooltip with Category, Legend, X, Y, Size and your Tooltips measures, in the model format.</td></tr>
+  </table></div>
+  <p>Bookmarks save and restore the selection. When another visual highlights data, the bubbles outside the highlight are
+     dimmed. With <em>Show share of each group</em>, the legend shows the share inside the current selection or selected zone.</p>
+
+  <h3 id="keyboard">Keyboard</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Key</th><th>Action</th></tr>
+    <tr><td><kbd>Tab</kbd>, arrow keys</td><td>Move between zones</td></tr>
+    <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Select or clear the focused zone</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Clear the selection</td></tr>
+    <tr><td><kbd>Shift</kbd>+<kbd>F10</kbd> or the Menu key</td><td>Context menu for the focused zone</td></tr>
+  </table></div>
+
+  <h3 id="languages">Languages, number formats and accessibility</h3>
+  <ul>
+    <li>Format pane and texts in English, Spanish, Portuguese (Brazil and Portugal), French, German, Italian, Dutch, Polish,
+        Japanese, Chinese (Simplified) and Korean, following the language of Power BI.</li>
+    <li>Axis values, tooltips and the zone table use each measure's format string in the report's language. Set
+        <em>Axes → Decimals</em> to 0–5 to override the decimals on the axes.</li>
+    <li>Each zone announces its label and number of points to screen readers.</li>
+    <li>In high contrast mode the chart takes the theme colours and marks the selection with the selection colour.</li>
+    <li>When a filter leaves no data, the visual says “No data for the current filters” instead of keeping old bubbles.</li>
+  </ul>
+
+  <!-- USE CASES -->
+  <h2 id="use-cases">Use cases</h2>
+  <h3>1. Customer portfolio: value and margin by channel</h3>
+  <p>Category = Customer, X = Sales, Y = Margin % (a DIVIDE measure), Size = Orders, Legend = Channel. Click
+     <em>Quadrants at the average</em>: high-value, high-margin customers sit top right; large accounts with thin margins bottom
+     right. With Pro, the zone table set to <em>% of row</em> shows what share of each channel sits in each quadrant, and the
+     legend share tells you the channel mix of the zone you click.</p>
+  <h3>2. Project prioritisation</h3>
+  <p>Category = Project, X = Effort, Y = Expected value, Size = Budget. Y line at the value threshold the committee uses.
+     Above it, two dividers split effort into Quick wins, Plan and Major bets; below it, with Pro own dividers, a single divider
+     separates Fill-ins from Avoid. Click a zone to list its projects in a table beside the chart.</p>
+  <h3>3. Risk register</h3>
+  <p>Category = Risk, X = Likelihood, Y = Impact, Legend = Owner or Area. High-impact risks need finer bands of likelihood
+     than low-impact ones: three zones above the impact line, two below (Pro). Zone counts show how many risks fall in each
+     band, and fixed axes keep the scale steady while you filter by area.</p>
+
+  <!-- FAQ -->
+  <h2 id="faq">Frequently asked questions</h2>
+  <input id="faq-search" type="search" placeholder="Search the FAQ…" aria-label="Search the FAQ" />
+  <div id="faq-list">
+
+  <details>
+    <summary>Is it free? What does Pro add?</summary>
+    <p>The chart is complete without a licence: bubbles, size, colours, data labels, axis titles, Y line, up to four dividers,
+       quadrants, log scale, legend, templates and all interaction. Pro adds own lower dividers (asymmetric zones), the zone
+       table, the trend line, zone counts and fixed axis range. See <a href="#free-pro">Free and Pro</a>.</p>
+  </details>
+  <details>
+    <summary>How do I buy Pro?</summary>
+    <p>From the offer on Microsoft AppSource, plan <code>pro</code>, or from the notice Power BI shows when you use a Pro
+       feature while editing. Prices are shown on the AppSource listing.</p>
+  </details>
+  <details>
+    <summary>I bought Pro and still see the watermark</summary>
+    <p>The licence is assigned in the Microsoft 365 admin center to the user who opens the report. Once assigned, close and
+       reopen Power BI Desktop or reload the report in the service so Power BI reads the licence again. A new licence can take
+       a while to be recognised. If it persists, write to <a href="mailto:support@tcviz.com">support@tcviz.com</a>.</p>
+  </details>
+  <details>
+    <summary>Do readers of my report need a Pro licence?</summary>
+    <p>The licence is checked for the person viewing the report. Viewers without one see the free result with no watermark:
+       the report still works for them, without the Pro features.</p>
+  </details>
+  <details>
+    <summary>What is “Pro preview”, and why do I see it on my chart?</summary>
+    <p>You turned on a Pro setting without a licence. While you edit it is drawn working under a watermark so you can judge it
+       on your own data; readers see the free result. Turn the setting off, or get the Pro plan to remove the watermark. See
+       <a href="#pro-preview">Pro preview</a>.</p>
+  </details>
+  <details>
+    <summary>Why do I see only one bubble?</summary>
+    <p>There is nothing in <strong>Category</strong> (or Legend), so Power BI aggregates the whole table into one point. Put the
+       field you want one bubble for — customer, product, project — in Category.</p>
+  </details>
+  <details>
+    <summary>My percentages are huge or wrong. Why?</summary>
+    <p>Power BI aggregates X, Y and Size for each bubble. If you drag a percentage <em>column</em>, it is summed per bubble: a
+       customer with ten rows at 30% shows 300%. Averaging is not right either, because it ignores the size of each row. Create
+       a measure that divides the totals, e.g. <code>Margin % = DIVIDE(SUM(Sales[Margin]), SUM(Sales[Sales]))</code>, and use
+       it instead. The same applies to prices, rates and any ratio.</p>
+  </details>
+  <details>
+    <summary>I have more bubbles than customers</summary>
+    <p>With both Category and Legend, there is one bubble per combination. If a customer appears under two channels, it gets
+       two bubbles. Use a Legend field that has one value per Category value (e.g. the customer's main channel).</p>
+  </details>
+  <details>
+    <summary>How is the bubble size calculated?</summary>
+    <p>The area of each bubble is proportional to its Size value, relative to the largest value in view: a bubble with half
+       the value has half the area, not half the width. Blank, zero and negative values get the smallest size.
+       <em>Bubbles → Size</em> scales them all, and in small tiles they shrink so the largest stays readable.</p>
+  </details>
+  <details>
+    <summary>How do I get a classic four-quadrant chart?</summary>
+    <p>Click <em>Quadrants at the average</em> in the tips bar, or pick the <em>Four quadrants</em> template. By hand: Y line
+       at <em>Average</em>, Upper zones → Number of dividers = 1, Divider 1 at <em>Average</em>, Lower half = <em>Same dividers
+       as above</em>.</p>
+  </details>
+  <details>
+    <summary>What is the difference between quadrants and own dividers?</summary>
+    <p>With <em>Same dividers as above</em> (free), the upper dividers continue below the Y line, so both halves are split at
+       the same X values. With <em>Own dividers</em> (Pro), the lower half has its own number and position of dividers: for
+       example three bands of sales above the margin line and two below. Use it when the segmentation that matters is different
+       for each half.</p>
+  </details>
+  <details>
+    <summary>How many zones can I have?</summary>
+    <p>Up to five per half: four dividers above the line, and four below (as quadrants, or with Pro own dividers).</p>
+  </details>
+  <details>
+    <summary>Is the average weighted?</summary>
+    <p>No. Average and median are taken over the bubbles, one value per bubble, without weighting by Size. A small customer counts
+       as much as a large one. If you need a weighted reference (for example the company's overall margin), type it as a
+       <em>Fixed value</em>.</p>
+  </details>
+  <details>
+    <summary>Do the average and median lines move when I filter?</summary>
+    <p>Yes. They are recalculated from the bubbles in the visual after report, page and visual filters. Selecting bubbles or a
+       cross-highlight from another visual does not move them.</p>
+  </details>
+  <details>
+    <summary>Can dividers 2 to 4 follow the average?</summary>
+    <p>No. Divider 1 of the upper half can be at a fixed value, the average or the median; the other dividers, and the lower
+       dividers, take fixed values.</p>
+  </details>
+  <details>
+    <summary>I turned on log scale and the axis is still linear</summary>
+    <p>A logarithmic axis needs every value above 0. If any bubble on that axis is zero or negative, the axis is drawn linear and,
+       while you edit, a note says “Log scale needs values above 0: shown linear”. The Y line does not block log Y: a Y line at
+       0 or below (including the default fixed value 0) sits on the bottom edge of the plot.
+       With Fixed axis range on, values seen earlier also count.</p>
+  </details>
+  <details>
+    <summary>Can a divider be at 0 or below with a log X axis?</summary>
+    <p>Yes. A divider at 0 or below does not block log X: with every bubble above 0, that zone is simply empty and the divider is
+       not drawn.</p>
+  </details>
+  <details>
+    <summary>How does Fixed axis range work? <span class="badge pro">Pro</span></summary>
+    <p>The axes keep the widest range seen since the page was opened: they grow when a filter brings larger values and never
+       shrink. Bubbles then move against the same scale as you change slicers, so the positions compare. The range resets when
+       you change the fields in X axis or Y axis, or when the page is opened again.</p>
+  </details>
+  <details>
+    <summary>What do the zone table modes mean? <span class="badge pro">Pro</span></summary>
+    <p><em>% of row</em>: how each group is spread across the zones (each row adds to 100%). <em>% of column</em>: the mix of
+       groups inside each zone (each column adds to 100%). <em>Points</em>: the number of bubbles. <em>Size field</em>: the sum of
+       the Size measure. See <a href="#zone-table">The zone table in detail</a>.</p>
+  </details>
+  <details>
+    <summary>Why can't I build the zone table with a matrix visual?</summary>
+    <p>Because the zones are not in your data model. They are drawn by this visual, often at the average or median of what is
+       on screen, and they move with every filter. Only the visual knows which bubble is in which zone at each moment.</p>
+  </details>
+  <details>
+    <summary>The zone table does not appear</summary>
+    <p>Check <em>Zone table → Show zone table</em> and make the visual larger: the table is hidden in very small tiles. Without a
+       Legend field it shows a single row, <em>All</em>. Without a licence it appears only while editing, under the watermark.</p>
+  </details>
+  <details>
+    <summary>What does the trend line calculate? <span class="badge pro">Pro</span></summary>
+    <p>A least-squares straight line of Y on X over the bubbles in view, unweighted, with its R² in the top-right corner. On
+       logarithmic axes the same line is drawn as a curve. It needs at least two bubbles, and R² at least three.</p>
+  </details>
+  <details>
+    <summary>What do the zone counts show? <span class="badge pro">Pro</span></summary>
+    <p>The number of bubbles in each zone, in a badge at its top-left corner, and optionally the % of all bubbles in the visual.</p>
+  </details>
+  <details>
+    <summary>What happens when I click a bubble, a zone or the legend?</summary>
+    <p>A bubble filters the report by that point; a zone background selects all of its bubbles; a legend item selects its group.
+       <kbd>Ctrl</kbd> adds to the selection; clicking an empty area clears it. See <a href="#interaction">Interaction</a>.</p>
+  </details>
+  <details>
+    <summary>Do bookmarks keep the selection?</summary>
+    <p>Yes. A bookmark restores the selected bubbles, and other visuals stay filtered by them.</p>
+  </details>
+  <details>
+    <summary>Can I use it with the keyboard?</summary>
+    <p>Yes: <kbd>Tab</kbd> into the chart, arrow keys between zones, <kbd>Enter</kbd> or <kbd>Space</kbd> to select a zone,
+       <kbd>Escape</kbd> to clear, <kbd>Shift</kbd>+<kbd>F10</kbd> for the context menu.</p>
+  </details>
+  <details>
+    <summary>I added a Legend field but there is no legend</summary>
+    <p>The legend shows when <em>Bubbles → Colour by</em> is <em>Auto (legend if any)</em> and <em>Legend → Show legend</em> is on.
+       With One colour, Each category or Zone, the bubbles do not follow the groups, so there is no legend to show.</p>
+  </details>
+  <details>
+    <summary>Can I colour bubbles with conditional formatting (fx)?</summary>
+    <p>Yes: <em>Bubbles → Colour → fx</em>, with a rule or a field. A rule takes precedence over Colour by.</p>
+  </details>
+  <details>
+    <summary>What does a style template change, and does it keep my settings?</summary>
+    <p>A template sets colours and styles only where you have not set them yourself. When you <em>choose</em> a template, the
+       settings it defines are reset so it looks as designed — including a fixed bubble colour or an fx rule on bubble colour;
+       add the rule again afterwards if you need it. Your lines (Y line, dividers, lower half) are never reset. <em>Four
+       quadrants</em> places the Y line and divider 1 at the average only if you have not set them.</p>
+  </details>
+  <details>
+    <summary>How do I hide the tips bar?</summary>
+    <p>Click ✕ on the bar, or turn off <em>Format → Style template → Show setup tips</em>. It only shows while you edit.</p>
+  </details>
+  <details>
+    <summary>How are numbers formatted?</summary>
+    <p>With each measure's format string, in the report's language, on the axes, tooltips and zone table. <em>Axes → Decimals</em>
+       at 0–5 overrides the decimals on the axes; −1 keeps the model format. On a log axis each tick carries its own unit
+       (1K, 10K, 1M).</p>
+  </details>
+  <details>
+    <summary>How do I change or hide the axis titles?</summary>
+    <p>They show the field names by default. Type your own in <em>Axes → X title / Y title</em>, or turn off <em>Axis titles</em>.</p>
+  </details>
+  <details>
+    <summary>Some data labels are missing</summary>
+    <p>By design: a label that would overlap another label or fall outside the plot is not drawn. Hover the bubble for the tooltip,
+       lower the label size, or filter to fewer bubbles.</p>
+  </details>
+  <details id="from-1-0">
+    <summary>What changed from Asymmetric Matrix 1.0?</summary>
+    <p>The visual was renamed and rewritten. It has the same ID, and every 1.0 setting kept its name, so saved reports open with
+       their settings. Visible differences in a 1.0 report:</p>
+    <ul>
+      <li>The lower half defaults to <strong>quadrants</strong> (same dividers as above). For the 1.0 look, choose
+          <em>Lower zones → Lower half → One zone</em>.</li>
+      <li>Bubbles default to <strong>one colour</strong>. For the 1.0 look (one colour per category), choose
+          <em>Bubbles → Colour by → Each category</em>.</li>
+      <li><strong>Axis titles</strong> appear with the field names. Turn them off in <em>Axes → Axis titles</em>.</li>
+      <li>Clicking a bubble now filters by that point; clicking a zone background still selects the zone.</li>
+      <li>Data labels and axis titles are free now.</li>
+    </ul>
+  </details>
+  <details>
+    <summary>My 1.0 report had dividers below the line. What happens now?</summary>
+    <p>They are read as <em>Own dividers</em>, a Pro feature, exactly as in 1.0. With a licence they are drawn as before. Without
+       one, readers see the quadrants (the upper dividers continued below), and while editing you see your lower dividers under the
+       Pro preview watermark.</p>
+  </details>
+  <details>
+    <summary>How many rows can it plot?</summary>
+    <p>Up to 30,000 rows (bubbles). Beyond that Power BI reduces the data.</p>
+  </details>
+  <details>
+    <summary>Does it support report page tooltips?</summary>
+    <p>Yes. Set a tooltip page in <em>Format → General → Tooltips</em>. The default tooltip shows Category, Legend, X, Y, Size and
+       up to 10 Tooltips measures.</p>
+  </details>
+  <details>
+    <summary>What does “No data for the current filters” mean?</summary>
+    <p>The filters leave no bubble with both an X and a Y value. Clear a filter or check that the measures return values for the
+       current selection.</p>
+  </details>
+  <details>
+    <summary>Does it work in high contrast mode?</summary>
+    <p>Yes. Bubbles, lines, zones and texts take the colours of the Windows high-contrast theme, and the selection is marked with
+       the theme's selection colour.</p>
+  </details>
+  <details>
+    <summary>Does the visual send my data anywhere?</summary>
+    <p>No. It makes no network calls, has no telemetry, sets no cookies and stores nothing outside the report. The links on the
+       start screen open only when you click them, through Power BI. See the <a href="privacy.html">privacy policy</a>.</p>
+  </details>
+  </div>
+
+  <!-- CONTACT -->
+  <h2 id="contact">Contact &amp; issues</h2>
+  <div class="card">
+    <p>Questions, licences, bugs or ideas: write to <a href="mailto:support@tcviz.com">support@tcviz.com</a>. A person answers —
+       the developer of the visual, not a bot.</p>
+    <p>Bug reports are also welcome on <a href="https://github.com/tinocallarisa-web/asymmetric-matrix/issues">GitHub Issues</a>.
+       Please include the visual version (1.1.0.0), Power BI Desktop or service, and a screenshot.</p>
+    <p>Product page: <a href="https://tcviz.com/product/asymmetric-matrix/">tcviz.com/product/asymmetric-matrix</a> ·
+       Version history: <a href="changelog.html">Changelog</a>.</p>
+  </div>
+
+  <footer>
+    Bubble &amp; Scatter Chart 1.1.0.0 by TCViz (formerly Asymmetric Matrix) &nbsp;|&nbsp;
+    <a href="https://tcviz.com/product/asymmetric-matrix/">tcviz.com</a> &nbsp;|&nbsp;
+    <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
+    <a href="terms.html">Terms of Use</a>
+  </footer>
+
+  <script>
+    // Buscador del FAQ: filtra las preguntas por texto, sin red.
+    document.getElementById('faq-search').addEventListener('input', function (e) {
+      var q = e.target.value.toLowerCase();
+      document.querySelectorAll('#faq-list details').forEach(function (d) {
+        d.style.display = d.textContent.toLowerCase().indexOf(q) >= 0 ? '' : 'none';
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,14 +1,20 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "target": "ES6",
-    "lib": ["ES6", "DOM"],
-    "strict": false,
-    "noImplicitAny": false,
-    "sourceMap": true,
-    "types": [],
-    "moduleResolution": "node",
-    "outDir": ".tmp/drop"
-  },
-  "files": ["src/visual.ts"]
+    "compilerOptions": {
+        "allowJs": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "ES2020",
+        "sourceMap": true,
+        "outDir": "./.tmp/build/",
+        "moduleResolution": "node",
+        "lib": [
+            "es2020",
+            "dom"
+        ],
+        "module": "esnext",
+        "useUnknownInCatchVariables": false
+    },
+    "files": [
+        "./src/visual.ts"
+    ]
 }

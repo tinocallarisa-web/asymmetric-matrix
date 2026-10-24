@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — Bubble &amp; Scatter Chart | TCViz</title>
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; max-width: 820px; margin: 40px auto; padding: 0 24px; color: #333; line-height: 1.7; background: #fff; }
+    h1 { font-size: 28px; color: #0078D4; margin-bottom: 4px; }
+    h2 { font-size: 21px; margin-top: 44px; color: #1a1a2e; border-bottom: 2px solid #e0e0e0; padding-bottom: 6px; }
+    h2 .date { font-size: 13px; font-weight: 400; color: #83827D; margin-left: 8px; }
+    h3.kind { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin: 24px 0 8px; color: #535146; }
+    h3.kind-fixed { color: #A4262C; }
+    h3.kind-added { color: #3E9C5B; }
+    h3.kind-changed { color: #2B6CB0; }
+    h3.kind-pro { color: #3E9C5B; }
+    h3.kind-removed { color: #83827D; }
+    a { color: #0078D4; }
+    code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    ul { padding-left: 22px; }
+    li { margin-bottom: 10px; }
+    footer { margin-top: 60px; font-size: 12px; color: #83827D; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+    .meta { font-size: 14px; color: #535146; }
+  </style>
+</head>
+<body>
+  <h1>Changelog — Bubble &amp; Scatter Chart</h1>
+  <p class="meta">Formerly Asymmetric Matrix — same visual, same ID.</p>
+  <p class="meta">Current version <strong>1.1.0.0</strong> &nbsp;|&nbsp;
+    <a href="support.html">Support</a> &nbsp;|&nbsp;
+    <a href="mailto:support@tcviz.com">support@tcviz.com</a></p>
+
+  <p>All notable changes to Bubble &amp; Scatter Chart are documented here. Up to 1.0.1.0 the visual was called Asymmetric Matrix; it keeps the same ID, so reports made with it keep working.</p>
+  <h2 id="v1.1.0.0">1.1.0.0 <span class="date">2026-10-24</span></h2>
+  <h3 class="kind kind-changed">Changed</h3>
+  <ul>
+  <li><strong>New name: Bubble &amp; Scatter Chart</strong> (formerly Asymmetric Matrix), and a full rewrite. Same visual ID; every 1.0 format setting keeps its name, so saved reports open with their settings.</li>
+  <li><strong>Clicking a bubble filters by that point</strong> (<code>Ctrl</code> adds or removes; clicking the only selected bubble again clears). In 1.0 a click on a point selected its whole zone. Clicking a zone background still selects every bubble in the zone, and a legend item selects its group.</li>
+  <li><strong>The lower half defaults to quadrants</strong>: the upper dividers continue below the Y line. Choose Lower zones → Lower half → One zone for the 1.0 look.</li>
+  <li><strong>Bubbles default to one colour.</strong> Choose Bubbles → Colour by → Each category for the 1.0 look.</li>
+  <li><strong>Axis titles are on by default</strong>, showing the field names.</li>
+  <li><strong>Data labels and axis titles are free</strong> (Pro in 1.0). Data labels avoid overlapping automatically.</li>
+  <li><strong>Bubble area is proportional to Size</strong>, relative to the largest value, and bubbles are drawn largest first so small ones stay on top.</li>
+  <li>The visual reports exactly one rendering start and one finish (or failure) to Power BI per update; repaints after a click, a bookmark or the licence resolving raise none.</li>
+  </ul>
+  <h3 class="kind kind-added">Added</h3>
+  <ul>
+  <li><strong>Legend</strong> field: colour the bubbles by group, with an optional share of each group (by points or by Size), which switches to the share inside the selection or the selected zone.</li>
+  <li><strong>Y line and divider 1 at the average or the median</strong>, recalculated as the report is filtered.</li>
+  <li><strong>Lower half layouts</strong>: Same dividers as above (quadrants), One zone, or Own dividers (Pro).</li>
+  <li><strong>Colour by</strong> legend, one colour, each category or zone; <strong>fx conditional formatting</strong> on bubble colour; bubble border; opacity.</li>
+  <li><strong>Log scale</strong> on X and Y. With a value at or below 0 the axis is drawn linear and, while editing, a note says so.</li>
+  <li><strong>Model number format</strong>: axes, tooltips and the zone table use the measure's format string in the report's language; Axes → Decimals overrides the axis decimals.</li>
+  <li><strong>Zone table (Pro)</strong>: legend group × zone, as % of row, % of column, points or sum of Size, to the right of or below the chart. Click a cell, a zone header or a row to filter.</li>
+  <li><strong>Trend line (Pro)</strong>: least squares, with R²; drawn as a curve on log axes.</li>
+  <li><strong>Style templates</strong>: Classic, Four quadrants, Minimal, Soft and Dark background.</li>
+  <li><strong>Setup tips</strong> while editing: templates, "Quadrants at the average" and "Try Pro" buttons. Hide them with ✕ or in Format → Style template → Show setup tips.</li>
+  <li><strong>Start screen</strong> with the steps, a line naming the Pro features, and links to the guide, the product page and the video.</li>
+  <li><strong>On-object formatting</strong>, <strong>12 languages</strong> (English, Spanish, Portuguese (Brazil and Portugal), French, German, Italian, Dutch, Polish, Japanese, Chinese (Simplified), Korean), axis font, plot background, gridline colour, zone label colour.</li>
+  <li>Bookmarks restore the selection; "No data for the current filters" when a filter leaves nothing to draw.</li>
+  </ul>
+  <h3 class="kind kind-pro">Pro</h3>
+  <ul>
+  <li>Own lower dividers, zone table, trend line, zone counts and fixed axis range. Fixed axis range now keeps the widest range seen since the page opened and resets only when the X or Y fields change.</li>
+  <li><strong>Pro preview</strong>: without a licence, while editing only, Pro settings that are turned on are drawn under a "Pro preview" watermark. Reading view, Publish to Web and export show the free result, with no watermark.</li>
+  </ul>
+  <h2 id="v1.0.1.0">1.0.1.0 <span class="date">2026-09-15</span></h2>
+  <h3 class="kind kind-fixed">Fixed</h3>
+  <ul>
+  <li><strong>Pro never unlocked for a paying customer.</strong> The licence check compared <code>spIdentifier</code> with <code>asymmetric-matrix-tcviz</code>, the offer id. The Pro plan is <code>pro</code>, and the Licensing API returns the full Service ID (<code>tino_callarisa.asymmetric-matrix-tcviz.pro</code>). It now accepts either, and the Warning (payment grace period) state.</li>
+  <li><strong>No purchase path.</strong> Power BI's <code>notifyFeatureBlocked</code> (English / Spanish) and licence icon are now raised when a Pro option is used without a licence, only once the licence has resolved and never where licences cannot be checked.</li>
+  <li><strong>Pro options were hidden</strong> from the Format Pane for free users. They are always visible now, labelled "(Pro)".</li>
+  <li><strong>Keyboard focus was declared but not implemented.</strong> Zones are focusable: Tab / arrow keys, Enter or Space to select, Escape to clear, Shift+F10 for the context menu, with screen reader labels.</li>
+  </ul>
+  <h3 class="kind kind-added">Added</h3>
+  <ul>
+  <li>Pro preview: while editing a report without a licence, Pro options render under a "Pro preview" watermark. In reading view the free result is shown.</li>
+  <li>High contrast mode support.</li>
+  <li>Landing page lists the Pro plan features.</li>
+  </ul>
+  <h3 class="kind kind-changed">Changed</h3>
+  <ul>
+  <li>The chart is built with DOM APIs instead of an HTML string (<code>innerHTML</code>).</li>
+  <li><code>powerbi-visuals-tools</code> 7.2.1; ESLint with <code>eslint-plugin-powerbi-visuals</code>; <code>npm audit</code> clean.</li>
+  </ul>
+  <h2 id="v1.0.0.0">1.0.0.0 <span class="date">2026-08 — Initial release</span></h2>
+  <h3 class="kind kind-added">Added</h3>
+  <ul>
+  <li>Scatter plot with configurable asymmetric zones</li>
+  <li>1 horizontal Y-reference line (configurable value, color, style: solid / dashed / dotted)</li>
+  <li>Up to 4 independent vertical dividers above the Y-ref (upper half)</li>
+  <li>Zone labels, background colors and opacity per zone (upper and lower)</li>
+  <li>Category field for color grouping of data points</li>
+  <li>Bubble size field — maps a measure to point radius</li>
+  <li>Tooltips field well — up to 10 extra fields shown on hover</li>
+  <li>Cross-filter on zone click: selects all points in the zone and filters other visuals (toggle to deselect)</li>
+  <li>Visual feedback on zone selection: selected zone at full opacity, rest dimmed to 25%</li>
+  <li>Gridlines, tick size, tick color, tick decimal precision</li>
+  <li>Landing page shown when no data fields are added</li>
+  </ul>
+  <h3 class="kind kind-profeaturesrequireappsourcelicense">Pro features (require AppSource license)</h3>
+  <ul>
+  <li>Up to 4 independent vertical dividers below the Y-ref (lower asymmetry)</li>
+  <li>Axis titles for X and Y axes, with configurable font size</li>
+  <li>Fixed axis range — axis domain expands but never shrinks during cross-filtering</li>
+  <li>Data labels displayed above each point</li>
+  <li>Zone count cards — badge showing the number of points per zone</li>
+  </ul>
+
+  <footer>
+    Generated from CHANGELOG.md by scripts/gen-changelog.js — do not edit this file by hand.<br />
+    &copy; 2026 TCViz. &nbsp;|&nbsp;
+    <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
+    <a href="terms.html">Terms of Use</a>
+  </footer>
+</body>
+</html>

@@ -1,31 +1,36 @@
 {
-  "name": "asymmetric-matrix",
-  "description": "Asymmetric Matrix — scatter plot with configurable asymmetric zones",
-  "version": "1.0.1",
-  "author": "TCViz <support@tcviz.com>",
-  "license": "MIT",
+  "name": "bubble-scatter-chart",
+  "version": "1.1.0",
+  "description": "Bubble & Scatter Chart by TCViz — scatter and bubble chart with quadrants and asymmetric zones",
   "scripts": {
-    "pbiviz": "pbiviz",
-    "start": "pbiviz start",
     "package": "pbiviz package",
-    "build-test": "node build-test.js",
-    "eslint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
-  },
-  "devDependencies": {
-    "eslint": "^9.39.5",
-    "eslint-plugin-powerbi-visuals": "^1.1.1",
-    "typescript": "^5.0.0"
+    "start": "pbiviz start",
+    "test-build": "node build-test.js",
+    "test-build-free": "node build-test.js --free",
+    "lint": "npx eslint ."
   },
   "dependencies": {
-    "powerbi-visuals-api": "^5.11.0",
-    "powerbi-visuals-tools": "^7.2.1"
+    "powerbi-visuals-api": "~5.11.1",
+    "powerbi-visuals-utils-formattingmodel": "^7.1.0",
+    "powerbi-visuals-utils-formattingutils": "^6.1.2",
+    "powerbi-visuals-utils-onobjectutils": "^6.0.3"
+  },
+  "overrides": {
+    "qs": "^6.16.0",
+    "uuid": "^11.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "eslint": "^10.13.0",
+    "eslint-plugin-powerbi-visuals": "^1.1.1",
+    "powerbi-visuals-tools": "^7.2.1",
+    "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/tinocallarisa-web/asymmetric-matrix"
   },
-  "overrides": {
-    "qs": "^6.16.0",
-    "uuid": "^11.1.1"
-  }
+  "author": "TCViz <support@tcviz.com>",
+  "license": "UNLICENSED",
+  "private": true
 }

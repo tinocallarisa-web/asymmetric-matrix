@@ -1,145 +1,117 @@
-TIPS & HINTS — ASYMMETRIC MATRIX
-==================================
+TIPS & HINTS — BUBBLE & SCATTER CHART 1.1 (formerly Asymmetric Matrix)
+=======================================================================
 
 
 GETTING STARTED
 ---------------
-Add at minimum X Value and Y Value to see your data.
-The visual shows a landing page until both fields are mapped.
+1. Category: one bubble per value (customer, product, project).
+   Without it (and without Legend) the whole table is one bubble.
+2. X axis and Y axis: the two measures to compare.
+3. Optional: Size (bubble area), Legend (colour by group),
+   Tooltips (up to 10 measures).
+4. Click "Quadrants at the average" in the tips bar, or pick a style template.
 
-The Category field groups points by color (one color per unique value).
-Without it, all points share a single default color.
+Until X and Y are in, the visual shows a start screen with the steps.
 
 
 FIELD WELLS
 -----------
-· Category     — No — Text/dimension. One color per unique value.
-· X Value      — Yes — Numeric measure. Horizontal axis.
-· Y Value      — Yes — Numeric measure. Vertical axis.
-· Size         — No  — Numeric measure. Maps values to bubble radius.
-· Tooltips     — No  — Up to 10 measures. All appear in the hover tooltip.
+· Category  — needed for more than one bubble — one bubble per value
+· Legend    — optional — colour by group; rows of the zone table
+· X axis    — required — measure, horizontal position
+· Y axis    — required — measure, vertical position
+· Size      — optional — bubble AREA proportional to the value
+· Tooltips  — optional — up to 10 measures; report page tooltips supported
+
+Up to 30,000 rows. With Category and Legend: one bubble per combination.
 
 
-FORMAT PANE — REFERENCE LINES
-------------------------------
-Set Y Reference Value to the threshold that separates upper and lower halves
-(average, target, or zero). Change the line style to Dashed or Dotted to make
-it less dominant.
+THE ONE MISTAKE TO AVOID: PERCENTAGES AS COLUMNS
+------------------------------------------------
+Power BI aggregates X, Y and Size per bubble (Sum by default). A margin %
+column summed per customer gives 300% for ten rows at 30%. Use a measure:
+
+   Margin % = DIVIDE(SUM(Sales[Margin]), SUM(Sales[Sales]))
 
 
-FORMAT PANE — UPPER ZONES
---------------------------
-· Number of vertical lines (above): 1–4 to create 2–5 column zones.
-· Line value: X threshold where the divider appears.
-· Zone label: text centered in the zone background.
-· Zone color + Zone opacity (0–100): color-coded risk or priority layout.
-· Label background color/opacity: subtle fill behind label text for legibility.
+LINES AND ZONES
+---------------
+· Y line: fixed value, average or median of the bubbles' Y.
+· Upper dividers: 0–4. Divider 1 can be at the average or the median.
+· Lower half:
+    Same dividers as above — quadrants (default)
+    One zone               — the 1.0 look
+    Own dividers (Pro)     — different dividers below the line
+· Up to 5 zones per half, each with label, colour and opacity.
+· Average and median are unweighted (one value per bubble) and follow
+  the filters. For a weighted reference, type a fixed value.
 
 
-FORMAT PANE — LOWER ZONES (Free: 1 zone · Pro: up to 5 zones)
---------------------------------------------------------------
-Free tier: the lower half is a single zone.
-  Configure its label, color and opacity.
-
-Pro tier: add up to 4 independent vertical dividers below the Y-ref.
-  Lower positions are completely independent of upper ones —
-  enabling asymmetric layouts not possible with standard 2×2 matrices.
+STYLE TEMPLATES
+---------------
+Classic · Four quadrants · Minimal · Soft · Dark background.
+A template fills only what you have not set. Choosing one resets the
+colours it defines (also a fixed bubble colour or an fx rule), never
+your lines.
 
 
-FORMAT PANE — AXES
-------------------
-· Tick font size / Tick color: adjust to match your report theme.
-· Tick decimals: 0 for whole numbers, 1–5 for decimals, -1 for auto (K/M).
-· Show gridlines: disable for a cleaner look when zone colors are visible.
-· X axis title / Y axis title [PRO]: label your axes.
-· Fixed axis range [PRO]: axes never shrink during cross-filtering.
-  Recommended for dashboards where stable spatial positioning matters.
-
-
-FORMAT PANE — DATA POINTS
---------------------------
-· Default radius: applies when no Size field is mapped.
-· Opacity (0–100): lower slightly (e.g. 70) if points overlap.
-· Data labels [PRO]: shows Category value above each point.
-  Best with fewer than ~30 points.
-
-
-FORMAT PANE — ZONE CARDS (PRO)
--------------------------------
-Displays a count badge in the top-left of each zone.
-Shows how many data points fall in that zone.
-Clickable — same cross-filter behavior as clicking the zone.
-
-
-FREE vs PRO
+FORMAT PANE
 -----------
-Feature                           Free   Pro
-Upper zones (up to 5)              Yes    Yes
-1 lower zone                       Yes    Yes
-Zone labels, colors, opacity       Yes    Yes
-Category grouping                  Yes    Yes
-Bubble size                        Yes    Yes
-Tooltips (up to 10 fields)         Yes    Yes
-Cross-filter on zone click         Yes    Yes
-Lower asymmetry (up to 5 zones)     No    Yes
-Axis titles                         No    Yes
-Fixed axis range                    No    Yes
-Data labels on points               No    Yes
-Zone count cards                    No    Yes
+· Style template — template, show setup tips
+· Bubbles        — colour by, colour (fx), opacity, size, border, data labels
+· Legend         — show, position, font size, colour, share of each group
+· Y line         — show, at, value, colour, style
+· Upper zones    — dividers, zones, zone labels
+· Lower zones    — lower half, dividers (own), zones, zone labels
+· Axes           — font, ticks, decimals (−1 = model format), log X/Y,
+                   gridlines, plot background, fixed range (Pro), titles
+· Trend line     — Pro
+· Zone table     — Pro: % of row, % of column, points, size field
+· Zone counts    — Pro: count and optional %
 
 
-TIPS & BEST PRACTICES
----------------------
-· Design your zones before setting values.
-  Sketch on paper: how many zones above/below, and what each means.
-
-· Use asymmetry intentionally.
-  Common pattern: 3 zones above (Low/Mid/High) and 2 zones below.
-
-· Coordinate zone colors with your report palette.
-  Traffic-light (green/yellow/red) works well. Keep opacity 30–50%.
-
-· Fixed axis range for presentations (Pro).
-  Stable axes make it easy to track where points move when filtering.
-
-· Add 2–3 tooltip measures for context (Revenue, Margin, Region).
-
-· Data labels work best with fewer than 30 points.
-  For denser data, rely on tooltips instead.
+INTERACTION
+-----------
+· Bubble click      — filters by that point (Ctrl adds)
+· Zone click        — all bubbles in the zone
+· Legend click      — that group
+· Zone table click  — cell, zone or group (Pro)
+· Empty area        — clears
+· Keyboard          — Tab, arrows, Enter/Space, Escape, Shift+F10
+· Bookmarks restore the selection.
 
 
-EXAMPLE CONFIGURATIONS
-----------------------
-3x2 Asymmetric Matrix:
-  Upper: 2 vertical lines → 3 zones (Low / Medium / High)
-  Lower [Pro]: 1 vertical line → 2 zones (Acceptable / At risk)
-  Y-ref: average of Y Value measure
+PRO AND THE PREVIEW
+-------------------
+Pro: own lower dividers, zone table, trend line with R², zone counts,
+fixed axis range. Without a licence, while editing, Pro settings you
+turn on are drawn under a "Pro preview" watermark. Readers without a
+licence see the free chart, with no watermark.
 
-Classic 2x2:
-  Upper: 1 vertical line → 2 zones
-  Lower [Pro]: 1 matching line (or 0 for single lower zone in Free)
 
-Performance vs Risk Scatter:
-  X axis: Performance score (0–100), Y axis: Risk score (0–100)
-  Y-ref: 50 (midpoint)
-  Upper: 2 lines at X=33 and X=66
-  Lower [Pro]: 1 line at X=50
+TIPS
+----
+· Start at the average; switch to fixed thresholds when you know them.
+· Use own dividers where the decision differs above and below the line.
+· Name the zones: "Grow", "Protect", "Fix price", "Review".
+· Zone table: % of row = where each group sits; % of column = what a
+  zone is made of; size field = how much value sits in each zone.
+· Fixed axes when flipping through a slicer in front of an audience.
+· Log scale for skewed measures: every value on that axis must be above 0.
+· Data labels hide the ones that would collide; for hundreds of
+  bubbles rely on tooltips.
 
 
 TROUBLESHOOTING
 ---------------
-· Points not visible:
-  Check that X Value and Y Value are numeric measures, not text fields.
+· One bubble only         — add a field to Category.
+· Strange percentages     — DIVIDE measure, not a column.
+· Log scale stays linear  — a value ≤ 0 on that axis.
+· No legend               — Colour by = Auto, Show legend on.
+· Zone table missing      — turn it on, enlarge the visual; Pro.
+· "No data for the current filters" — no bubble with both X and Y.
+· 1.0 report looks different — Lower half → One zone; Colour by →
+  Each category; Axis titles off.
 
-· Zone dividers in wrong position:
-  Line values are in the same units as your X Value measure.
-
-· Cross-filter not working:
-  Verify other visuals support cross-filtering.
-  Clicking outside all zones clears the selection.
-
-· Lower Zones lineCount option missing:
-  This is a Pro feature. Appears only with an active Pro license.
-
-· Axis titles not showing:
-  Axis titles are a Pro feature. Appears in Format Pane → Axes with Pro license.
+Support: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
+Email:   support@tcviz.com

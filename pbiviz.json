@@ -1,26 +1,39 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/core/pbiviz.json",
-  "visual": {
-    "name": "Asymmetric Matrix",
-    "displayName": "Asymmetric Matrix",
-    "guid": "asymmetricMatrixTCVIZ",
-    "visualClassName": "Visual",
-    "version": "1.0.1.0",
-    "description": "Scatter plot with configurable asymmetric zones — different number of vertical dividers above and below the horizontal reference line.",
-    "supportUrl": "https://tinocallarisa-web.github.io/asymmetric-matrix/support.html",
-    "gitHubUrl": "https://github.com/tinocallarisa-web/asymmetric-matrix",
-    "privacyTermsLink": "https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html"
-  },
-  "apiVersion": "5.11.0",
-  "author": {
-    "name": "TCViz",
-    "email": "support@tcviz.com"
-  },
-  "assets": {
-    "icon": "assets/icon.png"
-  },
-  "externalJS": [],
-  "style": "style/visual.less",
-  "capabilities": "capabilities.json",
-  "stringResources": []
+    "$schema": "https://developer.microsoft.com/json-schemas/core/pbiviz.json",
+    "visual": {
+        "name": "Asymmetric Matrix",
+        "displayName": "Bubble & Scatter Chart",
+        "guid": "asymmetricMatrixTCVIZ",
+        "visualClassName": "Visual",
+        "version": "1.1.0.0",
+        "description": "Scatter and bubble chart with quadrants and zones: one Y line, up to four dividers, and different dividers above and below the line in Pro.",
+        "supportUrl": "https://tinocallarisa-web.github.io/asymmetric-matrix/support.html",
+        "gitHubUrl": "https://github.com/tinocallarisa-web/asymmetric-matrix",
+        "privacyTermsLink": "https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html"
+    },
+    "apiVersion": "5.11.1",
+    "author": {
+        "name": "TCViz",
+        "email": "support@tcviz.com"
+    },
+    "assets": {
+        "icon": "assets/icon.png"
+    },
+    "externalJS": [],
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "stringResources": [
+        "stringResources/en-US/resources.resjson",
+        "stringResources/es-ES/resources.resjson",
+        "stringResources/pt-BR/resources.resjson",
+        "stringResources/pt-PT/resources.resjson",
+        "stringResources/fr-FR/resources.resjson",
+        "stringResources/de-DE/resources.resjson",
+        "stringResources/it-IT/resources.resjson",
+        "stringResources/nl-NL/resources.resjson",
+        "stringResources/pl-PL/resources.resjson",
+        "stringResources/ja-JP/resources.resjson",
+        "stringResources/zh-CN/resources.resjson",
+        "stringResources/ko-KR/resources.resjson"
+    ]
 }

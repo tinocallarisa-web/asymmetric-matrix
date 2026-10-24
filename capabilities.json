@@ -4,207 +4,1281 @@
       "displayName": "Category",
       "name": "category",
       "kind": "Grouping",
-      "description": "Category field for color grouping"
+      "description": "Each point: one row per value",
+      "displayNameKey": "Role_category",
+      "descriptionKey": "RoleDesc_category"
     },
     {
-      "displayName": "X Value",
+      "displayName": "Legend",
+      "displayNameKey": "Role_legend",
+      "name": "legend",
+      "kind": "Grouping",
+      "description": "Colour the points by group (optional)",
+      "descriptionKey": "RoleDesc_legend"
+    },
+    {
+      "displayName": "X axis",
       "name": "xValue",
       "kind": "Measure",
-      "description": "Horizontal axis value"
+      "description": "Horizontal position",
+      "displayNameKey": "Role_xValue",
+      "descriptionKey": "RoleDesc_xValue"
     },
     {
-      "displayName": "Y Value",
+      "displayName": "Y axis",
       "name": "yValue",
       "kind": "Measure",
-      "description": "Vertical axis value"
+      "description": "Vertical position",
+      "displayNameKey": "Role_yValue",
+      "descriptionKey": "RoleDesc_yValue"
     },
     {
       "displayName": "Size",
       "name": "size",
       "kind": "Measure",
-      "description": "Bubble size (optional)"
+      "description": "Bubble size (optional)",
+      "displayNameKey": "Role_size",
+      "descriptionKey": "RoleDesc_size"
     },
     {
       "displayName": "Tooltips",
       "name": "tooltips",
       "kind": "Measure",
-      "description": "Extra fields shown in tooltip"
+      "description": "Extra fields shown in the tooltip",
+      "displayNameKey": "Role_tooltips",
+      "descriptionKey": "RoleDesc_tooltips"
     }
   ],
-
   "dataViewMappings": [
     {
       "conditions": [
         {
-          "category":  { "max": 1 },
-          "xValue":    { "max": 1 },
-          "yValue":    { "max": 1 },
-          "size":      { "max": 1 },
-          "tooltips":  { "max": 10 }
+          "category": {
+            "max": 1
+          },
+          "xValue": {
+            "max": 1
+          },
+          "yValue": {
+            "max": 1
+          },
+          "size": {
+            "max": 1
+          },
+          "tooltips": {
+            "max": 10
+          },
+          "legend": {
+            "max": 1
+          }
         }
       ],
       "categorical": {
         "categories": {
-          "for": { "in": "category" },
-          "dataReductionAlgorithm": { "top": { "count": 30000 } }
+          "select": [
+            {
+              "bind": {
+                "to": "category"
+              }
+            },
+            {
+              "bind": {
+                "to": "legend"
+              }
+            }
+          ],
+          "dataReductionAlgorithm": {
+            "top": {
+              "count": 30000
+            }
+          }
         },
         "values": {
           "select": [
-            { "bind": { "to": "xValue" } },
-            { "bind": { "to": "yValue" } },
-            { "bind": { "to": "size" } },
-            { "bind": { "to": "tooltips" } }
+            {
+              "bind": {
+                "to": "xValue"
+              }
+            },
+            {
+              "bind": {
+                "to": "yValue"
+              }
+            },
+            {
+              "bind": {
+                "to": "size"
+              }
+            },
+            {
+              "bind": {
+                "to": "tooltips"
+              }
+            }
           ]
         }
       }
     }
   ],
-
   "objects": {
-
     "referenceLines": {
-      "displayName": "Reference Lines",
+      "displayName": "Y line",
       "properties": {
         "showYRef": {
           "displayName": "Show Y line",
-          "type": { "bool": true }
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "referenceLines_showYRef"
         },
         "yRef": {
-          "displayName": "Y Reference Value",
-          "type": { "numeric": true }
+          "displayName": "Y line value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "referenceLines_yRef"
         },
         "yRefColor": {
-          "displayName": "Y Line Color",
-          "type": { "fill": { "solid": { "color": true } } }
+          "displayName": "Y line colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "referenceLines_yRefColor"
         },
         "yRefStyle": {
-          "displayName": "Y Line Style",
-          "type": { "enumeration": [
-            { "value": "solid", "displayName": "Solid" },
-            { "value": "dashed", "displayName": "Dashed" },
-            { "value": "dotted", "displayName": "Dotted" }
-          ]}
+          "displayName": "Y line style",
+          "type": {
+            "enumeration": [
+              {
+                "value": "solid",
+                "displayName": "Solid",
+                "displayNameKey": "Enum_solid"
+              },
+              {
+                "value": "dashed",
+                "displayName": "Dashed",
+                "displayNameKey": "Enum_dashed"
+              },
+              {
+                "value": "dotted",
+                "displayName": "Dotted",
+                "displayNameKey": "Enum_dotted"
+              }
+            ]
+          },
+          "displayNameKey": "referenceLines_yRefStyle"
+        },
+        "yRefMode": {
+          "displayName": "Y line at",
+          "displayNameKey": "referenceLines_yRefMode",
+          "type": {
+            "enumeration": [
+              {
+                "value": "fixed",
+                "displayName": "Fixed value",
+                "displayNameKey": "Enum_fixed"
+              },
+              {
+                "value": "average",
+                "displayName": "Average",
+                "displayNameKey": "Enum_average"
+              },
+              {
+                "value": "median",
+                "displayName": "Median",
+                "displayNameKey": "Enum_median"
+              }
+            ]
+          }
         }
-      }
+      },
+      "displayNameKey": "card_referenceLines"
     },
-
     "upperZones": {
-      "displayName": "Upper Zones",
+      "displayName": "Upper zones",
       "properties": {
         "showLines": {
           "displayName": "Show divider lines",
-          "type": { "bool": true }
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "upperZones_showLines"
         },
         "lineCount": {
-          "displayName": "Number of vertical lines (above)",
-          "type": { "numeric": true }
+          "displayName": "Number of dividers",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_lineCount"
         },
-        "line1Value":  { "displayName": "Line 1 value",  "type": { "numeric": true } },
-        "line2Value":  { "displayName": "Line 2 value",  "type": { "numeric": true } },
-        "line3Value":  { "displayName": "Line 3 value",  "type": { "numeric": true } },
-        "line4Value":  { "displayName": "Line 4 value",  "type": { "numeric": true } },
-        "line1Color":  { "displayName": "Line 1 color",  "type": { "fill": { "solid": { "color": true } } } },
-        "line2Color":  { "displayName": "Line 2 color",  "type": { "fill": { "solid": { "color": true } } } },
-        "line3Color":  { "displayName": "Line 3 color",  "type": { "fill": { "solid": { "color": true } } } },
-        "line4Color":  { "displayName": "Line 4 color",  "type": { "fill": { "solid": { "color": true } } } },
-
-        "zone1Label":   { "displayName": "Zone 1 label",   "type": { "text": true } },
-        "zone2Label":   { "displayName": "Zone 2 label",   "type": { "text": true } },
-        "zone3Label":   { "displayName": "Zone 3 label",   "type": { "text": true } },
-        "zone4Label":   { "displayName": "Zone 4 label",   "type": { "text": true } },
-        "zone5Label":   { "displayName": "Zone 5 label",   "type": { "text": true } },
-        "zone1Color":   { "displayName": "Zone 1 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone2Color":   { "displayName": "Zone 2 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone3Color":   { "displayName": "Zone 3 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone4Color":   { "displayName": "Zone 4 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone5Color":   { "displayName": "Zone 5 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone1Opacity": { "displayName": "Zone 1 opacity", "type": { "numeric": true } },
-        "zone2Opacity": { "displayName": "Zone 2 opacity", "type": { "numeric": true } },
-        "zone3Opacity": { "displayName": "Zone 3 opacity", "type": { "numeric": true } },
-        "zone4Opacity": { "displayName": "Zone 4 opacity", "type": { "numeric": true } },
-        "zone5Opacity": { "displayName": "Zone 5 opacity", "type": { "numeric": true } },
-        "labelFontSize": { "displayName": "Label font size", "type": { "numeric": true } },
-        "labelBgColor":  { "displayName": "Label background color", "type": { "fill": { "solid": { "color": true } } } },
-        "labelBgOpacity": { "displayName": "Label background opacity", "type": { "numeric": true } }
-      }
+        "line1Value": {
+          "displayName": "Divider 1 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_line1Value"
+        },
+        "line2Value": {
+          "displayName": "Divider 2 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_line2Value"
+        },
+        "line3Value": {
+          "displayName": "Divider 3 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_line3Value"
+        },
+        "line4Value": {
+          "displayName": "Divider 4 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_line4Value"
+        },
+        "line1Color": {
+          "displayName": "Divider 1 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_line1Color"
+        },
+        "line2Color": {
+          "displayName": "Divider 2 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_line2Color"
+        },
+        "line3Color": {
+          "displayName": "Divider 3 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_line3Color"
+        },
+        "line4Color": {
+          "displayName": "Divider 4 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_line4Color"
+        },
+        "zone1Label": {
+          "displayName": "Zone 1 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "upperZones_zone1Label"
+        },
+        "zone2Label": {
+          "displayName": "Zone 2 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "upperZones_zone2Label"
+        },
+        "zone3Label": {
+          "displayName": "Zone 3 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "upperZones_zone3Label"
+        },
+        "zone4Label": {
+          "displayName": "Zone 4 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "upperZones_zone4Label"
+        },
+        "zone5Label": {
+          "displayName": "Zone 5 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "upperZones_zone5Label"
+        },
+        "zone1Color": {
+          "displayName": "Zone 1 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_zone1Color"
+        },
+        "zone2Color": {
+          "displayName": "Zone 2 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_zone2Color"
+        },
+        "zone3Color": {
+          "displayName": "Zone 3 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_zone3Color"
+        },
+        "zone4Color": {
+          "displayName": "Zone 4 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_zone4Color"
+        },
+        "zone5Color": {
+          "displayName": "Zone 5 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_zone5Color"
+        },
+        "zone1Opacity": {
+          "displayName": "Zone 1 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_zone1Opacity"
+        },
+        "zone2Opacity": {
+          "displayName": "Zone 2 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_zone2Opacity"
+        },
+        "zone3Opacity": {
+          "displayName": "Zone 3 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_zone3Opacity"
+        },
+        "zone4Opacity": {
+          "displayName": "Zone 4 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_zone4Opacity"
+        },
+        "zone5Opacity": {
+          "displayName": "Zone 5 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_zone5Opacity"
+        },
+        "labelFontSize": {
+          "displayName": "Label font size",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_labelFontSize"
+        },
+        "labelColor": {
+          "displayName": "Label colour",
+          "displayNameKey": "upperZones_labelColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "labelBgColor": {
+          "displayName": "Label background",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "upperZones_labelBgColor"
+        },
+        "labelBgOpacity": {
+          "displayName": "Label background opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "upperZones_labelBgOpacity"
+        },
+        "line1Mode": {
+          "displayName": "Divider 1 at",
+          "displayNameKey": "upperZones_line1Mode",
+          "type": {
+            "enumeration": [
+              {
+                "value": "fixed",
+                "displayName": "Fixed value",
+                "displayNameKey": "Enum_fixed"
+              },
+              {
+                "value": "average",
+                "displayName": "Average",
+                "displayNameKey": "Enum_average"
+              },
+              {
+                "value": "median",
+                "displayName": "Median",
+                "displayNameKey": "Enum_median"
+              }
+            ]
+          }
+        }
+      },
+      "displayNameKey": "card_upperZones"
     },
-
     "lowerZones": {
-      "displayName": "Lower Zones",
+      "displayName": "Lower zones",
       "properties": {
         "showLines": {
           "displayName": "Show divider lines",
-          "type": { "bool": true }
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "lowerZones_showLines"
         },
         "lineCount": {
-          "displayName": "Number of vertical lines (below) (Pro)",
-          "type": { "numeric": true }
+          "displayName": "Number of dividers",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_lineCount"
         },
-        "line1Value":  { "displayName": "Line 1 value",  "type": { "numeric": true } },
-        "line2Value":  { "displayName": "Line 2 value",  "type": { "numeric": true } },
-        "line3Value":  { "displayName": "Line 3 value",  "type": { "numeric": true } },
-        "line4Value":  { "displayName": "Line 4 value",  "type": { "numeric": true } },
-        "line1Color":  { "displayName": "Line 1 color",  "type": { "fill": { "solid": { "color": true } } } },
-        "line2Color":  { "displayName": "Line 2 color",  "type": { "fill": { "solid": { "color": true } } } },
-        "line3Color":  { "displayName": "Line 3 color",  "type": { "fill": { "solid": { "color": true } } } },
-        "line4Color":  { "displayName": "Line 4 color",  "type": { "fill": { "solid": { "color": true } } } },
-
-        "zone1Label":   { "displayName": "Zone 1 label",   "type": { "text": true } },
-        "zone2Label":   { "displayName": "Zone 2 label",   "type": { "text": true } },
-        "zone3Label":   { "displayName": "Zone 3 label",   "type": { "text": true } },
-        "zone4Label":   { "displayName": "Zone 4 label",   "type": { "text": true } },
-        "zone5Label":   { "displayName": "Zone 5 label",   "type": { "text": true } },
-        "zone1Color":   { "displayName": "Zone 1 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone2Color":   { "displayName": "Zone 2 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone3Color":   { "displayName": "Zone 3 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone4Color":   { "displayName": "Zone 4 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone5Color":   { "displayName": "Zone 5 color",   "type": { "fill": { "solid": { "color": true } } } },
-        "zone1Opacity": { "displayName": "Zone 1 opacity", "type": { "numeric": true } },
-        "zone2Opacity": { "displayName": "Zone 2 opacity", "type": { "numeric": true } },
-        "zone3Opacity": { "displayName": "Zone 3 opacity", "type": { "numeric": true } },
-        "zone4Opacity": { "displayName": "Zone 4 opacity", "type": { "numeric": true } },
-        "zone5Opacity": { "displayName": "Zone 5 opacity", "type": { "numeric": true } },
-        "labelFontSize": { "displayName": "Label font size", "type": { "numeric": true } },
-        "labelBgColor":  { "displayName": "Label background color", "type": { "fill": { "solid": { "color": true } } } },
-        "labelBgOpacity": { "displayName": "Label background opacity", "type": { "numeric": true } }
-      }
+        "line1Value": {
+          "displayName": "Divider 1 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_line1Value"
+        },
+        "line2Value": {
+          "displayName": "Divider 2 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_line2Value"
+        },
+        "line3Value": {
+          "displayName": "Divider 3 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_line3Value"
+        },
+        "line4Value": {
+          "displayName": "Divider 4 value",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_line4Value"
+        },
+        "line1Color": {
+          "displayName": "Divider 1 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_line1Color"
+        },
+        "line2Color": {
+          "displayName": "Divider 2 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_line2Color"
+        },
+        "line3Color": {
+          "displayName": "Divider 3 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_line3Color"
+        },
+        "line4Color": {
+          "displayName": "Divider 4 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_line4Color"
+        },
+        "zone1Label": {
+          "displayName": "Zone 1 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "lowerZones_zone1Label"
+        },
+        "zone2Label": {
+          "displayName": "Zone 2 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "lowerZones_zone2Label"
+        },
+        "zone3Label": {
+          "displayName": "Zone 3 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "lowerZones_zone3Label"
+        },
+        "zone4Label": {
+          "displayName": "Zone 4 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "lowerZones_zone4Label"
+        },
+        "zone5Label": {
+          "displayName": "Zone 5 label",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "lowerZones_zone5Label"
+        },
+        "zone1Color": {
+          "displayName": "Zone 1 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_zone1Color"
+        },
+        "zone2Color": {
+          "displayName": "Zone 2 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_zone2Color"
+        },
+        "zone3Color": {
+          "displayName": "Zone 3 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_zone3Color"
+        },
+        "zone4Color": {
+          "displayName": "Zone 4 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_zone4Color"
+        },
+        "zone5Color": {
+          "displayName": "Zone 5 colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_zone5Color"
+        },
+        "zone1Opacity": {
+          "displayName": "Zone 1 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_zone1Opacity"
+        },
+        "zone2Opacity": {
+          "displayName": "Zone 2 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_zone2Opacity"
+        },
+        "zone3Opacity": {
+          "displayName": "Zone 3 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_zone3Opacity"
+        },
+        "zone4Opacity": {
+          "displayName": "Zone 4 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_zone4Opacity"
+        },
+        "zone5Opacity": {
+          "displayName": "Zone 5 opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_zone5Opacity"
+        },
+        "labelFontSize": {
+          "displayName": "Label font size",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_labelFontSize"
+        },
+        "labelColor": {
+          "displayName": "Label colour",
+          "displayNameKey": "lowerZones_labelColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "labelBgColor": {
+          "displayName": "Label background",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "lowerZones_labelBgColor"
+        },
+        "labelBgOpacity": {
+          "displayName": "Label background opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "lowerZones_labelBgOpacity"
+        },
+        "layout": {
+          "displayName": "Lower half",
+          "displayNameKey": "lowerZones_layout",
+          "type": {
+            "enumeration": [
+              {
+                "value": "mirror",
+                "displayName": "Same dividers as above",
+                "displayNameKey": "Enum_mirror"
+              },
+              {
+                "value": "single",
+                "displayName": "One zone",
+                "displayNameKey": "Enum_single"
+              },
+              {
+                "value": "own",
+                "displayName": "Own dividers (Pro)",
+                "displayNameKey": "Enum_own"
+              }
+            ]
+          }
+        }
+      },
+      "displayNameKey": "card_lowerZones"
     },
-
     "axes": {
       "displayName": "Axes",
       "properties": {
-        "xTitle":       { "displayName": "X axis title (Pro)",         "type": { "text": true } },
-        "yTitle":       { "displayName": "Y axis title (Pro)",         "type": { "text": true } },
-        "tickSize":     { "displayName": "Tick font size",       "type": { "numeric": true } },
-        "tickColor":    { "displayName": "Tick color",           "type": { "fill": { "solid": { "color": true } } } },
-        "showGridlines":{ "displayName": "Show gridlines",       "type": { "bool": true } },
-        "tickDecimals": { "displayName": "Tick decimals (−1=auto)", "type": { "numeric": true } },
-        "titleSize":    { "displayName": "Axis title font size (Pro)",  "type": { "numeric": true } },
-        "fixedAxes":    { "displayName": "Fixed axis range (Pro)",       "type": { "bool": true } }
-      }
+        "xTitle": {
+          "displayName": "X title",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "axes_xTitle"
+        },
+        "yTitle": {
+          "displayName": "Y title",
+          "type": {
+            "text": true
+          },
+          "displayNameKey": "axes_yTitle"
+        },
+        "tickSize": {
+          "displayName": "Tick label size",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "axes_tickSize"
+        },
+        "tickColor": {
+          "displayName": "Tick label colour",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "displayNameKey": "axes_tickColor"
+        },
+        "logX": {
+          "displayName": "Log scale X",
+          "displayNameKey": "axes_logX",
+          "type": {
+            "bool": true
+          }
+        },
+        "logY": {
+          "displayName": "Log scale Y",
+          "displayNameKey": "axes_logY",
+          "type": {
+            "bool": true
+          }
+        },
+        "showGridlines": {
+          "displayName": "Gridlines",
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "axes_showGridlines"
+        },
+        "tickDecimals": {
+          "displayName": "Decimals (-1 = model format)",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "axes_tickDecimals"
+        },
+        "titleSize": {
+          "displayName": "Title size",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "axes_titleSize"
+        },
+        "fixedAxes": {
+          "displayName": "Fixed axis range (Pro)",
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "axes_fixedAxes"
+        },
+        "showTitles": {
+          "displayName": "Axis titles",
+          "displayNameKey": "axes_showTitles",
+          "type": {
+            "bool": true
+          }
+        },
+        "titleColor": {
+          "displayName": "Title colour",
+          "displayNameKey": "axes_titleColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "plotBackground": {
+          "displayName": "Plot background",
+          "displayNameKey": "axes_plotBackground",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "gridColor": {
+          "displayName": "Gridline colour",
+          "displayNameKey": "axes_gridColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "fontFamily": {
+          "displayName": "Font",
+          "displayNameKey": "axes_fontFamily",
+          "type": {
+            "formatting": {
+              "fontFamily": true
+            }
+          }
+        }
+      },
+      "displayNameKey": "card_axes"
     },
-
     "dataPoints": {
-      "displayName": "Data Points",
+      "displayName": "Bubbles",
       "properties": {
-        "radius":  { "displayName": "Default radius", "type": { "numeric": true } },
-        "opacity": { "displayName": "Opacity",        "type": { "numeric": true } },
-        "showLabels": { "displayName": "Data labels (Pro)", "type": { "bool": true } }
+        "radius": {
+          "displayName": "Size (no Size field)",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "dataPoints_radius"
+        },
+        "opacity": {
+          "displayName": "Opacity %",
+          "type": {
+            "numeric": true
+          },
+          "displayNameKey": "dataPoints_opacity"
+        },
+        "showLabels": {
+          "displayName": "Data labels",
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "dataPoints_showLabels"
+        },
+        "colorBy": {
+          "displayName": "Colour by",
+          "displayNameKey": "dataPoints_colorBy",
+          "type": {
+            "enumeration": [
+              {
+                "value": "auto",
+                "displayName": "Auto (legend if any)",
+                "displayNameKey": "Enum_auto"
+              },
+              {
+                "value": "single",
+                "displayName": "One colour",
+                "displayNameKey": "Enum_singleColor"
+              },
+              {
+                "value": "category",
+                "displayName": "Each category",
+                "displayNameKey": "Enum_category"
+              },
+              {
+                "value": "zone",
+                "displayName": "Zone",
+                "displayNameKey": "Enum_zone"
+              }
+            ]
+          }
+        },
+        "fill": {
+          "displayName": "Colour",
+          "displayNameKey": "dataPoints_fill",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "borderColor": {
+          "displayName": "Border colour",
+          "displayNameKey": "dataPoints_borderColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "borderWidth": {
+          "displayName": "Border width",
+          "displayNameKey": "dataPoints_borderWidth",
+          "type": {
+            "numeric": true
+          }
+        },
+        "labelSize": {
+          "displayName": "Label size",
+          "displayNameKey": "dataPoints_labelSize",
+          "type": {
+            "numeric": true
+          }
+        },
+        "labelColor": {
+          "displayName": "Label colour",
+          "displayNameKey": "dataPoints_labelColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
+      },
+      "displayNameKey": "card_dataPoints"
+    },
+    "zoneTable": {
+      "displayName": "Zone table (Pro)",
+      "displayNameKey": "card_zoneTable",
+      "properties": {
+        "show": {
+          "displayName": "Show zone table (Pro)",
+          "displayNameKey": "zoneTable_show",
+          "type": {
+            "bool": true
+          }
+        },
+        "mode": {
+          "displayName": "Values",
+          "displayNameKey": "zoneTable_mode",
+          "type": {
+            "enumeration": [
+              {
+                "value": "rowPct",
+                "displayName": "% of row",
+                "displayNameKey": "Enum_rowPct"
+              },
+              {
+                "value": "colPct",
+                "displayName": "% of column",
+                "displayNameKey": "Enum_colPct"
+              },
+              {
+                "value": "count",
+                "displayName": "Points",
+                "displayNameKey": "Enum_count"
+              },
+              {
+                "value": "size",
+                "displayName": "Size field",
+                "displayNameKey": "Enum_sizeField"
+              }
+            ]
+          }
+        },
+        "position": {
+          "displayName": "Position",
+          "displayNameKey": "zoneTable_position",
+          "type": {
+            "enumeration": [
+              {
+                "value": "right",
+                "displayName": "Right",
+                "displayNameKey": "Enum_right"
+              },
+              {
+                "value": "bottom",
+                "displayName": "Bottom",
+                "displayNameKey": "Enum_bottom"
+              }
+            ]
+          }
+        },
+        "sizePct": {
+          "displayName": "Width / height %",
+          "displayNameKey": "zoneTable_sizePct",
+          "type": {
+            "numeric": true
+          }
+        },
+        "fontSize": {
+          "displayName": "Font size",
+          "displayNameKey": "zoneTable_fontSize",
+          "type": {
+            "numeric": true
+          }
+        }
       }
     },
-
     "cards": {
-      "displayName": "Zone Cards (Pro)",
+      "displayName": "Zone counts (Pro)",
       "properties": {
-        "show": { "displayName": "Show zone cards", "type": { "bool": true } }
+        "show": {
+          "displayName": "Show zone counts (Pro)",
+          "type": {
+            "bool": true
+          },
+          "displayNameKey": "cards_show"
+        },
+        "fontSize": {
+          "displayName": "Font size",
+          "displayNameKey": "cards_fontSize",
+          "type": {
+            "numeric": true
+          }
+        },
+        "showPercent": {
+          "displayName": "Show % of points",
+          "displayNameKey": "cards_showPercent",
+          "type": {
+            "bool": true
+          }
+        }
+      },
+      "displayNameKey": "card_cards"
+    },
+    "legend": {
+      "displayName": "Legend",
+      "displayNameKey": "card_legend",
+      "properties": {
+        "show": {
+          "displayName": "Show legend",
+          "displayNameKey": "legend_show",
+          "type": {
+            "bool": true
+          }
+        },
+        "position": {
+          "displayName": "Position",
+          "displayNameKey": "legend_position",
+          "type": {
+            "enumeration": [
+              {
+                "value": "top",
+                "displayName": "Top",
+                "displayNameKey": "Enum_top"
+              },
+              {
+                "value": "bottom",
+                "displayName": "Bottom",
+                "displayNameKey": "Enum_bottom"
+              }
+            ]
+          }
+        },
+        "fontSize": {
+          "displayName": "Font size",
+          "displayNameKey": "legend_fontSize",
+          "type": {
+            "numeric": true
+          }
+        },
+        "color": {
+          "displayName": "Text colour",
+          "displayNameKey": "legend_color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "showShare": {
+          "displayName": "Show share of each group",
+          "displayNameKey": "legend_showShare",
+          "type": {
+            "bool": true
+          }
+        },
+        "shareBy": {
+          "displayName": "Share of",
+          "displayNameKey": "legend_shareBy",
+          "type": {
+            "enumeration": [
+              {
+                "value": "count",
+                "displayName": "Points",
+                "displayNameKey": "Enum_count"
+              },
+              {
+                "value": "size",
+                "displayName": "Size field",
+                "displayNameKey": "Enum_sizeField"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "trendLine": {
+      "displayName": "Trend line (Pro)",
+      "displayNameKey": "card_trendLine",
+      "properties": {
+        "show": {
+          "displayName": "Show trend line (Pro)",
+          "displayNameKey": "trendLine_show",
+          "type": {
+            "bool": true
+          }
+        },
+        "color": {
+          "displayName": "Colour",
+          "displayNameKey": "trendLine_color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "width": {
+          "displayName": "Width",
+          "displayNameKey": "trendLine_width",
+          "type": {
+            "numeric": true
+          }
+        },
+        "style": {
+          "displayName": "Style",
+          "displayNameKey": "trendLine_style",
+          "type": {
+            "enumeration": [
+              {
+                "value": "solid",
+                "displayName": "Solid",
+                "displayNameKey": "Enum_solid"
+              },
+              {
+                "value": "dashed",
+                "displayName": "Dashed",
+                "displayNameKey": "Enum_dashed"
+              },
+              {
+                "value": "dotted",
+                "displayName": "Dotted",
+                "displayNameKey": "Enum_dotted"
+              }
+            ]
+          }
+        },
+        "showR2": {
+          "displayName": "Show R²",
+          "displayNameKey": "trendLine_showR2",
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    },
+    "style": {
+      "displayName": "Style template",
+      "displayNameKey": "card_style",
+      "properties": {
+        "template": {
+          "displayName": "Template",
+          "displayNameKey": "style_template",
+          "type": {
+            "enumeration": [
+              {
+                "value": "classic",
+                "displayName": "Classic",
+                "displayNameKey": "Enum_classic"
+              },
+              {
+                "value": "quadrant",
+                "displayName": "Four quadrants",
+                "displayNameKey": "Enum_quadrant"
+              },
+              {
+                "value": "minimal",
+                "displayName": "Minimal",
+                "displayNameKey": "Enum_minimal"
+              },
+              {
+                "value": "soft",
+                "displayName": "Soft",
+                "displayNameKey": "Enum_soft"
+              },
+              {
+                "value": "dark",
+                "displayName": "Dark background",
+                "displayNameKey": "Enum_dark"
+              }
+            ]
+          }
+        },
+        "guide": {
+          "displayName": "Show setup tips",
+          "displayNameKey": "style_guide",
+          "type": {
+            "bool": true
+          }
+        }
       }
     }
   },
-
+  "tooltips": {
+    "supportedTypes": {
+      "default": true,
+      "canvas": true
+    },
+    "roles": [
+      "tooltips"
+    ]
+  },
   "supportsHighlight": true,
   "supportsSynchronizingFilterState": true,
   "supportsLandingPage": true,
   "supportsKeyboardFocus": true,
   "supportsMultiVisualSelection": true,
-  "privileges": []
+  "privileges": [],
+  "supportsOnObjectFormatting": true,
+  "enablePointerEventsFormatMode": true,
+  "supportsEmptyDataView": true
 }

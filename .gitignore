@@ -2,3 +2,4 @@ node_modules/
 dist/
 .tmp/
 *.pbiviz
+__pycache__/
