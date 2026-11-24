@@ -284,7 +284,8 @@ export class Visual implements IVisual {
     /** Alto contraste: el tema de Windows, o Accesibilidad → High contrast = On (negro sobre blanco) sin depender de él. */
     private readHighContrast(): void {
         const cp: any = this.host.colorPalette;
-        const tema = !!cp?.isHighContrast;
+        // Sin cadena opcional: OKviz y Desktop solo detectan "x.isHighContrast" (24-11-2026).
+        const tema = !!(cp && cp.isHighContrast);
         const forzado = !tema && (this.settings?.accessibility?.highContrast.value as any)?.value === "on";
         this.hc = tema
             ? { on: true, fg: cp.foreground?.value || "#FFFFFF", bg: cp.background?.value || "#000000", sel: cp.foregroundSelected?.value || cp.foreground?.value || "#FFFF00" }
