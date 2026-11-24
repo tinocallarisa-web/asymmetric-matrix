@@ -30,15 +30,19 @@ export interface LicenseState {
 }
 
 /**
- * The service plan identifier of the Pro plan, exactly as defined in Partner
+ * The service plan identifiers of the Pro plans, exactly as defined in Partner
  * Center → the offer → Plan overview → Plan ID.
  *
- * It is NOT the plan's display name. Comparing it is what makes the check
+ * They are NOT the plans' display names. Comparing them is what makes the check
  * specific to this visual: `getAvailableServicePlans()` returns every plan the
  * user holds, so accepting any active plan would unlock this visual for someone
  * who bought a different one.
+ *
+ * 1.2: precio nuevo 1,99 USD/mes · 19 USD/año en un plan nuevo "bubble-scatter-pro" (un plan publicado no cambia de
+ * precio). El viejo "pro" (4,99 · 49) se detiene en Partner Center, NO se borra: quien ya lo pagó sigue en Pro. El plan
+ * nuevo debe crearse en Partner Center con ese Plan ID EXACTO, o nadie que lo compre verá el Pro.
  */
-const PLAN_PRO = "pro";
+export const PLAN_IDS = ["pro", "bubble-scatter-pro"];
 
 // El plan gratuito. No se compara -solo nos importa el de pago- pero se deja
 // escrito porque explica por que hay que comparar el identificador en lugar de
@@ -57,7 +61,7 @@ const STATE_WARNING = 2;
  * en Free a quien pagaba. Se acepta el Service ID que termina en ".<plan>" y, por si
  * algun entorno devuelve solo el Plan ID, tambien ese.
  */
-function matchesPlan(spIdentifier: unknown, planId: string): boolean {
+export function matchesPlan(spIdentifier: unknown, planId: string): boolean {
     const sp = String(spIdentifier ?? "");
     return sp === planId || sp.endsWith("." + planId);
 }
@@ -88,7 +92,7 @@ export async function getLicenseState(
         // active and warning states represent a usable license", so a paying
         // customer keeps their features while a billing problem is resolved.
         const licensed = result?.plans?.some(
-            (p: any) => matchesPlan(p.spIdentifier, PLAN_PRO) &&
+            (p: any) => PLAN_IDS.some(id => matchesPlan(p.spIdentifier, id)) &&
                         (p.state === STATE_ACTIVE || p.state === STATE_WARNING)
         ) ?? false;
 
