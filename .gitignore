@@ -3,3 +3,4 @@ dist/
 .tmp/
 *.pbiviz
 __pycache__/
+tools/simulador/capturas/
