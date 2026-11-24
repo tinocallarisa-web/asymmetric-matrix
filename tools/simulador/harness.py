@@ -426,6 +426,23 @@ async def main():
         await eventos(pg, "selección")
         await pg.close()
 
+        print("Sin datos")
+        pg = await page(b, None, name="19_inicio")
+        n = await pg.evaluate("() => document.querySelectorAll('.bs-landing').length")
+        check("sin campos: pantalla de inicio", n == 1, str(n))
+        await eventos(pg, "inicio")
+        vacio = dataview({"style": {"template": "aurora"}})
+        for c in vacio["categorical"]["categories"]:
+            c["values"], c["identity"] = [], []
+            c.pop("objects", None)
+        for v in vacio["categorical"]["values"]:
+            v["values"] = []
+        await upd(pg, vacio)
+        n = await pg.evaluate("() => [document.querySelectorAll('.bs-empty').length, document.querySelectorAll('circle[data-idx]').length]")
+        check("filtro sin filas: aviso y ninguna burbuja", n == [1, 0], str(n))
+        await eventos(pg, "sin filas")
+        await pg.close()
+
         print("Consejos (edición)")
         pg = await page(b, dataview(guia=True), plan=None, edit=True, name="17_guia")
         g = await pg.evaluate("() => { const g = document.querySelector('.bs-guide'); return g ? Array.from(g.querySelectorAll('button')).map(b => b.textContent) : null; }")
