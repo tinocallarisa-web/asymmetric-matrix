@@ -9,19 +9,12 @@ Bubble & Scatter Chart by TCViz turns the scatter into a segmentation: quadrants
 ━━━━━━━━━━━━━━━━━━━━
 CHAPTERS
 ━━━━━━━━━━━━━━━━━━━━
-PENDING — the 1.2 video has not been recorded yet. Replace with the real timestamps when it is published.
-0:00 The problem: a scatter that doesn't segment
-0:00 Start screen and fields: Category, X, Y, Size, Legend
-0:00 Four quadrants centred on the average
-0:00 Click a bubble or a whole zone to filter the report
-0:00 Series colours and legend order
-0:00 Report theme and the free templates
-0:00 Accessibility and text that scales with the visual
-0:00 Pro — different dividers above and below
-0:00 Pro — zone table: channel × zone
-0:00 Pro — trend line, zone counts and fixed axes
-0:00 Pro — collection styles and the Pro preview
-0:00 Summary
+0:00 Which customers sell a lot but earn little?
+0:16 Quadrants at the average (free)
+0:29 Asymmetric zones and click to filter
+0:47 New in 1.2: series colours, legend order and styles
+1:09 Zone table, zone counts and trend line (Pro)
+1:26 Text that scales, Pro preview and Free vs Pro
 
 ━━━━━━━━━━━━━━━━━━━━
 WHAT'S NEW IN 1.2
