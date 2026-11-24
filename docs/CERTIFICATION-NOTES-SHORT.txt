@@ -1,45 +1,45 @@
-Bubble & Scatter Chart 1.1.0.0 (formerly Asymmetric Matrix) - GUID asymmetricMatrixTCVIZ
+Bubble & Scatter Chart 1.2.0.0 (formerly Asymmetric Matrix) - GUID asymmetricMatrixTCVIZ
 Repo, branch certification: https://github.com/tinocallarisa-web/asymmetric-matrix/tree/certification
 Docs: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
 Video: https://www.youtube.com/watch?v=5esHnUDLUok
 
 WHY THIS SUBMISSION
-Replaces 1.0.1.0. Full rewrite and new name, same GUID; every 1.0 object/property kept
-its name, new ones added. Fixes the 1.0.1.0 soft failure "does not filter out": a bubble
-click now selects that point (Ctrl adds); a zone click selects all its points. Render
-events 1:1: one renderingStarted and one Finished/Failed per update(); repaints (licence,
-click, bookmark) raise none.
+Replaces 1.1.0.0. Same GUID; nothing removed or renamed. New:
+seriesColors, legend.order, accessibility card, general.formatString (dynamic format
+strings), 6 Pro collection styles + free Report theme in style.template, text that
+scales with the viewport. Render events 1:1 unchanged.
 
 PRO PREVIEW
 Without a licence, IN EDIT MODE ONLY, Pro settings turned on (own lower dividers, zone
-table, trend line, zone counts, fixed axes) render under a "Pro preview" watermark.
-Intentional. Reading view, before the licence resolves and where licences cannot be read
-(Publish to Web, embed, export): free result, no watermark.
+table, trend line, zone counts, fixed axes, collection styles) render under the "Pro
+preview" watermark that names them. Reading view, before the licence resolves and where
+licences cannot be read: free result (a Pro style draws as Classic), no watermark.
 
 TESTING - FREE (no plan)
-1. "Bubble Scatter - sample.pbix" (BubbleScatter_Clientes): Category, Legend, X, Y, Size,
-plus a native table for cross-filter. Click a bubble: the table shows that customer;
-Ctrl+click adds; click a zone background: all its customers; click outside clears.
-Bookmarks restore it. Right-click menu. Tab/arrows between zones, Enter, Escape.
-2. Edit mode: tips bar at the bottom. "Quadrants at the average": four quadrants.
-"Try Pro > Zone table": table under watermark, Power BI licence notice, Upgrade bar
-~10 s later. Reading view: no table. Turn it off: notices clear.
-3. Style template > Dark background: colours change. Format mode: click a bubble.
-allowInteractions false: no selection.
+1. "Bubble Scatter - sample.pbix": click a bubble, the native table filters; Ctrl adds;
+zone click: its points. Bookmarks, right-click, Tab/arrows/Enter/Escape.
+2. Series colours card (needs Legend + Colour by = Auto): change a group colour; bubbles,
+legend, zone table, tooltip follow. Change style: it stays.
+3. Legend > Order: Alphabetical, By size.
+4. Style template > Report theme: theme colours, no watermark.
+5. Accessibility > High contrast On: high contrast; Minimum text size 12.
+Shrink the visual: text scales down.
+6. Edit mode, tips bar: "Pro styles > Aurora" (visual >= 560 px wide) or "Try Pro > Zone
+table": drawn under watermark, Power BI licence notice, Upgrade bar ~10 s later. Reading
+view: Classic, no table. Turn off: notices clear.
 
-TESTING - PRO (plan "pro")
-Lower half > Own dividers, zone table, trend line, zone counts, fixed axis range: no
+TESTING - PRO (plan "bubble-scatter-pro" or "pro")
+Own dividers, zone table, trend line, zone counts, fixed axes, the 6 styles: no
 watermark, no notice.
 
 PERSISTPROPERTIES
-Only on a click in the tips bar (template, quadrants, Try Pro, close) and once when the
-template is changed in the format pane (clears the settings it defines). Never in the
-selection callback.
+Only on a tips-bar click and once when the template changes in the format pane (clears
+the settings templates define, never seriesColors). Never in the selection callback.
 
 PRIVACY
 No network, telemetry, cookies or storage. privileges: []. No innerHTML in src/.
 Start-screen links open only on click via host.launchUrl.
 
 LICENSING
-IVisualLicenseManager only. Pro if Service ID ends in ".pro", state Active or Warning.
-Never blocks render; failure = Free. No licensing UI of its own.
+IVisualLicenseManager only. Pro if Service ID ends in ".bubble-scatter-pro" or ".pro",
+state Active or Warning. Never blocks render; failure = Free. No licensing UI of its own.

@@ -1,54 +1,54 @@
-# Certification notes — Bubble & Scatter Chart 1.1.0.0 (formerly Asymmetric Matrix)
+# Certification notes — Bubble & Scatter Chart 1.2.0.0 (formerly Asymmetric Matrix)
 
-Short version to paste into Partner Center: `docs/CERTIFICATION-NOTES-SHORT.txt` (2,471 characters counting each
+Short version to paste into Partner Center: `docs/CERTIFICATION-NOTES-SHORT.txt` (2,484 characters counting each
 newline as CRLF; the field truncates at 2,500 without warning and is cleared on every resubmission).
 
 ```
-Bubble & Scatter Chart 1.1.0.0 (formerly Asymmetric Matrix) - GUID asymmetricMatrixTCVIZ
+Bubble & Scatter Chart 1.2.0.0 (formerly Asymmetric Matrix) - GUID asymmetricMatrixTCVIZ
 Repo, branch certification: https://github.com/tinocallarisa-web/asymmetric-matrix/tree/certification
 Docs: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
 Video: https://www.youtube.com/watch?v=5esHnUDLUok
 
 WHY THIS SUBMISSION
-Replaces 1.0.1.0. Full rewrite and new name, same GUID; every 1.0 object/property kept
-its name, new ones added. Fixes the 1.0.1.0 soft failure "does not filter out": a bubble
-click now selects that point (Ctrl adds); a zone click selects all its points. Render
-events 1:1: one renderingStarted and one Finished/Failed per update(); repaints (licence,
-click, bookmark) raise none.
+Replaces 1.1.0.0. Same GUID; nothing removed or renamed. New:
+seriesColors, legend.order, accessibility card, general.formatString (dynamic format
+strings), 6 Pro collection styles + free Report theme in style.template, text that
+scales with the viewport. Render events 1:1 unchanged.
 
 PRO PREVIEW
 Without a licence, IN EDIT MODE ONLY, Pro settings turned on (own lower dividers, zone
-table, trend line, zone counts, fixed axes) render under a "Pro preview" watermark.
-Intentional. Reading view, before the licence resolves and where licences cannot be read
-(Publish to Web, embed, export): free result, no watermark.
+table, trend line, zone counts, fixed axes, collection styles) render under the "Pro
+preview" watermark that names them. Reading view, before the licence resolves and where
+licences cannot be read: free result (a Pro style draws as Classic), no watermark.
 
 TESTING - FREE (no plan)
-1. "Bubble Scatter - sample.pbix" (BubbleScatter_Clientes): Category, Legend, X, Y, Size,
-plus a native table for cross-filter. Click a bubble: the table shows that customer;
-Ctrl+click adds; click a zone background: all its customers; click outside clears.
-Bookmarks restore it. Right-click menu. Tab/arrows between zones, Enter, Escape.
-2. Edit mode: tips bar at the bottom. "Quadrants at the average": four quadrants.
-"Try Pro > Zone table": table under watermark, Power BI licence notice, Upgrade bar
-~10 s later. Reading view: no table. Turn it off: notices clear.
-3. Style template > Dark background: colours change. Format mode: click a bubble.
-allowInteractions false: no selection.
+1. "Bubble Scatter - sample.pbix": click a bubble, the native table filters; Ctrl adds;
+zone click: its points. Bookmarks, right-click, Tab/arrows/Enter/Escape.
+2. Series colours card (needs Legend + Colour by = Auto): change a group colour; bubbles,
+legend, zone table, tooltip follow. Change style: it stays.
+3. Legend > Order: Alphabetical, By size.
+4. Style template > Report theme: theme colours, no watermark.
+5. Accessibility > High contrast On: high contrast; Minimum text size 12.
+Shrink the visual: text scales down.
+6. Edit mode, tips bar: "Pro styles > Aurora" (visual >= 560 px wide) or "Try Pro > Zone
+table": drawn under watermark, Power BI licence notice, Upgrade bar ~10 s later. Reading
+view: Classic, no table. Turn off: notices clear.
 
-TESTING - PRO (plan "pro")
-Lower half > Own dividers, zone table, trend line, zone counts, fixed axis range: no
+TESTING - PRO (plan "bubble-scatter-pro" or "pro")
+Own dividers, zone table, trend line, zone counts, fixed axes, the 6 styles: no
 watermark, no notice.
 
 PERSISTPROPERTIES
-Only on a click in the tips bar (template, quadrants, Try Pro, close) and once when the
-template is changed in the format pane (clears the settings it defines). Never in the
-selection callback.
+Only on a tips-bar click and once when the template changes in the format pane (clears
+the settings templates define, never seriesColors). Never in the selection callback.
 
 PRIVACY
 No network, telemetry, cookies or storage. privileges: []. No innerHTML in src/.
 Start-screen links open only on click via host.launchUrl.
 
 LICENSING
-IVisualLicenseManager only. Pro if Service ID ends in ".pro", state Active or Warning.
-Never blocks render; failure = Free. No licensing UI of its own.
+IVisualLicenseManager only. Pro if Service ID ends in ".bubble-scatter-pro" or ".pro",
+state Active or Warning. Never blocks render; failure = Free. No licensing UI of its own.
 ```
 
 ## Links
@@ -64,6 +64,156 @@ Never blocks render; failure = Free. No licensing UI of its own.
 | Video | https://www.youtube.com/watch?v=5esHnUDLUok |
 
 ---
+
+## Why this submission
+
+1.1.0.0 is published. 1.2.0.0 adds colours per legend group, legend order, the TCViz collection styles (Pro), a free
+Report theme style, an Accessibility card, text that scales with the viewport and dynamic format strings, and moves Pro
+to a new, cheaper AppSource plan. The GUID does not change; saved reports keep working.
+
+### Compatibility with 1.1
+
+No data role, object or property was removed or renamed; the Format pane only changes order. Additions:
+
+- New object `seriesColors` (`fill`). The card is built by the visual (one slice per legend group, selector of the
+  group's first row via `withCategory` on Legend), only with a Legend field and `dataPoints.colorBy` = `auto`; up to
+  100 groups are listed. Chosen colours are read from the Legend column's `objects` (or the first category column's).
+- `legend.order` (`data`, `alpha`, `size`), visible only with a Legend field. `legend.shareBy` is now visible only
+  while `legend.showShare` is on.
+- New object `accessibility`: `highContrast` (`auto`, `on`), `focusColor`, `focusWidth` (1–6), `minTextSize` (6–24).
+- `general.formatString` with `type: { formatting: { formatString: true } }`: per-row dynamic format strings are read
+  from `objects[i].general.formatString` for tooltips, and for the axes when every row shares one.
+- `style.template` gains `report` (free) and `boardroom`, `ledger`, `editorial`, `signal`, `aurora`, `terrace` (Pro).
+  A 1.1 report keeps its template; Classic stays the default.
+- Text sizes scale with the viewport below about 760 × 440 px (down to 60 %), never below 8 px (or the requested size
+  if smaller) nor below `accessibility.minTextSize`.
+
+Rendering events are unchanged: one `renderingStarted` and one `renderingFinished` / `renderingFailed` per
+`update()`; repaints (licence, click, bookmark) go through `redraw()` and raise none.
+
+---
+
+## Free vs Pro
+
+| Feature | Free | Pro |
+|---|---|---|
+| Scatter and bubble chart, Size as bubble area, up to 30,000 rows | ✅ | ✅ |
+| Colour by legend / one colour / each category / zone, fx, border, opacity | ✅ | ✅ |
+| Series colours (one colour per legend group), legend order | ✅ | ✅ |
+| Data labels with collision avoidance, axis titles | ✅ | ✅ |
+| Y line at fixed / average / median; up to 4 upper dividers (divider 1 fixed / average / median) | ✅ | ✅ |
+| Lower half: same dividers as above (quadrants) or one zone | ✅ | ✅ |
+| Log scale X / Y, model number format, dynamic format strings, tick decimals, legend with share of each group | ✅ | ✅ |
+| Report theme style and the five templates (Classic, Four quadrants, Minimal, Soft, Dark background) | ✅ | ✅ |
+| Accessibility card, text that scales with the visual | ✅ | ✅ |
+| Setup tips, start screen, on-object formatting, 12 languages | ✅ | ✅ |
+| Cross-filter, bookmarks, highlight, context menu, keyboard, high contrast, report page tooltips | ✅ | ✅ |
+| Own lower dividers (asymmetric zones) | ❌ | ✅ |
+| Zone table (legend group × zone) | ❌ | ✅ |
+| Trend line with R² | ❌ | ✅ |
+| Zone counts | ❌ | ✅ |
+| Fixed axis range | ❌ | ✅ |
+| Six collection styles (Boardroom, Ledger, Editorial, Signal, Aurora, Terrace) | ❌ | ✅ |
+
+The free tier never blocks rendering. Without a licence and outside edit mode, Pro settings are simply not applied
+(own lower dividers fall back to the quadrants; a collection style is drawn as Classic).
+
+## Pro preview
+
+`preview = !licensed && editing && licence resolved && !serviceUnavailable`. In that state only, the Pro settings the
+author has set in `metadata.objects` (including a collection style in `style.template`) are drawn, under the "Pro
+preview" watermark shared by all TCViz visuals (DOM, `textContent`), which names them. Free features never carry a
+watermark. Reading view (`viewMode` 0), before the licence resolves, and where it cannot be read
+(`isLicenseUnsupportedEnv`, `isLicenseInfoAvailable === false`: Publish to Web, embed, export) render the free result
+with no watermark.
+
+## Licensing
+
+- Official `IVisualLicenseManager` only (`host.licenseManager`); no external server, no licensing UI of its own.
+- Two Pro plans are accepted (`PLAN_IDS` in `src/licenseManager.ts`): the new `bubble-scatter-pro` (USD 1.99/month or
+  19/year) and the earlier `pro`, so licences already bought keep Pro. Pro when a plan's `spIdentifier` equals one of
+  them or ends in `.<plan>` (full Service ID, e.g. `tino_callarisa.asymmetric-matrix-tcviz.bubble-scatter-pro`), state
+  Active (1) or Warning (2).
+- `getAvailableServicePlans()` once, from the constructor; the result triggers a `redraw()` (no rendering events).
+- Any failure resolves to Free and is logged to the console; it never invents a tier.
+- Purchase path: `notifyFeatureBlocked` naming the Pro features in use (localized), then `notifyLicenseRequired(General)`
+  about 10.5 s later so the banner does not replace it; cleared when the Pro settings are turned off. Not raised before
+  the licence resolves, for a licensed user, or where licences cannot be read. The timer is cancelled in `destroy()`.
+
+## persistProperties
+
+Called only:
+
+1. From a click in the setup tips bar (style buttons, Pro style buttons, "Quadrants at the average", the "Try Pro"
+   buttons, ✕).
+2. Once, inside `update()`, when the `style.template` value differs from the previous update while editing: it removes
+   the colour/style properties defined by the templates (never the line geometry, never `seriesColors`) so the chosen
+   style shows.
+
+Series colours are written by Power BI from the Format pane, not by the visual. Never from `registerOnSelectCallback`,
+a bubble/zone click or any repaint, so bookmarks are not overwritten.
+
+## Privacy & network access
+
+- No `fetch`, `XMLHttpRequest`, WebSocket, cookies, `localStorage` or `sessionStorage`. `privileges` is `[]`.
+- No `innerHTML`: SVG and HTML are built with `createElementNS` / `createElement`, `setAttribute` and `textContent`.
+- Start-screen links (support page, product page, video) have no `href` and open only on click or Enter/Space through
+  `host.launchUrl`.
+- Data processed: Category, Legend, X axis, Y axis, Size, Tooltips (up to 10).
+
+## Accessibility and localization
+
+- Zones are focusable (`tabindex`, `role="button"`, `aria-pressed`, `aria-label` with label and point count): Tab /
+  arrows, Enter / Space, Escape, Shift+F10 or Menu key for the context menu. The zone table is a real `<table>` with
+  `th scope`, and its cells are focusable.
+- High contrast: `colorPalette.isHighContrast` → foreground / background / selection colours throughout;
+  `accessibility.highContrast = on` forces a high-contrast rendering without a Windows high-contrast theme.
+- Focus ring colour and width from the Accessibility card (in high contrast, the theme's selection colour).
+- Texts: 12 locales; texts drawn by the visual come from a table in the bundle (Desktop only translates keys present
+  in capabilities.json).
+
+## Testing instructions
+
+Sample report: **Bubble Scatter - sample.pbix**, built on `BubbleScatter_Clientes` (400 customers, 4 channels). Fields:
+Category = customer, Legend = channel, X = total sales, Y = margin % (a DIVIDE measure), Size = orders. A native table
+beside the chart shows customer rows, to see the cross-filter.
+
+### Free tier (no plan)
+
+1. Remove the fields: the start screen shows the steps and links (they open only on click).
+2. Restore them. Click a bubble: the table shows that customer. Ctrl+click a second: both. Click the only selected
+   bubble again: cleared. Click a zone background: all its customers. Click a legend item: that channel.
+3. Bookmark with a selection, clear, apply it: restored. Select rows in the native table: bubbles outside dim.
+4. Keyboard: Tab into the chart, arrows between zones, Enter selects, Escape clears, Shift+F10 opens the menu.
+5. Format → Series colours (Legend filled, Bubbles → Colour by = Auto): change a channel's colour. Bubbles, legend,
+   zone table (Pro preview) and tooltip use it. Switch Style template: the chosen colour stays. Colour by = One colour:
+   the card disappears.
+6. Legend → Order → Alphabetical, then By size: legend (and zone table rows) reorder.
+7. Style template → Report theme: theme colours, no watermark. Classic and the other four templates: no watermark.
+8. Accessibility → High contrast → On: high-contrast rendering. Focus outline colour / width: the keyboard focus ring
+   changes. Minimum text size = 12: small texts grow. Resize the visual small: texts shrink, the first and last X ticks
+   are not cut.
+9. A measure with a dynamic format string on X: the tooltip shows each row in its own format.
+10. Edit mode, tips bar: "Pro styles → Aurora" (visual at least ~560 px wide) or "Try Pro → Zone table": drawn under the
+    "Pro preview" watermark naming it; Power BI shows its licence banner, then the Upgrade bar about 10 s later.
+    Reading view: Classic, no table, no watermark. Turn them off: watermark and notices clear.
+11. Format mode: click a bubble or a zone: on-object options; no selection. allowInteractions false: no selection.
+12. A filter that leaves no customer: "No data for the current filters".
+
+### Pro tier (same package, plan "bubble-scatter-pro" or the earlier "pro")
+
+Lower zones → Lower half → Own dividers, zone table, trend line with R², zone counts, fixed axis range and the six
+collection styles all render with no watermark and no notification.
+
+## Build
+
+powerbi-visuals-tools, API 5.11.1, TypeScript, ESLint with `eslint-plugin-powerbi-visuals`. Run the lint and
+`npm audit` and record the result before packaging.
+
+---
+
+# History — notes of 1.1.0.0
+
 
 ## Why this submission
 

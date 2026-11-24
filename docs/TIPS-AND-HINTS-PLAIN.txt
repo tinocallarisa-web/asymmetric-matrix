@@ -1,5 +1,7 @@
-TIPS & HINTS — BUBBLE & SCATTER CHART 1.1 (formerly Asymmetric Matrix)
+TIPS & HINTS — BUBBLE & SCATTER CHART 1.2 (formerly Asymmetric Matrix)
 =======================================================================
+
+On a Mac (Power BI in the browser), use Cmd wherever these tips say Ctrl.
 
 
 GETTING STARTED
@@ -9,7 +11,7 @@ GETTING STARTED
 2. X axis and Y axis: the two measures to compare.
 3. Optional: Size (bubble area), Legend (colour by group),
    Tooltips (up to 10 measures).
-4. Click "Quadrants at the average" in the tips bar, or pick a style template.
+4. Click "Quadrants at the average" in the tips bar, or pick a style.
 
 Until X and Y are in, the visual shows a start screen with the steps.
 
@@ -47,34 +49,89 @@ LINES AND ZONES
   the filters. For a weighted reference, type a fixed value.
 
 
-STYLE TEMPLATES
----------------
-Classic · Four quadrants · Minimal · Soft · Dark background.
-A template fills only what you have not set. Choosing one resets the
-colours it defines (also a fixed bubble colour or an fx rule), never
-your lines.
+SERIES COLOURS (NEW IN 1.2)
+---------------------------
+· The Series colours card appears only with a field in Legend and
+  Bubbles → Colour by = Auto (legend if any).
+· One colour per group. Bubbles, legend, zone table and tooltip use it.
+· No style or template overrides a colour you chose.
+· Groups you leave alone keep their usual colours (or the palette of
+  the collection style in use).
+· Not there? Check Legend is filled and Colour by is Auto.
 
 
-FORMAT PANE
------------
+LEGEND ORDER (NEW IN 1.2)
+-------------------------
+Legend → Order (shown when there is a Legend field):
+· Data order    — as before
+· Alphabetical  — in the report's language
+· By size       — sum of Size, or number of bubbles without Size
+The zone table rows follow the same order.
+
+
+STYLES
+------
+Free:  Report theme · Classic (default) · Four quadrants · Minimal ·
+       Soft · Dark background
+Pro:   Boardroom · Ledger · Editorial · Signal · Aurora · Terrace
+       (the TCViz collection styles, shared with the other visuals)
+· Report theme takes colours and text from the report theme, so the
+  chart matches the native visuals on the page.
+· A style fills only what you have not set. Choosing one resets the
+  colours it defines (also a fixed bubble colour or an fx rule), never
+  your lines and never your series colours.
+· The tips bar has a button for each style; the Pro styles row shows
+  when the visual is at least about 560 px wide.
+
+
+ACCESSIBILITY (NEW IN 1.2)
+--------------------------
+Format → Accessibility (free):
+· High contrast — Auto (follow Windows) or On (high contrast always)
+· Focus outline colour and width — the keyboard focus ring
+· Minimum text size — the smallest size any text may take (default 8)
+Each zone announces its label and point count to screen readers.
+
+
+TEXT THAT SCALES WITH THE VISUAL (NEW IN 1.2)
+---------------------------------------------
+Below about 760 × 440 px, ticks, titles, labels, legend, zone names,
+counts, R² and the zone table shrink with the tile instead of
+overflowing. Never below the minimum text size. Want bigger text in a
+small tile? Raise Accessibility → Minimum text size.
+
+
+NUMBER FORMATS
+--------------
+Axes, tooltips and zone table use each measure's format string, in the
+report's language. Dynamic format strings: each tooltip uses its row's
+format; the axes use it when every row shares one.
+Axes → Decimals 0–5 overrides the axis decimals (−1 = model format).
+
+
+FORMAT PANE (in this order)
+---------------------------
 · Style template — template, show setup tips
 · Bubbles        — colour by, colour (fx), opacity, size, border, data labels
-· Legend         — show, position, font size, colour, share of each group
+· Series colours — one colour per legend group (Legend + Colour by = Auto)
 · Y line         — show, at, value, colour, style
 · Upper zones    — dividers, zones, zone labels
 · Lower zones    — lower half, dividers (own), zones, zone labels
-· Axes           — font, ticks, decimals (−1 = model format), log X/Y,
-                   gridlines, plot background, fixed range (Pro), titles
 · Trend line     — Pro
 · Zone table     — Pro: % of row, % of column, points, size field
 · Zone counts    — Pro: count and optional %
+· Axes           — font, ticks, decimals (−1 = model format), log X/Y,
+                   gridlines, plot background, fixed range (Pro), titles
+· Legend         — show, position, order, font size, colour, share of
+                   each group ("Share of" shows while Show share is on)
+· Accessibility  — high contrast, focus outline, minimum text size
 
 
 INTERACTION
 -----------
 · Bubble click      — filters by that point (Ctrl adds)
 · Zone click        — all bubbles in the zone
-· Legend click      — that group
+· Legend click      — that group (Ctrl adds)
 · Zone table click  — cell, zone or group (Pro)
 · Empty area        — clears
 · Keyboard          — Tab, arrows, Enter/Space, Escape, Shift+F10
@@ -84,9 +141,13 @@ INTERACTION
 PRO AND THE PREVIEW
 -------------------
 Pro: own lower dividers, zone table, trend line with R², zone counts,
-fixed axis range. Without a licence, while editing, Pro settings you
-turn on are drawn under a "Pro preview" watermark. Readers without a
-licence see the free chart, with no watermark.
+fixed axis range, six collection styles.
+Price: USD 1.99 per user per month or USD 19 per year (plan
+"bubble-scatter-pro"). Licences bought on the earlier plan "pro" keep Pro.
+Without a licence, while editing, Pro settings and Pro styles you turn
+on are drawn under a "Pro preview" watermark that names them. Readers
+without a licence see the free chart (a Pro style shows as Classic),
+with no watermark.
 
 
 TIPS
@@ -94,6 +155,10 @@ TIPS
 · Start at the average; switch to fixed thresholds when you know them.
 · Use own dividers where the decision differs above and below the line.
 · Name the zones: "Grow", "Protect", "Fix price", "Review".
+· Give each channel or region its own colour in Series colours, so it
+  reads the same across the report.
+· Legend by size puts the largest group first in legend and zone table.
+· Report theme when the chart sits among native visuals.
 · Zone table: % of row = where each group sits; % of column = what a
   zone is made of; size field = how much value sits in each zone.
 · Fixed axes when flipping through a slicer in front of an audience.
@@ -108,6 +173,9 @@ TROUBLESHOOTING
 · Strange percentages     — DIVIDE measure, not a column.
 · Log scale stays linear  — a value ≤ 0 on that axis.
 · No legend               — Colour by = Auto, Show legend on.
+· No Series colours card  — Legend field, Colour by = Auto.
+· No Order in Legend      — it shows only with a Legend field.
+· Text looks small        — small tile; raise Minimum text size.
 · Zone table missing      — turn it on, enlarge the visual; Pro.
 · "No data for the current filters" — no bubble with both X and Y.
 · 1.0 report looks different — Lower half → One zone; Colour by →

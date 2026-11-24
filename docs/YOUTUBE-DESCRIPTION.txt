@@ -1,47 +1,60 @@
 TITLE
-Bubble & Scatter Chart for Power BI — Quadrants, Asymmetric Zones and a Zone Table
+Bubble & Scatter Chart 1.2 for Power BI — Quadrants, Series Colours and Collection Styles
 
 DESCRIPTION
 400 customers on a scatter chart, and the question is still open: which ones matter? A plain scatter draws the dots. It does not split them into segments, it does not tell you which channel lands where, and it treats your business as if it were symmetric.
 
-Bubble & Scatter Chart by TCViz turns the scatter into a segmentation: quadrants centred on the average or the median, zones you name and colour, and — in Pro — different dividers above and below the line, plus a table that crosses your legend with the zones.
+Bubble & Scatter Chart by TCViz turns the scatter into a segmentation: quadrants centred on the average or the median, zones you name and colour, a colour of your choice for each group — and, in Pro, different dividers above and below the line, a table that crosses your legend with the zones, and the six TCViz collection styles.
 
 ━━━━━━━━━━━━━━━━━━━━
 CHAPTERS
 ━━━━━━━━━━━━━━━━━━━━
+PENDING — the 1.2 video has not been recorded yet. Replace with the real timestamps when it is published.
 0:00 The problem: a scatter that doesn't segment
-0:15 Start screen
-0:25 Fields: Category, X, Y, Size, Legend
-0:45 Log scale for skewed sales
-0:55 Four quadrants centred on the average
-1:15 Click a bubble or a whole zone to filter the report
-1:30 Pro — different dividers above and below
-1:50 Pro — zone table: channel × zone
-2:15 Pro — trend line with R² and zone counts
-2:30 Pro — fixed axes across filters
-2:40 Templates and summary
+0:00 Start screen and fields: Category, X, Y, Size, Legend
+0:00 Four quadrants centred on the average
+0:00 Click a bubble or a whole zone to filter the report
+0:00 Series colours and legend order
+0:00 Report theme and the free templates
+0:00 Accessibility and text that scales with the visual
+0:00 Pro — different dividers above and below
+0:00 Pro — zone table: channel × zone
+0:00 Pro — trend line, zone counts and fixed axes
+0:00 Pro — collection styles and the Pro preview
+0:00 Summary
 
+━━━━━━━━━━━━━━━━━━━━
+WHAT'S NEW IN 1.2
+━━━━━━━━━━━━━━━━━━━━
+• A colour for each legend group: bubbles, legend, zone table and tooltip use it, and no style overrides it
+• Legend order: data, alphabetical or by size
+• Report theme style (free); six collection styles (Pro)
+• Accessibility card: high contrast on demand, focus outline, minimum text size
+• Text that scales with the visual; dynamic format strings
+• Lower Pro price
 
 ━━━━━━━━━━━━━━━━━━━━
 FREE
 ━━━━━━━━━━━━━━━━━━━━
 • Scatter and bubble chart: bubble area proportional to Size, colour by legend, one colour, category or zone, conditional formatting (fx)
+• Series colours and legend order
 • Quadrants: Y line and first divider at a fixed value, the average or the median
 • Up to 5 named zones per half, with colours, opacity and label styling
-• Data labels without overlaps, axis titles, log scale, the measure's own number format
-• Five style templates, on-object formatting, 12 languages
+• Data labels without overlaps, axis titles, log scale, the measure's own number format and dynamic format strings
+• Report theme and five style templates, Accessibility card, on-object formatting, 12 languages
 • Click a bubble, a zone or a legend item to cross-filter the report
 
 ━━━━━━━━━━━━━━━━━━━━
-PRO
+PRO — USD 1.99 per user per month or USD 19 per year
 ━━━━━━━━━━━━━━━━━━━━
 • Different dividers above and below the line — asymmetric zones
 • Zone table: your legend × the zones, as % of row, % of column, count or sum of Size. Zones only exist inside the chart, so this cross-tab cannot be built anywhere else in the report
 • Trend line with R²
 • Count and % of points per zone
 • Fixed axis range, so filtered views compare on the same scale
+• Six collection styles: Boardroom, Ledger, Editorial, Signal, Aurora, Terrace
 
-Try Pro on your own data while you edit: Pro settings are drawn under a "Pro preview" watermark.
+Try Pro on your own data while you edit: Pro settings and styles are drawn under a "Pro preview" watermark.
 
 ━━━━━━━━━━━━━━━━━━━━
 PRIVACY

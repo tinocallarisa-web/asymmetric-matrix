@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bubble &amp; Scatter Chart — Support | TCViz</title>
-  <meta name="description" content="Bubble &amp; Scatter Chart for Power BI (formerly Asymmetric Matrix): scatter and bubble chart with quadrants and zones. Fields, Free and Pro, Pro preview, every format card, interaction, use cases and FAQ." />
+  <meta name="description" content="Bubble &amp; Scatter Chart for Power BI (formerly Asymmetric Matrix): scatter and bubble chart with quadrants and zones. Fields, Free and Pro, Pro preview, styles, series colours, accessibility, every format card, interaction, use cases and FAQ." />
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #333; line-height: 1.7; }
     h1   { color: #0078D4; margin-bottom: 4px; }
@@ -38,12 +38,12 @@
   <h1>Bubble &amp; Scatter Chart — Support</h1>
   <p><strong>Publisher:</strong> TCViz &nbsp;|&nbsp;
      <strong>Email:</strong> <a href="mailto:support@tcviz.com">support@tcviz.com</a> &nbsp;|&nbsp;
-     <strong>Version:</strong> 1.1.0.0 &nbsp;|&nbsp;
-     <strong>Price:</strong> free, with an optional Pro plan &nbsp;|&nbsp;
-     <span class="muted">docs updated 24 Oct 2026</span></p>
+     <strong>Version:</strong> 1.2.0.0 &nbsp;|&nbsp;
+     <strong>Price:</strong> free, with an optional Pro plan (USD 1.99 per user per month or USD 19 per year) &nbsp;|&nbsp;
+     <span class="muted">docs updated 24 Nov 2026</span></p>
 
   <div class="note">
-    <strong>Formerly Asymmetric Matrix.</strong> Version 1.1 renames the visual to <em>Bubble &amp; Scatter Chart</em>.
+    <strong>Formerly Asymmetric Matrix.</strong> Version 1.1 renamed the visual to <em>Bubble &amp; Scatter Chart</em>.
     It is the same visual (same ID), so reports made with Asymmetric Matrix keep working and keep their settings.
     See <a href="#from-1-0">Coming from Asymmetric Matrix 1.0</a>.
   </div>
@@ -53,8 +53,10 @@
     <a href="#fields">Fields</a>
     <a href="#zones">Lines and zones</a>
     <a href="#free-pro">Free and Pro</a>
-    <a href="#templates">Templates</a>
+    <a href="#templates">Styles</a>
+    <a href="#series-colours">Series colours</a>
     <a href="#format">Format pane</a>
+    <a href="#accessibility">Accessibility</a>
     <a href="#interaction">Interaction</a>
     <a href="#use-cases">Use cases</a>
     <a href="#faq">FAQ</a>
@@ -80,7 +82,25 @@
   </div>
   <p class="muted">Also on YouTube: <a href="https://www.youtube.com/watch?v=5esHnUDLUok">https://www.youtube.com/watch?v=5esHnUDLUok</a></p>
 
-  <h2 id="whats-new">What's new in 1.1.0.0</h2>
+  <h2 id="whats-new">What's new in 1.2.0.0</h2>
+  <ul>
+    <li><strong>A colour for each series</strong>: with a Legend field and Colour by = Auto, the new <em>Series colours</em>
+        card has a colour for each group, used by the bubbles, the legend, the zone table and the tooltip. No style overrides
+        it. See <a href="#series-colours">Series colours</a>.</li>
+    <li><strong>Legend order</strong>: Data order (as before), Alphabetical or By size. The zone table follows it.</li>
+    <li><strong>Six collection styles</strong> <span class="badge pro">Pro</span>: Boardroom, Ledger, Editorial, Signal,
+        Aurora and Terrace, shared with the other TCViz visuals.</li>
+    <li><strong>Report theme style</strong> (free): colours and text from the report theme. The five templates stay free;
+        Classic is still the default.</li>
+    <li><strong>Accessibility card</strong>: high contrast on demand, focus outline colour and width, minimum text size.</li>
+    <li><strong>Text that scales with the visual</strong>: in a small tile, ticks, titles, labels, legend, zone names,
+        counts, R² and the zone table shrink instead of overflowing.</li>
+    <li><strong>Dynamic format strings</strong> of the measures in tooltips and, when every row shares one, on the axes.</li>
+    <li><strong>New Pro price</strong>: USD 1.99 per user per month or USD 19 per year, on a new AppSource plan. Licences
+        bought on the earlier plan keep Pro.</li>
+    <li>The Format pane follows the common TCViz order: Style template first; Axes, Legend and Accessibility last.</li>
+  </ul>
+  <h3>In 1.1.0.0</h3>
   <ul>
     <li><strong>New name and a full rewrite</strong>: Bubble &amp; Scatter Chart, formerly Asymmetric Matrix.</li>
     <li><strong>Click a bubble to filter by that point</strong> (<kbd>Ctrl</kbd> adds); clicking a zone background still selects all of its points.</li>
@@ -103,11 +123,12 @@
     <li>Drag two measures into <strong>X axis</strong> and <strong>Y axis</strong>. The chart appears.</li>
     <li>Optional: a measure in <strong>Size</strong> (bubble area), a column in <strong>Legend</strong> (colour by group),
         measures in <strong>Tooltips</strong>.</li>
-    <li>In the tips bar at the bottom, click <strong>Quadrants at the average</strong>, or pick a style template.</li>
+    <li>In the tips bar at the bottom, click <strong>Quadrants at the average</strong>, or pick a style.</li>
   </ol>
   <p>With no fields, the visual shows a start screen with these steps, the Pro features and links to this guide, the product page and the video;
-     the links open only when you click them. While you edit, a tips bar at the bottom offers the templates,
-     “Quadrants at the average” and the “Try Pro” buttons. Hide it with ✕; it comes back from
+     the links open only when you click them. While you edit, a tips bar at the bottom offers Report theme and the five
+     templates, “Quadrants at the average”, the six Pro styles (when the visual is at least about 560 px wide) and the
+     “Try Pro” buttons. Hide it with ✕; it comes back from
      <em>Format → Style template → Show setup tips</em>. It never shows in reading view or in very small tiles.</p>
 
   <!-- FIELDS -->
@@ -151,50 +172,74 @@
     <tr><th>Feature</th><th>Free</th><th>Pro</th></tr>
     <tr><td>Scatter and bubble chart, size by field (area), up to 30,000 rows</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Colour by legend, one colour, each category or zone; fx conditional formatting; border; opacity</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Series colours (a colour for each legend group); legend order (data, alphabetical, by size)</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Data labels with collision avoidance; axis titles</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Y line at a fixed value, the average or the median</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Up to 4 upper dividers (divider 1 at fixed, average or median); quadrants or one zone below</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Zone labels, colours, opacity; label size, colour and background</td><td>Yes</td><td>Yes</td></tr>
-    <tr><td>Log scale X / Y, model number format, tick decimals</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Log scale X / Y, model number format, dynamic format strings, tick decimals</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Legend with optional share of each group</td><td>Yes</td><td>Yes</td></tr>
-    <tr><td>Style templates, setup tips, start screen, on-object formatting, 12 languages</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Report theme style and the five templates (Classic, Four quadrants, Minimal, Soft, Dark background)</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Setup tips, start screen, on-object formatting, text that scales with the visual, 12 languages</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Accessibility card: high contrast on demand, focus outline colour and width, minimum text size</td><td>Yes</td><td>Yes</td></tr>
     <tr><td>Cross-filtering, bookmarks, highlight, context menu, keyboard, high contrast, report page tooltips</td><td>Yes</td><td>Yes</td></tr>
     <tr><td><strong>Own lower dividers</strong> — different dividers below the Y line (asymmetric zones)</td><td>—</td><td>Yes</td></tr>
     <tr><td><strong>Zone table</strong> — legend group × zone, four value modes, click to filter</td><td>—</td><td>Yes</td></tr>
     <tr><td><strong>Trend line</strong> — least squares, with R²</td><td>—</td><td>Yes</td></tr>
     <tr><td><strong>Zone counts</strong> — number of bubbles (and %) on each zone</td><td>—</td><td>Yes</td></tr>
     <tr><td><strong>Fixed axis range</strong> — the scale keeps the widest range seen, so filters compare on the same axes</td><td>—</td><td>Yes</td></tr>
+    <tr><td><strong>Collection styles</strong> — Boardroom, Ledger, Editorial, Signal, Aurora, Terrace</td><td>—</td><td>Yes</td></tr>
   </table></div>
   <p>The free chart is never blocked or cut down: Pro adds features, it does not unlock the chart. Pro is the plan
-     <code>pro</code> of this offer on Microsoft AppSource. The licence is read through the official Power BI licensing API;
+     <code>bubble-scatter-pro</code> of this offer on Microsoft AppSource: USD 1.99 per user per month or USD 19 per year.
+     Licences bought on the earlier plan <code>pro</code> keep unlocking Pro. The licence is read through the official Power BI licensing API;
      TCViz runs no licence server and receives no data from your report.</p>
 
   <h3 id="pro-preview">Pro preview</h3>
   <p>Without a licence you can try every Pro feature on your own data:</p>
   <ul>
-    <li><strong>While you edit</strong>, a Pro setting you turn on (in the Format pane or with a “Try Pro” button in the tips bar)
+    <li><strong>While you edit</strong>, a Pro setting or a Pro style you turn on (in the Format pane, or with a “Try Pro” or Pro style button in the tips bar)
         is drawn working, under a “Pro preview” watermark that names it, and Power BI shows its own licence notice with the
         way to get a licence.</li>
     <li><strong>In reading view</strong>, readers without a licence see the free result: no watermark, and none of the Pro
-        features (own lower dividers fall back to the quadrants).</li>
+        features (own lower dividers fall back to the quadrants, a collection style falls back to Classic).</li>
     <li><strong>Where licences cannot be read</strong> (Publish to Web, embedding, export to PDF or PowerPoint), the free result
         is drawn, with no watermark and no notice.</li>
   </ul>
   <p>The setting you turned on is kept. Once the licence is active, the feature works everywhere and the watermark goes.</p>
 
   <!-- TEMPLATES -->
-  <h2 id="templates">Style templates</h2>
+  <h2 id="templates">Styles and templates</h2>
+  <p>Pick one in <em>Format → Style template → Template</em> or with one click in the tips bar.</p>
   <div class="tbl-wrap"><table>
-    <tr><th>Template</th><th>Look</th></tr>
-    <tr><td>Classic</td><td>The default settings. Light zone colours, blue bubbles.</td></tr>
-    <tr><td>Four quadrants</td><td>Red, green, grey and yellow quadrants, dark blue bubbles. Also places the Y line and divider 1 at the average with one divider — only where you have not set the lines yourself.</td></tr>
-    <tr><td>Minimal</td><td>No zone fills and no gridlines; grey bubbles. The lines carry the segmentation.</td></tr>
-    <tr><td>Soft</td><td>Pastel zones, soft blue bubbles, light gridlines.</td></tr>
-    <tr><td>Dark background</td><td>Dark plot, darker zone colours, bright bubbles and light text, for dark report pages.</td></tr>
+    <tr><th>Style</th><th>Look</th><th>Tier</th></tr>
+    <tr><td>Report theme</td><td>Colours and text from the report theme: the bubbles take a theme colour (with a Legend, the
+        group colours), the zones light tints of it. No background of its own.</td><td>Free</td></tr>
+    <tr><td>Classic</td><td>The default settings. Light zone colours, blue bubbles.</td><td>Free</td></tr>
+    <tr><td>Four quadrants</td><td>Red, green, grey and yellow quadrants, dark blue bubbles. Also places the Y line and divider 1 at the average with one divider — only where you have not set the lines yourself.</td><td>Free</td></tr>
+    <tr><td>Minimal</td><td>No zone fills and no gridlines; grey bubbles. The lines carry the segmentation.</td><td>Free</td></tr>
+    <tr><td>Soft</td><td>Pastel zones, soft blue bubbles, light gridlines.</td><td>Free</td></tr>
+    <tr><td>Dark background</td><td>Dark plot, darker zone colours, bright bubbles and light text, for dark report pages.</td><td>Free</td></tr>
+    <tr><td>Boardroom · Ledger · Editorial · Signal · Aurora · Terrace</td><td>The six TCViz collection styles: background
+        (Aurora with a gradient), text, grid, series palette, zone tints and, for Ledger and Editorial, a serif font. The same
+        styles as in the other TCViz visuals, so a page of them matches.</td><td><span class="badge pro">Pro</span></td></tr>
   </table></div>
   <p>A template fills in only what you have not changed yourself. When you <em>pick</em> a template, the colours and styles it
      defines are reset so it looks as designed (this also clears a fixed bubble colour or an fx rule on bubble colour); your
-     lines — Y line, dividers, lower half layout — are never reset by a template.</p>
+     lines — Y line, dividers, lower half layout — are never reset by a template, and neither are the colours you chose in
+     <em>Series colours</em>.</p>
+
+  <!-- SERIES COLOURS -->
+  <h2 id="series-colours">Series colours and legend order</h2>
+  <p>With a field in <strong>Legend</strong> and <em>Bubbles → Colour by</em> set to <em>Auto (legend if any)</em>, a
+     <strong>Series colours</strong> card appears after Bubbles, with one colour per group, listed in legend order. The
+     colour you pick is used by the bubbles, the legend, the zone table and the tooltip, and no style or template overrides it.
+     Groups you leave alone keep the theme colours they had in 1.1, or take the palette of the collection style in use.
+     With One colour, Each category or Zone, the card is hidden because the bubbles do not follow the groups. In high
+     contrast the theme colours are used.</p>
+  <p><em>Legend → Order</em> (shown when there is a Legend field): <strong>Data order</strong> (as before),
+     <strong>Alphabetical</strong> (in the report's language), or <strong>By size</strong> — the sum of Size, or the
+     number of bubbles when there is no Size field, largest first. The zone table rows follow the same order.</p>
 
   <!-- ON-OBJECT -->
   <h2 id="on-object">On-object formatting</h2>
@@ -204,17 +249,20 @@
 
   <!-- FORMAT -->
   <h2 id="format">Format pane reference</h2>
+  <p>Cards in the order of the pane: Style template · Bubbles · Series colours · Y line · Upper zones · Lower zones ·
+     Trend line · Zone table · Zone counts · Axes · Legend · Accessibility.</p>
   <h3>Style template</h3>
-  <p>Template (Classic, Four quadrants, Minimal, Soft, Dark background) · Show setup tips.</p>
+  <p>Template (Report theme, Classic, Four quadrants, Minimal, Soft, Dark background; Boardroom, Ledger, Editorial,
+     Signal, Aurora, Terrace <span class="badge pro">Pro</span>) · Show setup tips.</p>
   <h3>Bubbles</h3>
   <p><em>Colour:</em> Colour by (Auto — legend if any; One colour; Each category; Zone) · Colour (with fx) · Opacity %.<br />
      <em>Size and border:</em> Size (no Size field) — the radius when there is no Size field, and the scale of the bubbles when
      there is · Border colour · Border width.<br />
      <em>Data labels:</em> Data labels (the Category value above each bubble) · Label size · Label colour.</p>
   <p>An fx rule on Colour takes precedence over Colour by. Bubbles are drawn largest first, so small bubbles stay on top.</p>
-  <h3>Legend</h3>
-  <p>Show legend · Position (Top, Bottom) · Font size · Text colour · Show share of each group · Share of (Points, Size field).
-     The legend appears when there is a Legend field and Colour by is <em>Auto</em>.</p>
+  <h3>Series colours</h3>
+  <p>One colour per legend group. Only with a Legend field and Colour by = Auto. See
+     <a href="#series-colours">Series colours and legend order</a>.</p>
   <h3>Y line</h3>
   <p>Show Y line · Y line at (Fixed value, Average, Median) · Y line value (fixed only) · Y line colour · Y line style (Solid,
      Dashed, Dotted).</p>
@@ -240,6 +288,13 @@
      Font size.</p>
   <h3>Zone counts <span class="badge pro">Pro</span></h3>
   <p>Show zone counts · Show % of points · Font size.</p>
+  <h3>Legend</h3>
+  <p>Show legend · Position (Top, Bottom) · Order (Data order, Alphabetical, By size; with a Legend field) · Font size ·
+     Text colour · Show share of each group · Share of (Points, Size field; shown while Show share is on).
+     The legend appears when there is a Legend field and Colour by is <em>Auto</em>.</p>
+  <h3>Accessibility</h3>
+  <p>High contrast (Auto — follow Windows; On) · Focus outline colour · Focus outline width (1–6) · Minimum text size
+     (6–24, default 8). See <a href="#accessibility">Accessibility</a>.</p>
 
   <h3 id="zone-table">The zone table in detail <span class="badge pro">Pro</span></h3>
   <p>A cross table of legend groups by zone. Rows are the Legend values plus a <em>Total</em> row (without a Legend field, one
@@ -282,11 +337,19 @@
   </table></div>
 
   <h3 id="languages">Languages, number formats and accessibility</h3>
-  <ul>
+  <ul id="accessibility">
+    <li><strong>Accessibility card</strong> (free): <em>High contrast → On</em> draws the chart in high contrast even when
+        Windows is not in a high-contrast theme; <em>Auto</em> follows Windows. <em>Focus outline colour</em> and
+        <em>width</em> set the keyboard focus ring. <em>Minimum text size</em> is the smallest size any text may take.</li>
+    <li><strong>Text that scales with the visual</strong>: below about 760 × 440 px, ticks, titles, data labels, legend,
+        zone names, counts, R² and the zone table shrink with the tile (down to 60%), never below 8 px — or the size you
+        asked for, if smaller — nor below the minimum text size. The first and last X ticks are no longer cut, and a long
+        axis title ends in “…”.</li>
     <li>Format pane and texts in English, Spanish, Portuguese (Brazil and Portugal), French, German, Italian, Dutch, Polish,
         Japanese, Chinese (Simplified) and Korean, following the language of Power BI.</li>
-    <li>Axis values, tooltips and the zone table use each measure's format string in the report's language. Set
-        <em>Axes → Decimals</em> to 0–5 to override the decimals on the axes.</li>
+    <li>Axis values, tooltips and the zone table use each measure's format string in the report's language. With
+        <strong>dynamic format strings</strong>, each tooltip uses the format of its row, and the axes use it when every row
+        shares one. Set <em>Axes → Decimals</em> to 0–5 to override the decimals on the axes.</li>
     <li>Each zone announces its label and number of points to screen readers.</li>
     <li>In high contrast mode the chart takes the theme colours and marks the selection with the selection colour.</li>
     <li>When a filter leaves no data, the visual says “No data for the current filters” instead of keeping old bubbles.</li>
@@ -315,14 +378,20 @@
 
   <details>
     <summary>Is it free? What does Pro add?</summary>
-    <p>The chart is complete without a licence: bubbles, size, colours, data labels, axis titles, Y line, up to four dividers,
-       quadrants, log scale, legend, templates and all interaction. Pro adds own lower dividers (asymmetric zones), the zone
-       table, the trend line, zone counts and fixed axis range. See <a href="#free-pro">Free and Pro</a>.</p>
+    <p>The chart is complete without a licence: bubbles, size, colours, series colours, data labels, axis titles, Y line, up
+       to four dividers, quadrants, log scale, legend and its order, Report theme and the five templates, the Accessibility
+       card and all interaction. Pro adds own lower dividers (asymmetric zones), the zone table, the trend line, zone counts,
+       fixed axis range and the six collection styles. See <a href="#free-pro">Free and Pro</a>.</p>
   </details>
   <details>
     <summary>How do I buy Pro?</summary>
-    <p>From the offer on Microsoft AppSource, plan <code>pro</code>, or from the notice Power BI shows when you use a Pro
-       feature while editing. Prices are shown on the AppSource listing.</p>
+    <p>From the offer on Microsoft AppSource, plan <code>bubble-scatter-pro</code> (USD 1.99 per user per month or USD 19
+       per year), or from the notice Power BI shows when you use a Pro feature while editing.</p>
+  </details>
+  <details>
+    <summary>I bought Pro before version 1.2. Does my licence still work?</summary>
+    <p>Yes. Version 1.2 moved Pro to a new, cheaper AppSource plan; licences bought on the earlier plan (<code>pro</code>)
+       keep unlocking every Pro feature, including the collection styles.</p>
   </details>
   <details>
     <summary>I bought Pro and still see the watermark</summary>
@@ -340,6 +409,38 @@
     <p>You turned on a Pro setting without a licence. While you edit it is drawn working under a watermark so you can judge it
        on your own data; readers see the free result. Turn the setting off, or get the Pro plan to remove the watermark. See
        <a href="#pro-preview">Pro preview</a>.</p>
+  </details>
+  <details>
+    <summary>How do I change the colour of one group?</summary>
+    <p>Put a field in Legend and keep <em>Bubbles → Colour by</em> on <em>Auto</em>. Then open <em>Format → Series
+       colours</em> and pick a colour for the group. Bubbles, legend, zone table and tooltip use it, and changing the style
+       does not reset it. The card lists up to 100 groups.</p>
+  </details>
+  <details>
+    <summary>I can't find the Series colours card</summary>
+    <p>It appears only with a field in Legend and <em>Colour by</em> = <em>Auto (legend if any)</em>. With One colour, Each
+       category or Zone the bubbles do not follow the groups, so there is nothing to colour by group.</p>
+  </details>
+  <details>
+    <summary>How do I sort the legend?</summary>
+    <p><em>Legend → Order</em>: Data order, Alphabetical or By size (sum of Size, or the number of bubbles without a Size
+       field). The zone table rows follow the same order.</p>
+  </details>
+  <details>
+    <summary>What does the Report theme style do?</summary>
+    <p>It takes colours and text from the report theme, so the chart matches the native visuals on the page. It is free.
+       Classic remains the default.</p>
+  </details>
+  <details>
+    <summary>Which styles are Pro?</summary>
+    <p>The six collection styles: Boardroom, Ledger, Editorial, Signal, Aurora and Terrace. Report theme and the five
+       templates are free. Without a licence, a collection style is shown while you edit under the Pro preview watermark;
+       readers see Classic.</p>
+  </details>
+  <details>
+    <summary>Why is the text smaller in a small tile?</summary>
+    <p>Since 1.2 text scales with the visual, so a small tile stays readable instead of overflowing. To keep text larger, raise
+       <em>Accessibility → Minimum text size</em>.</p>
   </details>
   <details>
     <summary>Why do I see only one bubble?</summary>
@@ -526,7 +627,8 @@
   <details>
     <summary>Does it work in high contrast mode?</summary>
     <p>Yes. Bubbles, lines, zones and texts take the colours of the Windows high-contrast theme, and the selection is marked with
-       the theme's selection colour.</p>
+       the theme's selection colour. <em>Accessibility → High contrast → On</em> draws the chart in high contrast even
+       without a Windows high-contrast theme.</p>
   </details>
   <details>
     <summary>Does the visual send my data anywhere?</summary>
@@ -541,13 +643,13 @@
     <p>Questions, licences, bugs or ideas: write to <a href="mailto:support@tcviz.com">support@tcviz.com</a>. A person answers —
        the developer of the visual, not a bot.</p>
     <p>Bug reports are also welcome on <a href="https://github.com/tinocallarisa-web/asymmetric-matrix/issues">GitHub Issues</a>.
-       Please include the visual version (1.1.0.0), Power BI Desktop or service, and a screenshot.</p>
+       Please include the visual version (1.2.0.0), Power BI Desktop or service, and a screenshot.</p>
     <p>Product page: <a href="https://tcviz.com/product/asymmetric-matrix/">tcviz.com/product/asymmetric-matrix</a> ·
        Version history: <a href="changelog.html">Changelog</a>.</p>
   </div>
 
   <footer>
-    Bubble &amp; Scatter Chart 1.1.0.0 by TCViz (formerly Asymmetric Matrix) &nbsp;|&nbsp;
+    Bubble &amp; Scatter Chart 1.2.0.0 by TCViz (formerly Asymmetric Matrix) &nbsp;|&nbsp;
     <a href="https://tcviz.com/product/asymmetric-matrix/">tcviz.com</a> &nbsp;|&nbsp;
     <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
     <a href="terms.html">Terms of Use</a>

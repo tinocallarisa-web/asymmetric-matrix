@@ -4,9 +4,10 @@ Content for https://tcviz.com/product/asymmetric-matrix/ — **the slug stays `a
 `?ref=visual-asymmetric` from the visual point there). Page title and headings use the new name.
 
 - Name: **Bubble & Scatter Chart**
-- Short line: *Scatter and bubble chart with quadrants at the average, your own zones and a zone table.*
-- Version: 1.1.0.0 · Price: free, with an optional Pro plan (see AppSource)
-- Video: https://www.youtube.com/watch?v=5esHnUDLUok
+- Short line: *Scatter and bubble chart with quadrants at the average, your own zones, series colours and a zone table.*
+- Version: 1.2.0.0 · Price: free, with an optional Pro plan — USD 1.99 per user per month or USD 19 per year (plan
+  `bubble-scatter-pro`; licences on the earlier plan `pro` keep Pro)
+- Video: https://www.youtube.com/watch?v=5esHnUDLUok (the 1.1 video; it stays until the 1.2 video exists)
 - Support: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
 
 ---
@@ -27,8 +28,8 @@ average or the median — names and colours them, and lets every reader click on
 
 Put the item you want one bubble for in Category, two measures in X and Y, and optionally a measure in Size and a
 group in Legend. Click *Quadrants at the average* and you have a four-quadrant chart that moves with every filter.
-From there, add dividers, name the zones, pick a style template — and, with Pro, give the lower half its own dividers
-and count what is in each zone.
+From there, add dividers, name the zones, give each group its colour, pick a style — and, with Pro, give the lower
+half its own dividers, count what is in each zone and use the TCViz collection styles.
 
 ### Who it is for
 
@@ -42,8 +43,9 @@ and count what is in each zone.
 - Scatter and bubble chart, up to 30,000 rows, bubble area proportional to Size
 - Y line and divider 1 at a fixed value, the average or the median; up to 4 dividers; quadrants in one click
 - Named, coloured zones; click a bubble, a zone or a group to filter
-- Data labels without overlap, axis titles, log scale, model number format — all free
-- Pro: own lower dividers, zone table, trend line with R², zone counts, fixed axes
+- Data labels without overlap, axis titles, log scale, model number format and dynamic format strings — all free
+- A colour for each legend group, legend order, Report theme style, an Accessibility card — all free
+- Pro: own lower dividers, zone table, trend line with R², zone counts, fixed axes, six collection styles
 - Formerly **Asymmetric Matrix**: same visual, existing reports keep working
 
 ---
@@ -68,15 +70,22 @@ Colour by legend group, one colour, each category or zone, with fx conditional f
 Data labels that hide themselves instead of overlapping, axis titles with the field names, log scale on X and Y, and
 the measure's own number format in the report's language.
 
-**Legend with shares**
-Show each group's share of the bubbles (or of Size) — and, when you click a zone, the mix inside that zone.
+**Legend with shares, your colours and your order**
+Show each group's share of the bubbles (or of Size) — and, when you click a zone, the mix inside that zone. Give each
+group its own colour in *Series colours* (bubbles, legend, zone table and tooltip use it; no style overrides it), and
+order the legend by data, alphabet or size.
 
 **Filter by what you click**
 A bubble filters by that point, a zone by all of its points, a legend item by its group. Ctrl adds. Bookmarks,
 cross-highlighting, report page tooltips, context menu, keyboard navigation between zones and high contrast.
 
-**Five style templates**
-Classic, Four quadrants, Minimal, Soft and Dark background — a template only fills what you have not set yourself.
+**Report theme and five style templates**
+Report theme takes the colours and text of your report theme. Classic, Four quadrants, Minimal, Soft and Dark
+background stay free — a style only fills what you have not set yourself.
+
+**Accessible and readable at any size**
+An Accessibility card with high contrast on demand, focus outline colour and width and a minimum text size. Text shrinks
+with the visual in a small tile instead of overflowing.
 
 **Made to be set up quickly**
 A start screen with the steps, setup tips while you edit, on-object formatting, and the format pane in 12 languages.
@@ -102,10 +111,14 @@ The number of bubbles in each zone, and optionally its %, on the zone itself.
 The axes keep the widest range seen since the page opened, so bubbles compare on the same scale while you change
 slicers.
 
+**Six collection styles**
+Boardroom, Ledger, Editorial, Signal, Aurora and Terrace: background, text, grid, series palette and zone tints, the same
+styles as in the other TCViz visuals.
+
 ### See Pro on your own data
 
-While you edit, turn on a Pro feature — or use *Try Pro* in the setup tips — and it is drawn working under a
-"Pro preview" watermark. Power BI shows its own notice with the way to get a licence. Readers without a licence see
+While you edit, turn on a Pro feature or a Pro style — or use *Try Pro* in the setup tips — and it is drawn working
+under a "Pro preview" watermark that names it. Power BI shows its own notice with the way to get a licence. Readers without a licence see
 the free chart.
 
 ### Free vs Pro table
@@ -114,18 +127,21 @@ the free chart.
 |---|---|---|
 | Scatter and bubble chart, size by field, up to 30,000 rows | ✅ | ✅ |
 | Colour by legend / one colour / category / zone, fx, border, opacity | ✅ | ✅ |
+| Series colours and legend order | ✅ | ✅ |
 | Data labels with collision avoidance, axis titles | ✅ | ✅ |
 | Y line at fixed value, average or median | ✅ | ✅ |
 | Up to 4 dividers; quadrants or one zone below | ✅ | ✅ |
 | Zone labels, colours, opacity | ✅ | ✅ |
-| Log scale, model number format, legend with shares | ✅ | ✅ |
-| Templates, setup tips, on-object formatting, 12 languages | ✅ | ✅ |
+| Log scale, model number format, dynamic format strings, legend with shares | ✅ | ✅ |
+| Report theme and five templates, setup tips, on-object formatting, 12 languages | ✅ | ✅ |
+| Accessibility card, text that scales with the visual | ✅ | ✅ |
 | Cross-filter, bookmarks, highlight, keyboard, high contrast, tooltips | ✅ | ✅ |
 | Own lower dividers (asymmetric zones) | ❌ | ✅ |
 | Zone table | ❌ | ✅ |
 | Trend line with R² | ❌ | ✅ |
 | Zone counts | ❌ | ✅ |
 | Fixed axis range | ❌ | ✅ |
+| Six collection styles | ❌ | ✅ |
 
 ---
 
@@ -156,8 +172,8 @@ Ratios must be measures (e.g. `DIVIDE(SUM(Margin), SUM(Sales))`): Power BI aggre
 
 ### Format pane cards
 
-Style template · Bubbles · Legend · Y line · Upper zones · Lower zones · Axes · Trend line (Pro) · Zone table (Pro) ·
-Zone counts (Pro).
+Style template · Bubbles · Series colours (with a Legend field) · Y line · Upper zones · Lower zones · Trend line (Pro) ·
+Zone table (Pro) · Zone counts (Pro) · Axes · Legend · Accessibility.
 
 ### Power BI integration
 
@@ -165,11 +181,12 @@ Zone counts (Pro).
 - Cross-highlight: bubbles outside the highlight are dimmed
 - Bookmarks restore the selection
 - Context menu, keyboard focus, high contrast, on-object formatting, landing page
+- Report theme style; dynamic format strings of the measures
 
 ### Licensing
 
-Pro is unlocked through the official Power BI licensing API (`IVisualLicenseManager`), plan `pro` of the AppSource
-offer. The free chart never waits for or depends on the licence. No licence server.
+Pro is unlocked through the official Power BI licensing API (`IVisualLicenseManager`), plan `bubble-scatter-pro` of
+the AppSource offer (USD 1.99 per user per month or USD 19 per year); licences on the earlier plan `pro` keep working. The free chart never waits for or depends on the licence. No licence server.
 
 ### Privacy
 
@@ -187,6 +204,16 @@ https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html
 ## TAB 4: CHANGELOG
 
 Full history: https://tinocallarisa-web.github.io/asymmetric-matrix/changelog.html
+
+### [1.2.0.0] — 24 November 2026
+
+- Series colours: a colour for each legend group, used by bubbles, legend, zone table and tooltip.
+- Legend order: data, alphabetical or by size; the zone table follows it.
+- Pro: six collection styles (Boardroom, Ledger, Editorial, Signal, Aurora, Terrace).
+- Report theme style (free); the five templates stay free.
+- Accessibility card: high contrast on demand, focus outline, minimum text size.
+- Text that scales with the visual; dynamic format strings.
+- New Pro price: USD 1.99 per user per month or USD 19 per year; earlier licences keep Pro.
 
 ### [1.1.0.0] — 24 October 2026 — Bubble & Scatter Chart
 
