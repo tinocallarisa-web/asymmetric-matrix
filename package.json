@@ -1,6 +1,6 @@
 {
   "name": "bubble-scatter-chart",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Bubble & Scatter Chart by TCViz — scatter and bubble chart with quadrants and asymmetric zones",
   "scripts": {
     "package": "pbiviz package",

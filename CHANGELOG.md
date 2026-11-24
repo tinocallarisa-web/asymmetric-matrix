@@ -3,6 +3,31 @@
 All notable changes to Bubble & Scatter Chart are documented here. Up to 1.0.1.0 the visual was called Asymmetric
 Matrix; it keeps the same ID, so reports made with it keep working.
 
+## [1.2.0.0] — 2026-11-24
+
+### Added
+- **Colour of each series.** With a Legend field and Colour by = Auto, the new Series colours card has a colour for
+  each group. The colour you choose is used by the bubbles, the legend, the zone table and the tooltip, and no style
+  overrides it. Groups you leave alone keep the 1.1 colours.
+- **Legend order:** Data order (as before), Alphabetical, or By size (sum of Size, or count without Size). The zone
+  table follows the same order.
+- **Six collection styles (Pro):** Boardroom, Ledger, Editorial, Signal, Aurora and Terrace — background, text, grid,
+  series palette and zone tints, shared with the other TCViz visuals.
+- **Report theme style (free).** Colours and text from the report theme. The five 1.1 templates (Classic, Quadrant,
+  Minimal, Soft, Dark) stay free; Classic is still the default.
+- **Accessibility card:** high contrast on demand, focus colour and width, and a minimum text size.
+- **Text that scales with the visual.** Ticks, titles, labels, legend, zone names, counts, R² and the zone table shrink
+  in a small tile instead of overflowing; the first and last X ticks are no longer cut, and a long axis title ends in "…".
+- **Dynamic format strings** of the measures in tooltips and, when every row shares one, on the axes.
+
+### Changed
+- **New Pro price: USD 1.99/month or 19/year** on a new AppSource plan. Licences bought on the earlier plan keep Pro.
+- The Pro preview watermark is the one shared by all TCViz visuals.
+- The Format pane follows the common TCViz order (Style first; Axes, Legend and Accessibility last). "Share of" shows
+  only while "Show share" is on.
+- In visuals smaller than about 760 × 440 px all text is a little smaller; axes in whole units read "100K" instead of
+  "0.1M".
+
 ## [1.1.0.0] — 2026-10-24
 
 ### Changed
