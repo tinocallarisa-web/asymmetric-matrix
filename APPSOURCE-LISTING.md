@@ -129,3 +129,25 @@ Cuenta de GitHub: `tinocallarisa-web`. Planes: `free`, `pro` (antiguo, 4,99 · 4
 ## Notas para la certificación
 
 `docs/CERTIFICATION-NOTES-SHORT.txt` — el campo se vacía en cada reenvío: pegarlo siempre.
+
+## Plan nuevo (1.2.0.0)
+
+- ID del plan: `bubble-scatter-pro` (no se puede cambiar después)
+- Nombre del plan: **Bubble & Scatter Pro**
+- Precio: USD 1,99 por usuario y mes, o USD 19 por usuario y año
+- El plan antiguo `pro` (4,99/49) se detiene cuando la 1.2.0.0 esté publicada, no antes (la 1.1 solo reconoce `pro`).
+
+Descripción del plan:
+
+```
+Unlocks the Pro features of Bubble & Scatter Chart by TCViz for one user:
+• Own dividers below the Y line, for asymmetric zones
+• Zone table: each legend group across the zones, as % of row, % of column, point count or sum of size
+• Zone counts and % of points shown in every zone
+• Trend line with R²
+• Fixed axis range
+• Six collection styles shared by every TCViz visual: Boardroom, Ledger, Editorial, Signal, Aurora and Terrace
+
+The free version stays complete: bubbles, quadrants, named zones, series colours, legend order, filtering, Report theme, five templates and accessibility.
+Each person who views the Pro features in a report needs their own licence. No data leaves Power BI.
+```
