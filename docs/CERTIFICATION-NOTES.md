@@ -22,7 +22,7 @@ preview" watermark that names them. Reading view, before the licence resolves an
 licences cannot be read: free result (a Pro style draws as Classic), no watermark.
 
 TESTING - FREE (no plan)
-1. "Bubble Scatter - sample.pbix": click a bubble, the native table filters; Ctrl adds;
+1. Model_videos.pbix: click a bubble, the other visuals filter; Ctrl adds;
 zone click: its points. Bookmarks, right-click, Tab/arrows/Enter/Escape.
 2. Series colours card (needs Legend + Colour by = Auto): change a group colour; bubbles,
 legend, zone table, tooltip follow. Change style: it stays.
@@ -174,7 +174,7 @@ a bubble/zone click or any repaint, so bookmarks are not overwritten.
 
 ## Testing instructions
 
-Sample report: **Bubble Scatter - sample.pbix**, built on `BubbleScatter_Clientes` (400 customers, 4 channels). Fields:
+Sample report: **Model_videos.pbix**, built on `BubbleScatter_Clientes` (400 customers, 4 channels). Fields:
 Category = customer, Legend = channel, X = total sales, Y = margin % (a DIVIDE measure), Size = orders. A native table
 beside the chart shows customer rows, to see the cross-filter.
 
@@ -337,7 +337,7 @@ Never from `registerOnSelectCallback`, a bubble/zone click or any repaint, so bo
 
 ## Testing instructions
 
-Sample report: **Bubble Scatter - sample.pbix**, built on `BubbleScatter_Clientes` (400 customers, 4 channels). Fields:
+Sample report: **Model_videos.pbix**, built on `BubbleScatter_Clientes` (400 customers, 4 channels). Fields:
 Category = customer, Legend = channel, X = total sales, Y = margin % (a DIVIDE measure), Size = orders. A native table
 beside the chart shows customer rows, to see the cross-filter.
 

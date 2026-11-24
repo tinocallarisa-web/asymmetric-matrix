@@ -13,8 +13,8 @@ Matrix; it keeps the same ID, so reports made with it keep working.
   table follows the same order.
 - **Six collection styles (Pro):** Boardroom, Ledger, Editorial, Signal, Aurora and Terrace — background, text, grid,
   series palette and zone tints, shared with the other TCViz visuals.
-- **Report theme style (free).** Colours and text from the report theme. The five 1.1 templates (Classic, Quadrant,
-  Minimal, Soft, Dark) stay free; Classic is still the default.
+- **Report theme style (free).** Colours and text from the report theme. The five 1.1 templates (Classic, Four quadrants,
+  Minimal, Soft, Dark background) stay free; Classic is still the default.
 - **Accessibility card:** high contrast on demand, focus colour and width, and a minimum text size.
 - **Text that scales with the visual.** Ticks, titles, labels, legend, zone names, counts, R² and the zone table shrink
   in a small tile instead of overflowing; the first and last X ticks are no longer cut, and a long axis title ends in "…".
