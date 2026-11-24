@@ -38,9 +38,9 @@ def main():
     for r in caps["dataRoles"]:
         poner(r.get("displayNameKey"), r["displayName"]); poner(r.get("descriptionKey"), r.get("description"))
     for o in caps["objects"].values():
-        poner(o.get("displayNameKey"), o["displayName"])
+        poner(o.get("displayNameKey"), o.get("displayName"))
         for p in o["properties"].values():
-            poner(p.get("displayNameKey"), p["displayName"])
+            poner(p.get("displayNameKey"), p.get("displayName"))
             for e in p["type"].get("enumeration", []):
                 poner(e.get("displayNameKey"), e["displayName"])
     st = io.open(os.path.join(ROOT, "src", "settings.ts"), encoding="utf-8").read()

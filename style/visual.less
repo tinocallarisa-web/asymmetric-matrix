@@ -1,4 +1,6 @@
 // Bubble & Scatter Chart — estilos (1.1). Casi todo el dibujo va en atributos SVG desde el código.
+// Marca de agua "Pro preview": la pieza común de la cartera (utillaje/comun), copiada por sincronizar_comun.py.
+@import (less) "comun/watermark.less";
 
 .bs {
     width: 100%; height: 100%; overflow: hidden; position: relative;
@@ -6,14 +8,9 @@
 
     .bs-svg { display: block; }
     .bs-zone { cursor: pointer; }
-    .bs-zone:focus { outline: none; stroke: var(--bs-focus, #005A9E); stroke-width: 2px; }
+    .bs-zone:focus { outline: none; stroke: var(--bs-focus, #005A9E); stroke-width: var(--bs-focus-w, 2px); }
     circle[data-idx] { cursor: pointer; }
 
-    .bs-watermark {
-        position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 4px; pointer-events: none; z-index: 35; opacity: 0.72; transform: rotate(-20deg);
-        div { font-weight: 700; letter-spacing: 0.06em; color: #FFFFFF; text-align: center; text-shadow: 0 0 3px #1B2A41, 0 0 3px #1B2A41, 0 0 3px #1B2A41; }
-    }
     .bs-table {
         position: absolute; box-sizing: border-box; overflow: auto; padding: 6px 6px 6px 10px; display: flex;
         // margin auto la centra en su espacio; si no cabe, se queda arriba a la izquierda y aparece el desplazamiento.
@@ -25,7 +22,7 @@
         .bs-tot, tr.bs-tot th, tr.bs-tot td { font-weight: 600; }
         .bs-tc { cursor: pointer; }
         .bs-tc:hover { background: rgba(128, 128, 128, .12); }
-        .bs-tc:focus-visible { outline: 2px solid var(--bs-focus, #005A9E); outline-offset: -2px; }
+        .bs-tc:focus-visible { outline: var(--bs-focus-w, 2px) solid var(--bs-focus, #005A9E); outline-offset: -2px; }
         .bs-on { background: rgba(43, 108, 176, .16); }
     }
     // Debajo: columnas con su ancho natural y pegadas a la izquierda; a todo lo ancho, las cifras quedan lejos de su fila.
@@ -43,7 +40,7 @@
         .bs-g-lbl { font-weight: 600; margin-right: 2px; }
         .bs-g-btn { border: 1px solid; border-radius: 999px; background: transparent; padding: 2px 9px; font: inherit; cursor: pointer; }
         .bs-g-close { position: absolute; top: 4px; right: 6px; border: none; background: transparent; cursor: pointer; color: #605E5C; font-size: 12px; }
-        button:focus-visible { outline: 2px solid var(--bs-focus, #005A9E); outline-offset: 1px; }
+        button:focus-visible { outline: var(--bs-focus-w, 2px) solid var(--bs-focus, #005A9E); outline-offset: 1px; }
     }
 
     // Pantalla de inicio (serie TCViz)
@@ -65,11 +62,11 @@
         .cl-links { display: grid; gap: 7px; }
         .cl-card { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border: 1px solid #E1DFDD; border-radius: 6px; background: #F7F6F3; color: #252423; text-decoration: none; font-size: 13.5px; cursor: pointer; }
         .cl-card:hover { border-color: #2B6CB0; }
-        .cl-card:focus-visible { border-color: #2B6CB0; outline: 2px solid var(--bs-focus, #005A9E); outline-offset: 1px; }
+        .cl-card:focus-visible { border-color: #2B6CB0; outline: var(--bs-focus-w, 2px) solid var(--bs-focus, #005A9E); outline-offset: 1px; }
         .cl-sub { margin-left: auto; color: #8A8886; font-size: 11px; }
         .cl-a { color: #2B6CB0; font-weight: 600; text-decoration: none; cursor: pointer; font-size: 12px; }
         .cl-a:hover { text-decoration: underline; }
-        .cl-a:focus-visible { text-decoration: underline; outline: 2px solid var(--bs-focus, #005A9E); outline-offset: 1px; }
+        .cl-a:focus-visible { text-decoration: underline; outline: var(--bs-focus-w, 2px) solid var(--bs-focus, #005A9E); outline-offset: 1px; }
         .cl-do { margin: 0; font-size: 12px; line-height: 1.45; }
     }
     .bs-landing-m {

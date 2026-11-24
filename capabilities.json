@@ -1152,6 +1152,29 @@
               }
             ]
           }
+        },
+        "order": {
+          "displayName": "Order",
+          "displayNameKey": "legend_order",
+          "type": {
+            "enumeration": [
+              {
+                "value": "data",
+                "displayName": "Data order",
+                "displayNameKey": "Enum_dataOrder"
+              },
+              {
+                "value": "alpha",
+                "displayName": "Alphabetical",
+                "displayNameKey": "Enum_alpha"
+              },
+              {
+                "value": "size",
+                "displayName": "By size",
+                "displayNameKey": "Enum_bySize"
+              }
+            ]
+          }
         }
       }
     },
@@ -1226,6 +1249,11 @@
           "type": {
             "enumeration": [
               {
+                "value": "report",
+                "displayName": "Report theme",
+                "displayNameKey": "Enum_report"
+              },
+              {
                 "value": "classic",
                 "displayName": "Classic",
                 "displayNameKey": "Enum_classic"
@@ -1249,6 +1277,36 @@
                 "value": "dark",
                 "displayName": "Dark background",
                 "displayNameKey": "Enum_dark"
+              },
+              {
+                "value": "boardroom",
+                "displayName": "Boardroom [Pro]",
+                "displayNameKey": "Enum_boardroom"
+              },
+              {
+                "value": "ledger",
+                "displayName": "Ledger [Pro]",
+                "displayNameKey": "Enum_ledger"
+              },
+              {
+                "value": "editorial",
+                "displayName": "Editorial [Pro]",
+                "displayNameKey": "Enum_editorial"
+              },
+              {
+                "value": "signal",
+                "displayName": "Signal [Pro]",
+                "displayNameKey": "Enum_signal"
+              },
+              {
+                "value": "aurora",
+                "displayName": "Aurora [Pro]",
+                "displayNameKey": "Enum_aurora"
+              },
+              {
+                "value": "terrace",
+                "displayName": "Terrace [Pro]",
+                "displayNameKey": "Enum_terrace"
               }
             ]
           }
@@ -1258,6 +1316,83 @@
           "displayNameKey": "style_guide",
           "type": {
             "bool": true
+          }
+        }
+      }
+    },
+    "seriesColors": {
+      "displayName": "Series colours",
+      "displayNameKey": "card_seriesColors",
+      "properties": {
+        "fill": {
+          "displayName": "Colour",
+          "displayNameKey": "seriesColors_fill",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "accessibility": {
+      "displayName": "Accessibility",
+      "displayNameKey": "card_accessibility",
+      "properties": {
+        "highContrast": {
+          "displayName": "High contrast",
+          "displayNameKey": "accessibility_highContrast",
+          "type": {
+            "enumeration": [
+              {
+                "value": "auto",
+                "displayName": "Auto (follow Windows)",
+                "displayNameKey": "Enum_hcAuto"
+              },
+              {
+                "value": "on",
+                "displayName": "On",
+                "displayNameKey": "Enum_hcOn"
+              }
+            ]
+          }
+        },
+        "focusColor": {
+          "displayName": "Focus outline colour",
+          "displayNameKey": "accessibility_focusColor",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "focusWidth": {
+          "displayName": "Focus outline width",
+          "displayNameKey": "accessibility_focusWidth",
+          "type": {
+            "integer": true
+          }
+        },
+        "minTextSize": {
+          "displayName": "Minimum text size",
+          "displayNameKey": "accessibility_minTextSize",
+          "type": {
+            "integer": true
+          }
+        }
+      }
+    },
+    "general": {
+      "properties": {
+        "formatString": {
+          "type": {
+            "formatting": {
+              "formatString": true
+            }
           }
         }
       }

@@ -19,6 +19,26 @@ const item = (value: string, displayName: string, key: string) => ({ value, disp
 const FONT = "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif";
 
 export const ZONE_COLORS_DEFAULT = ["#E8F4FD", "#FEF9E7", "#EAFAF1", "#FDF2F8", "#F0F3F4"];
+/** Color del foco de teclado de siempre (1.1); Accesibilidad → Focus outline colour lo cambia. */
+export const FOCUS_DEFAULT = "#005A9E";
+
+/** Estilos de la colección TCViz (1.2, Pro): los seis de toda la cartera. */
+export const PRO_STYLES = ["boardroom", "ledger", "editorial", "signal", "aurora", "terrace"];
+
+/**
+ * Lo que un estilo de la colección no puede decir con propiedades del panel: fondo del visual (y degradado), tinta,
+ * gris secundario, rejilla, paleta de series y tipo de letra. Mismos valores que Marimekko, Calendar y Risk Matrix.
+ */
+export interface StyleTokens { bg: string; grad?: string; text: string; muted: string; grid: string; series: string[]; font?: string; dark?: boolean; }
+export const STYLE_TOKENS: Record<string, StyleTokens> = {
+    boardroom: { bg: "#16263D", text: "#F2F0E8", muted: "#9FB0C6", grid: "#2A3E5C", series: ["#C9A45C", "#8FB8E8", "#EB8A7B", "#6FCF97", "#C5D3E3"], dark: true },
+    ledger:    { bg: "#FBF8EF", text: "#231F16", muted: "#6E6652", grid: "#D9D2BE", series: ["#7A1F1F", "#3A3528", "#2F6B3B", "#946A10", "#B7AD92"], font: "Georgia, serif" },
+    editorial: { bg: "#FFFFFF", text: "#111111", muted: "#5F5F5F", grid: "#E2E2E2", series: ["#D7263D", "#111111", "#5F5F5F", "#BDBDBD", "#8C1C2B"], font: "Georgia, serif" },
+    signal:    { bg: "#FFFFFF", text: "#14202B", muted: "#566472", grid: "#D9DEE4", series: ["#1F7A4D", "#14202B", "#B7791F", "#C0392B", "#9AA5B1"] },
+    aurora:    { bg: "#10395E", grad: "linear-gradient(135deg, #1B1147, #10395E 50%, #0B5A5E)", text: "#FFFFFF", muted: "#C5D3E3", grid: "#3A5C7E",
+                 series: ["#7CE7D0", "#FFD27D", "#FF9DB0", "#9DB7FF", "#C5D3E3"], dark: true },
+    terrace:   { bg: "#FBF5EC", text: "#3A2A1E", muted: "#7A6450", grid: "#E5D6C2", series: ["#B5532A", "#5E7128", "#B5782A", "#B5372A", "#C9A77E"] },
+};
 const MODES = () => [item("fixed", "Fixed value", "Enum_fixed"), item("average", "Average", "Enum_average"), item("median", "Median", "Enum_median")];
 
 const toggle = (name: string, displayName: string, key: string, value: boolean) =>
@@ -175,13 +195,17 @@ class LegendSettings extends Card {
     color    = color("color", "Text colour", "legend_color", "#605E5C");
     // El peso de cada grupo junto a su nombre; con una zona o unos puntos seleccionados, el de la selección.
     showShare = toggle("showShare", "Show share of each group", "legend_showShare", false);
+    // Orden de los grupos (1.2): el de los datos (como siempre), alfabético o por tamaño (suma de Size, o puntos).
+    order    = new formattingSettings.ItemDropdown({ name: "order", displayName: "Order", displayNameKey: "legend_order",
+        items: [item("data", "Data order", "Enum_dataOrder"), item("alpha", "Alphabetical", "Enum_alpha"), item("size", "By size", "Enum_bySize")],
+        value: item("data", "Data order", "Enum_dataOrder") });
     shareBy  = new formattingSettings.ItemDropdown({ name: "shareBy", displayName: "Share of", displayNameKey: "legend_shareBy",
         items: [item("count", "Points", "Enum_count"), item("size", "Size field", "Enum_sizeField")], value: item("count", "Points", "Enum_count") });
     topLevelSlice = this.show;
     name = "legend";
     displayName = "Legend";
     displayNameKey = "card_legend";
-    slices = [this.position, this.fontSize, this.color, this.showShare, this.shareBy];
+    slices = [this.position, this.order, this.fontSize, this.color, this.showShare, this.shareBy];
 }
 
 class TrendLineSettings extends Card {
@@ -227,8 +251,9 @@ class ZoneTableSettings extends Card {
 
 class StyleSettings extends Card {
     template = new formattingSettings.ItemDropdown({ name: "template", displayName: "Template", displayNameKey: "style_template",
-        items: [item("classic", "Classic", "Enum_classic"), item("quadrant", "Four quadrants", "Enum_quadrant"),
-            item("minimal", "Minimal", "Enum_minimal"), item("soft", "Soft", "Enum_soft"), item("dark", "Dark background", "Enum_dark")],
+        items: [item("report", "Report theme", "Enum_report"), item("classic", "Classic", "Enum_classic"), item("quadrant", "Four quadrants", "Enum_quadrant"),
+            item("minimal", "Minimal", "Enum_minimal"), item("soft", "Soft", "Enum_soft"), item("dark", "Dark background", "Enum_dark"),
+            ...PRO_STYLES.map(k => item(k, k.charAt(0).toUpperCase() + k.slice(1) + " [Pro]", "Enum_" + k))],
         value: item("classic", "Classic", "Enum_classic") });
     guide = toggle("guide", "Show setup tips", "style_guide", true);
     name = "style";
@@ -237,6 +262,24 @@ class StyleSettings extends Card {
     slices = [this.template, this.guide];
 }
 
+// Accesibilidad (1.2, gratis): la tarjeta común de la cartera (Calendar 1.3, Risk Matrix 1.1).
+class AccessibilitySettings extends Card {
+    highContrast = new formattingSettings.ItemDropdown({ name: "highContrast", displayName: "High contrast", displayNameKey: "accessibility_highContrast",
+        items: [item("auto", "Auto (follow Windows)", "Enum_hcAuto"), item("on", "On", "Enum_hcOn")], value: item("auto", "Auto (follow Windows)", "Enum_hcAuto") });
+    focusColor  = color("focusColor", "Focus outline colour", "accessibility_focusColor", FOCUS_DEFAULT);
+    focusWidth  = num("focusWidth", "Focus outline width", "accessibility_focusWidth", 2, 1, 6);
+    minTextSize = num("minTextSize", "Minimum text size", "accessibility_minTextSize", 8, 6, 24);
+    name = "accessibility";
+    displayName = "Accessibility";
+    displayNameKey = "card_accessibility";
+    slices = [this.highContrast, this.focusColor, this.focusWidth, this.minTextSize];
+}
+
+/**
+ * Orden del panel (1.2), el común de la cartera: Style template primero, las tarjetas propias, ejes, leyenda y
+ * Accessibility al final. "Series colours" (una muestra por grupo de la leyenda) la añade el visual detrás de Bubbles,
+ * porque sus selectores dependen de los datos. Los nombres internos no cambian: solo el orden.
+ */
 export class VisualFormattingSettingsModel extends Model {
     style          = new StyleSettings();
     dataPoints     = new DataPointSettings();
@@ -246,10 +289,11 @@ export class VisualFormattingSettingsModel extends Model {
     lowerZones     = new ZonesSettings("lowerZones");
     axes           = new AxesSettings();
     trendLine      = new TrendLineSettings();
-    cards          = [this.style, this.dataPoints, this.legend, this.referenceLines, this.upperZones, this.lowerZones,
-        this.axes, this.trendLine, new ZoneTableSettings(), new CardSettings()] as formattingSettings.Cards[];
-    get zoneTable(): ZoneTableSettings { return this.cards[8] as ZoneTableSettings; }
-    get zoneCards(): CardSettings { return this.cards[9] as CardSettings; }
+    zoneTable      = new ZoneTableSettings();
+    zoneCards      = new CardSettings();
+    accessibility  = new AccessibilitySettings();
+    cards          = [this.style, this.dataPoints, this.referenceLines, this.upperZones, this.lowerZones,
+        this.trendLine, this.zoneTable, this.zoneCards, this.axes, this.legend, this.accessibility] as formattingSettings.Cards[];
 }
 
 /**
@@ -286,8 +330,39 @@ export const TEMPLATES: Record<string, Record<string, Record<string, string | nu
         axes: { plotBackground: "#1F1F1F", gridColor: "#3B3A39", tickColor: "#C8C6C4", titleColor: "#E1DFDD" },
         legend: { color: "#C8C6C4" },
         trendLine: { color: "#F2C80F" }
-    }
+    },
+    // Report theme (1.2, gratis): los valores salen del tema del informe en cada pintado (visual.ts, temaInforme()).
+    report: {},
+    // Colección TCViz (1.2, Pro). Solo propiedades que ya define alguna plantilla de la 1.1: elegir un estilo no borra
+    // más ajustes guardados que antes. Los colores elegidos por serie (seriesColors) no se tocan nunca.
+    ...Object.keys(STYLE_TOKENS).reduce((acc, k) => { acc[k] = estilo(STYLE_TOKENS[k]); return acc; },
+        {} as Record<string, Record<string, Record<string, string | number | boolean>>>)
 };
+
+/** Mezcla de dos colores #RRGGBB (t = 0 el primero, 1 el segundo). */
+function mix(a: string, b: string, t: number): string {
+    const p = (h: string) => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) || 0);
+    const x = p(a), y = p(b);
+    return "#" + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+function estilo(k: StyleTokens): Record<string, Record<string, string | number | boolean>> {
+    // Zonas: tintes de la paleta del estilo sobre su fondo (opacidad 100). Un color de serie al 20 % quedaba turbio en
+    // los estilos claros con tinta oscura (Ledger, Editorial).
+    const s = k.series, t = k.dark ? [0.16, 0.24] : [0.10, 0.17];
+    const zonas = (orden: number[]) => orden.reduce((acc, c, i) => {
+        acc[`zone${i + 1}Color`] = mix(k.bg, s[c], t[i % 2]); acc[`zone${i + 1}Opacity`] = 100; return acc;
+    }, { labelBgColor: k.bg } as Record<string, string | number>);
+    return {
+        upperZones: zonas([0, 1, 2, 3, 4]),
+        lowerZones: zonas([2, 3, 4, 0, 1]),
+        dataPoints: { fill: s[0], borderColor: k.bg, labelColor: k.text },
+        referenceLines: { yRefColor: k.muted },
+        axes: { tickColor: k.muted, titleColor: k.text, gridColor: k.grid, plotBackground: k.bg },
+        legend: { color: k.muted },
+        trendLine: { color: s[1] }
+    };
+}
 
 /**
  * Geometría que una plantilla puede poner (Four quadrants: en la media, un divisor). Al elegir plantilla NO se borra:

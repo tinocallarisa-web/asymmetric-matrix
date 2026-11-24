@@ -31,10 +31,12 @@ import ILocalizationManager     = powerbi.extensibility.ILocalizationManager;
 import VisualUpdateType         = powerbi.VisualUpdateType;
 import VisualTooltipDataItem    = powerbi.extensibility.VisualTooltipDataItem;
 
-import { VisualFormattingSettingsModel, ZonesSettings, TEMPLATES, GEOMETRY, ZONE_COLORS_DEFAULT } from "./settings";
+import { VisualFormattingSettingsModel, ZonesSettings, TEMPLATES, GEOMETRY, ZONE_COLORS_DEFAULT, FOCUS_DEFAULT, PRO_STYLES, STYLE_TOKENS, StyleTokens } from "./settings";
 import { getLicenseState, LicenseState, LicenseNotifier, FREE_STATE } from "./licenseManager";
 import { STRINGS } from "./strings";
 import { LANDING_ICON } from "./landingIcon";
+import { createProWatermark, renderProWatermark } from "./comun/watermark";
+import { styleSeriesColor } from "./comun/paleta";
 
 /** Sello de compilación. Vacío en producción; build-test.js lo rellena en las builds de prueba. */
 const BUILD_MARKER = "";
@@ -75,6 +77,24 @@ function oscuro(hex: string): boolean {
 }
 const dash = (style: string): string => style === "dashed" ? "8,4" : style === "dotted" ? "2,4" : "";
 
+/** Mezcla de dos colores #RRGGBB (t = 0 el primero, 1 el segundo). */
+function mezcla(a: string, b: string, t: number): string {
+    const p = (h: string) => { const c = String(h || "#888888").replace("#", ""); const f = c.length === 3 ? c.split("").map(x => x + x).join("") : c;
+        return [0, 2, 4].map(i => parseInt(f.slice(i, i + 2), 16) || 0); };
+    const x = p(a), y = p(b);
+    return "#" + x.map((v, i) => Math.max(0, Math.min(255, Math.round(v + (y[i] - v) * t))).toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+const esHex = (c: unknown): c is string => typeof c === "string" && /^#[0-9a-f]{3,8}$/i.test(c.trim());
+
+/** Ancho real de un texto (canvas): las etiquetas se colocan midiendo, no contando letras. */
+let lienzo: CanvasRenderingContext2D | null | undefined;
+function medir(texto: string, px: number, font: string, peso = ""): number {
+    if (lienzo === undefined) { try { lienzo = document.createElement("canvas").getContext("2d"); } catch { lienzo = null; } }
+    if (!lienzo) return texto.length * px * 0.58;
+    lienzo.font = `${peso ? peso + " " : ""}${px}px ${font}`;
+    return lienzo.measureText(texto).width;
+}
+
 /** Marcas "bonitas" de un eje (1, 2, 2,5, 5 × 10^n). */
 function niceTicks(min: number, max: number, count: number): number[] {
     const span = max - min;
@@ -103,6 +123,7 @@ interface Point {
     label: string;
     series: string | null;
     fx: string | null;          // color de una regla fx para esta fila
+    row: number;                // fila del dataView
     id: ISelectionId;
     highlighted: boolean;
     tips: VisualTooltipDataItem[];
@@ -170,6 +191,22 @@ export class Visual implements IVisual {
     private static instanceCount = 0;
     private readonly clipId = "bsClip" + (++Visual.instanceCount);
 
+    /** Marca de agua "Pro preview" común a la cartera (utillaje/comun). */
+    private wm: HTMLDivElement;
+    /** Escala del texto (norma de la cartera): 1 por encima de ~760×440, hasta 0,6 en un mosaico pequeño. */
+    private escala = 1;
+    /** Alto contraste: el del tema de Windows o el forzado en Accesibilidad. */
+    private hc = { on: false, fg: "#000000", bg: "#FFFFFF", sel: "#1A3FBF" };
+    /** Grupos de la leyenda en el orden de los datos, su primera fila y el color elegido en el panel (si lo hay). */
+    private seriesData: string[] = [];
+    private seriesRow = new Map<string, number>();
+    private seriesChosen = new Map<string, string>();
+    private legendCol: powerbi.DataViewCategoryColumn | null = null;
+    /** Lo resuelto en el último pintado: color de cada grupo, orden de la leyenda y color de cada punto. */
+    private seriesColor = new Map<string, string>();
+    private seriesOrder: string[] = [];
+    private pointColor: string[] = [];
+
     constructor(options: VisualConstructorOptions) {
         this.host = options.host;
         this.localization = this.host.createLocalizationManager();
@@ -180,6 +217,7 @@ export class Visual implements IVisual {
         this.root = document.createElement("div");
         this.root.className = "bs";
         options.element.appendChild(this.root);
+        this.wm = createProWatermark(this.root);
 
         // Marcadores, panel de selección, "borrar filtros": solo repinta. Sin eventos de render ni persistProperties.
         this.selectionManager.registerOnSelectCallback((ids: ISelectionId[]) => {
@@ -241,6 +279,29 @@ export class Visual implements IVisual {
         return (h?.hostCapabilities?.allowInteractions ?? h?.allowInteractions) !== false;
     }
 
+    /** Alto contraste: el tema de Windows, o Accesibilidad → High contrast = On (negro sobre blanco) sin depender de él. */
+    private readHighContrast(): void {
+        const cp: any = this.host.colorPalette;
+        const tema = !!cp?.isHighContrast;
+        const forzado = !tema && (this.settings?.accessibility?.highContrast.value as any)?.value === "on";
+        this.hc = tema
+            ? { on: true, fg: cp.foreground?.value || "#FFFFFF", bg: cp.background?.value || "#000000", sel: cp.foregroundSelected?.value || cp.foreground?.value || "#FFFF00" }
+            : { on: forzado, fg: "#000000", bg: "#FFFFFF", sel: "#1A3FBF" };
+    }
+
+    /**
+     * Tamaño de texto que encoge con el visual (receta de Waterfall 1.3): nunca por debajo de 8 px —ni del tamaño pedido
+     * si era menor— ni del mínimo de Accesibilidad.
+     */
+    private fz(px: number): number {
+        const minimo = this.minTexto();
+        return Math.max(Math.round(px * this.escala * 10) / 10, Math.min(px, 8), minimo);
+    }
+
+    private minTexto(): number {
+        return Math.max(6, Math.min(24, Math.round(this.settings?.accessibility?.minTextSize.value ?? 8)));
+    }
+
     // ── Update: eventos de render 1:1 ─────────────────────────────────────────
 
     public update(options: VisualUpdateOptions): void {
@@ -262,20 +323,29 @@ export class Visual implements IVisual {
         this.subSelectionHelper.setFormatMode(this.formatMode);
         this.root.classList.toggle("fmt", this.formatMode);
         this.root.style.pointerEvents = this.interactionsAllowed() ? "auto" : "none";
-        const pal: any = this.host.colorPalette;
-        this.root.style.setProperty("--bs-focus", pal?.isHighContrast ? (pal.foregroundSelected?.value || pal.foreground?.value || "#FFFF00") : "#005A9E");
 
         const dv = options.dataViews?.[0];
         const vals = dv?.categorical?.values ?? [];
         const hasXY = !!vals.find(v => v.source?.roles?.["xValue"]) && !!vals.find(v => v.source?.roles?.["yValue"]);
         this.lastOptions = options;
+        this.settings = this.settingsSvc.populateFormattingSettingsModel(VisualFormattingSettingsModel, dv);
+        this.readHighContrast();
+        // Norma de la cartera (Waterfall 1.3, Calendar 1.3): por debajo de ~760×440 el texto baja con el visual, hasta el 60 %.
+        const vp0 = options.viewport ?? { width: 760, height: 440 };
+        this.escala = Math.min(1, Math.max(0.6, Math.min(vp0.width / 760, vp0.height / 440)));
+        // Foco de teclado: el de Accesibilidad si el autor lo eligió; si no, el de siempre. En alto contraste, el del tema.
+        const a11y = this.settings.accessibility;
+        const focoGuardado = (dv?.metadata?.objects as any)?.accessibility?.focusColor !== undefined;
+        this.root.style.setProperty("--bs-focus", this.hc.on ? this.hc.sel : (focoGuardado ? a11y.focusColor.value.value : FOCUS_DEFAULT));
+        this.root.style.setProperty("--bs-focus-w", Math.max(1, Math.min(6, Math.round(a11y.focusWidth.value || 2))) + "px");
         if (!dv || !hasXY) {
             this.points = [];
+            this.root.style.background = "";
+            renderProWatermark(this.wm, null);
             this.showLanding(options.viewport);
             return;
         }
 
-        this.settings = this.settingsSvc.populateFormattingSettingsModel(VisualFormattingSettingsModel, dv);
 
         // El cambio de plantilla se detecta aquí, en un update, nunca en un repintado: persistProperties no debe
         // salir de registerOnSelectCallback.
@@ -308,12 +378,44 @@ export class Visual implements IVisual {
 
     // ── Datos ─────────────────────────────────────────────────────────────────
 
+    /**
+     * Formato de una medida para ejes y totales: el dinámico (general.formatString, 1.2) si todas las filas traen el
+     * mismo; si no, el de la columna. displayUnitSystemType 2: con el de por defecto, 114.635 salía "0,11M".
+     */
+    private formatoDe(col: powerbi.DataViewValueColumn | undefined): string | undefined {
+        const objs: any[] = (col as any)?.objects ?? [];
+        let comun: string | null = null;
+        for (let i = 0; i < objs.length; i++) {
+            const d = objs[i]?.general?.formatString;
+            if (typeof d !== "string" || !d) continue;
+            if (comun === null) comun = d; else if (comun !== d) { comun = null; break; }
+        }
+        return comun ?? col?.source?.format ?? undefined;
+    }
+
     private formatterFor(col: powerbi.DataViewValueColumn | undefined, value: number): (v: number) => string {
-        const format = col?.source?.format;
+        const format = this.formatoDe(col);
         try {
-            const f = valueFormatter.create({ format, value, cultureSelector: this.host.locale });
+            const f = valueFormatter.create({ format, value, cultureSelector: this.host.locale, displayUnitSystemType: 2 });
             return (v: number) => f.format(v);
         } catch { return (v: number) => String(v); }
+    }
+
+    /** Formateador de un valor de la fila i: la cadena dinámica de esa fila si el DAX la decide; si no, la de la columna. */
+    private formatoFila(col: powerbi.DataViewValueColumn | undefined, porDefecto: (v: any) => string): (v: any, i: number) => string {
+        const cache = new Map<string, (v: any) => string>();
+        const objs: any[] = (col as any)?.objects ?? [];
+        return (v: any, i: number) => {
+            const d = objs[i]?.general?.formatString;
+            if (typeof d !== "string" || !d) return porDefecto(v);
+            let f = cache.get(d);
+            if (!f) {
+                try { const vf = valueFormatter.create({ format: d, cultureSelector: this.host.locale }); f = (x: any) => vf.format(x); }
+                catch { f = porDefecto; }
+                cache.set(d, f);
+            }
+            return f(v);
+        };
     }
 
     private parse(dv: powerbi.DataView): Point[] {
@@ -337,16 +439,36 @@ export class Visual implements IVisual {
         const xs = nums(xCol), ys = nums(yCol), ss = nums(sizeCol);
         const maxAbs = (a: number[]) => a.reduce((m, v) => isFinite(v) ? Math.max(m, Math.abs(v)) : m, 0);
         // Formato del modelo para tooltips y etiquetas (cadena de la medida, idioma del informe).
-        const tipX = this.formatterFor(xCol, 0), tipY = this.formatterFor(yCol, 0), tipS = this.formatterFor(sizeCol, 0);
+        // Valores sin escalar en la ayuda; con formato dinámico, el de cada fila.
+        const sinEscala = (col: powerbi.DataViewValueColumn | undefined) => {
+            try { const f = valueFormatter.create({ format: col?.source?.format, cultureSelector: this.host.locale }); return (v: any) => f.format(v); }
+            catch { return (v: any) => String(v ?? ""); }
+        };
+        const tipX = this.formatoFila(xCol, sinEscala(xCol)), tipY = this.formatoFila(yCol, sinEscala(yCol)), tipS = this.formatoFila(sizeCol, sinEscala(sizeCol));
         this.fmtX = this.formatterFor(xCol, maxAbs(xs));
         this.fmtS = this.formatterFor(sizeCol, maxAbs(ss));
         this.fmtY = this.formatterFor(yCol, maxAbs(ys));
-        this.fmtXcol = xCol?.source?.format ?? "";
-        this.fmtYcol = yCol?.source?.format ?? "";
-        const tipFmt = tipCols.map(c => {
-            try { const f = valueFormatter.create({ format: c.source?.format, cultureSelector: this.host.locale }); return (v: any) => f.format(v); }
-            catch { return (v: any) => String(v ?? ""); }
-        });
+        this.fmtXcol = this.formatoDe(xCol) ?? "";
+        this.fmtYcol = this.formatoDe(yCol) ?? "";
+        const tipFmt = tipCols.map(c => this.formatoFila(c, sinEscala(c)));
+
+        // Grupos de la leyenda (1.2): orden de los datos, primera fila de cada uno y el color elegido en el panel
+        // (seriesColors, guardado con el selector de esa fila). Power BI puede dejarlo en la columna de la leyenda o en
+        // la primera columna de categorías: se miran las dos.
+        this.legendCol = legCol ?? null;
+        this.seriesData = [];
+        this.seriesRow = new Map();
+        this.seriesChosen = new Map();
+        if (legCol) {
+            for (let i = 0; i < rows; i++) {
+                const nm = String(legCol.values[i] ?? "");
+                if (!this.seriesRow.has(nm)) { this.seriesRow.set(nm, i); this.seriesData.push(nm); }
+                if (this.seriesChosen.has(nm)) continue;
+                const c = (legCol.objects?.[i] as any)?.seriesColors?.fill?.solid?.color
+                    ?? (cats[0] !== legCol ? (cats[0]?.objects?.[i] as any)?.seriesColors?.fill?.solid?.color : undefined);
+                if (esHex(c)) this.seriesChosen.set(nm, c);
+            }
+        }
 
         const baseR = this.settings.dataPoints.radius.value;
         const minR = Math.max(2, baseR * 0.4), maxR = Math.max(minR + 2, baseR * 4);
@@ -371,12 +493,12 @@ export class Visual implements IVisual {
             const tips: VisualTooltipDataItem[] = [];
             if (catCol) tips.push({ displayName: this.names.category, value: label });
             if (legCol) tips.push({ displayName: this.names.legend, value: series ?? "" });
-            tips.push({ displayName: this.names.x, value: tipX(x) }, { displayName: this.names.y, value: tipY(y) });
-            if (sizeCol) tips.push({ displayName: this.names.size, value: isFinite(ss[i]) ? tipS(ss[i]) : "" });
-            tipCols.forEach((c, k) => tips.push({ displayName: c.source?.displayName ?? "", value: tipFmt[k](c.values[i]) }));
+            tips.push({ displayName: this.names.x, value: tipX(x, i) }, { displayName: this.names.y, value: tipY(y, i) });
+            if (sizeCol) tips.push({ displayName: this.names.size, value: isFinite(ss[i]) ? tipS(ss[i], i) : "" });
+            tipCols.forEach((c, k) => tips.push({ displayName: c.source?.displayName ?? "", value: tipFmt[k](c.values[i], i) }));
             const hl = xCol?.highlights;
             out.push({
-                x, y, r: rOf(ss[i]), s: ss[i] ?? NaN, label, series, fx: typeof fxv === "string" ? fxv : null,
+                x, y, r: rOf(ss[i]), s: ss[i] ?? NaN, label, series, fx: typeof fxv === "string" ? fxv : null, row: i,
                 id: b.createSelectionId(), highlighted: hl ? hl[i] !== null && hl[i] !== undefined : false, tips
             });
         }
@@ -395,7 +517,82 @@ export class Visual implements IVisual {
         if (objs?.cards?.show === true) out.push({ kind: "cards", label: this.t("Pro_Cards", "zone counts"), key: "cards" });
         if (objs?.zoneTable?.show === true) out.push({ kind: "table", label: this.t("Pro_Table", "zone table"), key: "table" });
         if (objs?.axes?.fixedAxes === true) out.push({ kind: "fixed", label: this.t("Pro_Fixed", "fixed axis range"), key: "fixed" });
+        const tpl = String(objs?.style?.template ?? "");
+        if (PRO_STYLES.indexOf(tpl) >= 0) out.push({ kind: "style", label: this.t("Pro_Styles", "collection styles"), key: "style=" + tpl });
         return out;
+    }
+
+    /**
+     * Color de cada grupo de la leyenda. Un color elegido en el panel siempre gana (ningún estilo lo pisa); si no, la
+     * paleta del estilo de la colección, por orden de aparición; si no, la del tema del informe, como en la 1.1.
+     * En alto contraste, el primer plano del tema.
+     */
+    private resolverColoresSerie(tk: StyleTokens | undefined): void {
+        // La paleta del host da los colores por orden de llamada. Se piden SIEMPRE todos y en el orden en que la 1.1 los
+        // pedía al dibujar (burbujas grandes primero): así un informe 1.1 conserva sus colores, y elegir el color de un
+        // grupo no mueve el de los demás.
+        const tema = new Map<string, string>();
+        const pedir = (nm: string) => { if (!tema.has(nm)) tema.set(nm, this.host.colorPalette.getColor(nm).value); };
+        const pts = this.points;
+        // Con "Colour by" distinto de Auto la 1.1 no pedía los grupos al dibujar (los pedía la tabla, después): igual aquí.
+        const auto = String((this.settings.dataPoints.colorBy.value as any)?.value ?? "auto") === "auto";
+        if (auto) {
+            pts.map((_p, i) => i).sort((a, b) => pts[b].r - pts[a].r).forEach(i => { if (pts[i].series !== null) pedir(pts[i].series); });
+            this.seriesData.forEach(pedir);
+        }
+        this.seriesColor = new Map();
+        this.seriesData.forEach((nm, k) => {
+            const c = this.hc.on ? this.hc.fg : this.seriesChosen.get(nm) ?? (tk ? styleSeriesColor(tk.series, k) : tema.get(nm));
+            if (c) this.seriesColor.set(nm, c);
+        });
+    }
+
+    private colorSerie(nm: string): string {
+        return this.seriesColor.get(nm) ?? (this.hc.on ? this.hc.fg : this.host.colorPalette.getColor(nm).value);
+    }
+
+    /** Orden de la leyenda (1.2): el de los datos (como siempre), alfabético o por tamaño (suma de Size, o puntos). */
+    private ordenarSeries(series: string[]): string[] {
+        const modo = String((this.settings.legend.order.value as any)?.value ?? "data");
+        if (modo === "alpha") {
+            const col = new Intl.Collator(this.host.locale || undefined, { numeric: true, sensitivity: "base" });
+            return series.slice().sort((a, b) => col.compare(a, b));
+        }
+        if (modo === "size") {
+            const conTam = this.points.some(p => isFinite(p.s));
+            const peso = new Map<string, number>();
+            for (const p of this.points) if (p.series !== null) peso.set(p.series, (peso.get(p.series) ?? 0) + (conTam ? (isFinite(p.s) ? p.s : 0) : 1));
+            const pos = new Map(series.map((n, i) => [n, i]));
+            return series.slice().sort((a, b) => (peso.get(b) ?? 0) - (peso.get(a) ?? 0) || pos.get(a) - pos.get(b));
+        }
+        return series.slice();
+    }
+
+    /**
+     * Report theme (1.2, gratis): los colores del tema del informe, sin fondo propio (lo pinta Power BI). Mismas
+     * propiedades que las otras plantillas, para que elegirlo o dejarlo se comporte igual.
+     */
+    private temaInforme(): Record<string, Record<string, string | number | boolean>> {
+        const cp: any = this.host.colorPalette;
+        const fg = esHex(cp?.foreground?.value) ? cp.foreground.value : "#252423";
+        const soft = esHex(cp?.foregroundNeutralSecondary?.value) ? cp.foregroundNeutralSecondary.value : mezcla(fg, "#FFFFFF", 0.35);
+        const panel = esHex(cp?.background?.value) ? cp.background.value : "#FFFFFF";
+        const line = esHex(cp?.backgroundNeutral?.value) ? cp.backgroundNeutral.value : mezcla(panel, fg, 0.12);
+        // El color principal: el del primer grupo si hay leyenda (no se gasta otro color del tema); si no, el primero del tema.
+        const base = this.seriesData.length ? this.colorSerie(this.seriesData[0]) : cp.getColor("bs-report-base").value;
+        const tintas = [mezcla(panel, base, 0.14), mezcla(panel, fg, 0.07), mezcla(panel, base, 0.26), mezcla(panel, fg, 0.14), mezcla(panel, base, 0.38)];
+        const zonas = (orden: number[]) => orden.reduce((acc, c, i) => {
+            acc[`zone${i + 1}Color`] = tintas[c]; acc[`zone${i + 1}Opacity`] = 100; return acc;
+        }, { labelBgColor: panel } as Record<string, string | number>);
+        return {
+            upperZones: zonas([0, 1, 2, 3, 4]),
+            lowerZones: zonas([1, 0, 3, 2, 4]),
+            dataPoints: { fill: base, borderColor: panel, labelColor: fg },
+            referenceLines: { yRefColor: soft },
+            axes: { tickColor: soft, titleColor: fg, gridColor: line, plotBackground: panel },
+            legend: { color: soft },
+            trendLine: { color: fg }
+        };
     }
 
     // ── Dibujo ────────────────────────────────────────────────────────────────
@@ -404,9 +601,6 @@ export class Visual implements IVisual {
         const options = this.lastOptions!;
         const dv = options.dataViews?.[0];
         const objs: any = dv?.metadata?.objects ?? {};
-        const tpl = String(objs?.style?.template ?? "classic");
-        this.applyTemplateDefaults(tpl, objs);
-        const s = this.settings;
         const points = this.points;
 
         const touched = this.proTouched(objs);
@@ -414,14 +608,32 @@ export class Visual implements IVisual {
         const preview = !licensed && this.editing && this.license.resolved && !this.license.serviceUnavailable;
         const on = (kind: string) => licensed || (preview && touched.some(x => x.kind === kind));
 
+        // Estilo en uso: uno de la colección solo con licencia o en vista previa; en lectura sin licencia, Classic (el
+        // resultado gratis). El panel sigue mostrando lo elegido.
+        const tplGuardada = String(objs?.style?.template ?? "classic");
+        const tpl = PRO_STYLES.indexOf(tplGuardada) >= 0 && !on("style") ? "classic" : tplGuardada;
+        const tk: StyleTokens | undefined = this.hc.on ? undefined : STYLE_TOKENS[tpl];
+        this.resolverColoresSerie(tk);
+        const tplVals = tpl === "report" ? this.temaInforme() : (TEMPLATES[tpl] ?? {});
+        this.applyTemplateDefaults(tplVals, objs);
+        const s = this.settings;
+        if (tk?.font && objs?.axes?.fontFamily === undefined) s.axes.fontFamily.value = tk.font;
+        // Fondo del visual: el del estilo de la colección (con su degradado); Classic, las plantillas gratis y Report theme
+        // siguen transparentes, como en la 1.1. En alto contraste, el fondo del tema.
+        this.root.style.background = this.hc.on ? this.hc.bg : (tk ? (tk.grad ?? tk.bg) : "");
+        this.root.style.color = this.hc.on ? this.hc.fg : (tk ? tk.text : "");
+
         // Un filtro que deja 0 puntos: aviso, nunca las burbujas anteriores (serían datos que no corresponden al filtro).
         if (!points.length) {
             this.clear();
             const m = document.createElement("div");
             m.className = "bs-empty";
+            m.style.fontSize = this.fz(12) + "px";
+            if (this.hc.on || tk) m.style.color = this.hc.on ? this.hc.fg : tk.muted;
             m.textContent = this.t("UI_NoData", "No data for the current filters");
             this.root.appendChild(m);
             this.notifier?.required(this.license, false);
+            this.renderWatermark([]);
             this.renderGuide(options.viewport);
             return;
         }
@@ -436,14 +648,16 @@ export class Visual implements IVisual {
         const tableSize = tableOn ? (this.tableFit > 0 ? Math.min(tableMax, this.tableFit) : tableMax) : 0;
         const W = tableRight ? fullW - tableSize : fullW, H = tableRight ? fullH : fullH - tableSize;
 
-        const cp: any = this.host.colorPalette;
-        const hc = !!cp?.isHighContrast;
-        const fg = hc ? cp.foreground.value : "";
-        const bg = hc ? cp.background.value : "";
-        const fgSel = hc ? cp.foregroundSelected.value : "";
+        const hc = this.hc.on;
+        const fg = hc ? this.hc.fg : "";
+        const bg = hc ? this.hc.bg : "";
+        const fgSel = hc ? this.hc.sel : "";
         const font = String(s.axes.fontFamily.value || "Segoe UI, sans-serif");
         const plotBg = hc ? bg : s.axes.plotBackground.value.value;
-        const darkPlot = !hc && oscuro(plotBg);
+        // Con degradado (Aurora) el área de dibujo deja verlo, salvo que el autor fije su propio fondo.
+        const plotFill = !hc && tk?.grad && objs?.axes?.plotBackground === undefined ? "none" : plotBg;
+        const darkPlot = !hc && (tk ? !!tk.dark && objs?.axes?.plotBackground === undefined || oscuro(plotBg) : oscuro(plotBg));
+        const fz = (px: number) => this.fz(px);
 
         // ── Líneas efectivas ──────────────────────────────────────────────────
         const xsAll = points.map(p => p.x), ysAll = points.map(p => p.y);
@@ -465,15 +679,17 @@ export class Visual implements IVisual {
         const zoneOf = (p: Point) => (p.y >= yRef ? "U" : "L") + zoneIndex(p.x, p.y >= yRef ? upper : lower);
 
         // ── Leyenda ───────────────────────────────────────────────────────────
-        const series: string[] = [];
         const seriesSet = new Set<string>();
-        for (const p of points) if (p.series !== null && !seriesSet.has(p.series)) { seriesSet.add(p.series); series.push(p.series); }
+        for (const p of points) if (p.series !== null) seriesSet.add(p.series);
+        // Grupos con puntos, en el orden elegido (datos, alfabético o tamaño): leyenda y filas de la tabla de zonas.
+        const series = this.ordenarSeries(this.seriesData.filter(n => seriesSet.has(n)));
+        this.seriesOrder = series;
         const colorBy = String((s.dataPoints.colorBy.value as any)?.value ?? "auto");
         const byLegend = series.length > 0 && (colorBy === "auto");
-        const seriesColor = (v: string) => this.host.colorPalette.getColor(v).value;
+        const seriesColor = (v: string) => this.colorSerie(v);
         const showLegend = byLegend && s.legend.show.value;
         const legPos = String((s.legend.position.value as any)?.value ?? "top");
-        const legFs = s.legend.fontSize.value;
+        const legFs = fz(s.legend.fontSize.value);
         // Peso de cada grupo: sobre la selección (zona o puntos), si no sobre lo resaltado, si no sobre todo.
         let shares: Map<string, string> | null = null;
         let shareLead = "";
@@ -489,7 +705,7 @@ export class Visual implements IVisual {
             if (base !== points) shareLead = this.selectedZone
                 ? this.tf("UI_ShareZone", "In {0}:", this.zoneName(this.selectedZone, upper.length + 1)) : this.t("UI_ShareSel", "Selection:");
         }
-        const legRows = showLegend ? this.legendRows(series, W - 16, legFs, shares, shareLead) : [];
+        const legRows = showLegend ? this.legendRows(series, W - 16, legFs, shares, shareLead, font) : [];
         const legH = legRows.length ? legRows.length * (legFs + 8) + 4 : 0;
 
         // ── Ejes y márgenes ───────────────────────────────────────────────────
@@ -541,18 +757,18 @@ export class Visual implements IVisual {
         };
         const ticksOf = (a: number, b: number, count: number, log: boolean) => log ? logTicks(a, b, count) : niceTicks(a, b, count);
 
-        const ts = s.axes.tickSize.value;
+        const ts = fz(s.axes.tickSize.value);
         const td = Math.round(s.axes.tickDecimals.value);
         const tickFmt = (v: number, isX: boolean) => {
             // En un eje logarítmico cada marca lleva su propia unidad (1K, 10K, 1M): una sola para todo el eje se lee mal.
             if (td < 0 && (isX ? logX : logY)) {
                 // La unidad por magnitud: 100.000 sale "100K" y no "0,1M" (el formateador pasa a millones antes de tiempo).
                 const a = Math.abs(v), unidad = a >= 1e9 ? v : a >= 1e6 ? 1e6 : a >= 1e3 ? 1e4 : v;
-                try { return valueFormatter.create({ format: isX ? this.fmtXcol : this.fmtYcol, value: unidad, cultureSelector: this.host.locale }).format(v); }
+                try { return valueFormatter.create({ format: isX ? this.fmtXcol : this.fmtYcol, value: unidad, cultureSelector: this.host.locale, displayUnitSystemType: 2 }).format(v); }
                 catch { return String(v); }
             }
             if (td < 0) return isX ? this.fmtX(v) : this.fmtY(v);
-            try { return valueFormatter.create({ format: isX ? this.fmtXcol : this.fmtYcol, value: Math.max(Math.abs(iX(xMax)), Math.abs(iX(xMin))), precision: td, cultureSelector: this.host.locale }).format(v); }
+            try { return valueFormatter.create({ format: isX ? this.fmtXcol : this.fmtYcol, value: Math.max(Math.abs(iX(xMax)), Math.abs(iX(xMin))), precision: td, cultureSelector: this.host.locale, displayUnitSystemType: 2 }).format(v); }
             catch { return v.toFixed(td); }
         };
         const yTicks = ticksOf(yMin, yMax, Math.max(2, Math.floor(H / 60)), logY);
@@ -560,8 +776,8 @@ export class Visual implements IVisual {
         const showTitles = s.axes.showTitles.value;
         const xTitle = showTitles ? (s.axes.xTitle.value || this.names.x) : "";
         const yTitle = showTitles ? (s.axes.yTitle.value || this.names.y) : "";
-        const tts = s.axes.titleSize.value;
-        const yLabW = Math.max(...yLabels.map(l => l.length), 1) * ts * 0.58;
+        const tts = fz(s.axes.titleSize.value);
+        const yLabW = Math.max(...yLabels.map(l => medir(l, ts, font)), ts * 0.6);
         const ML = Math.round(yLabW + 12 + (yTitle ? tts + 8 : 0));
         const MR = 14;
         const MT = 10 + (legPos === "top" ? legH : 0);
@@ -569,6 +785,13 @@ export class Visual implements IVisual {
         const plotW = W - ML - MR, plotH = H - MT - MB;
         if (plotW <= 20 || plotH <= 20) { this.clear(); return; }
         const xTicks = ticksOf(xMin, xMax, Math.max(2, Math.floor(plotW / Math.max(60, ts * 7))), logX);
+        const sinTitulo = (txt: string, max: number, px: number): string => {
+            // Un título más largo que su eje se corta con "…": nunca se sale del visual.
+            if (!txt || medir(txt, px, font) <= max) return txt;
+            let n = txt.length;
+            while (n > 1 && medir(txt.slice(0, n) + "…", px, font) > max) n--;
+            return txt.slice(0, n) + "…";
+        };
 
         // Las escalas reciben unidades de dato y aplican el log si toca.
         const xs = (v: number) => ML + ((tX(v) - xMin) / (xMax - xMin)) * plotW;
@@ -589,7 +812,7 @@ export class Visual implements IVisual {
             "aria-label": this.tf("Aria_Chart", "{0}, {1} points", TITLE, String(points.length)) });
         const clip = svgEl("clipPath", { id: this.clipId }, svgEl("defs", {}, svg));
         svgEl("rect", { x: ML, y: MT, width: plotW, height: plotH }, clip);
-        svgEl("rect", { x: ML, y: MT, width: plotW, height: plotH, fill: plotBg, stroke: hc ? fg : (darkPlot ? "#3B3A39" : "#D0D0D0"), "stroke-width": 1, "data-o": "plot" }, svg);
+        svgEl("rect", { x: ML, y: MT, width: plotW, height: plotH, fill: plotFill, stroke: hc ? fg : (darkPlot ? "#3B3A39" : "#D0D0D0"), "stroke-width": 1, "data-o": "plot" }, svg);
         const ca = { "clip-path": `url(#${this.clipId})` };
         const gZones = svgEl("g", ca, svg), gGrid = svgEl("g", ca, svg), gLines = svgEl("g", ca, svg);
         const gAxes = svgEl("g", {}, svg), gPoints = svgEl("g", ca, svg), gTrend = svgEl("g", ca, svg);
@@ -602,7 +825,7 @@ export class Visual implements IVisual {
         const half = (isUpper: boolean, lines: Line[]) => {
             const z = isUpper ? s.upperZones : s.lowerZones;
             const zObj = isUpper ? objs?.upperZones : objs?.lowerZones;
-            const tplZ: any = (TEMPLATES[tpl] ?? {})[isUpper ? "upperZones" : "lowerZones"] ?? {};
+            const tplZ: any = tplVals[isUpper ? "upperZones" : "lowerZones"] ?? {};
             const yTop = isUpper ? MT : yRefPx, yBot = isUpper ? yRefPx : MT + plotH;
             const zh = yBot - yTop;
             if (zh <= 0.5) return;
@@ -629,11 +852,14 @@ export class Visual implements IVisual {
                     tabindex: 0, role: "button", "aria-pressed": isSel ? "true" : "false",
                     "aria-label": this.tf("Aria_Zone", "{0}: {1} points", label, String(count))
                 }, gZones);
-                const fs = z.labelFontSize.value;
+                // El rótulo encoge con el visual y, si no cabe en su zona, un poco más (hasta el mínimo): no se quita.
+                let fs = fz(z.labelFontSize.value);
+                const lw = medir(label, fs, font);
+                if (lw > zw - 8) fs = Math.max(this.minTexto(), Math.floor(fs * (zw - 8) / lw * 10) / 10);
                 const lx = zx + zw / 2, ly = yTop + zh / 2 + fs * 0.35;
                 const bgOp = z.labelBgOpacity.value / 100;
                 if (bgOp > 0 && !hc) {
-                    const bw = Math.max(0, Math.min(zw - 8, label.length * fs * 0.6 + 8));
+                    const bw = Math.max(0, Math.min(zw - 8, medir(label, fs, font) + 10));
                     svgEl("rect", { x: f1(lx - bw / 2), y: f1(ly - fs - 4 + fs * 0.35), width: f1(bw), height: f1(fs + 8), rx: 4,
                         fill: z.labelBgColor.value.value, "fill-opacity": (bgOp * (dim ? 0.35 : 1)).toFixed(2), "pointer-events": "none" }, gZoneLbl);
                 }
@@ -656,21 +882,25 @@ export class Visual implements IVisual {
         }
         let lastRight = -Infinity;
         for (const v of xTicks) {
-            const lbl = tickFmt(v, true), px = xs(v), w = lbl.length * ts * 0.58;
+            const lbl = tickFmt(v, true), w = medir(lbl, ts, font);
+            // La primera y la última no se salen del visual: se apoyan en el borde en vez de centrarse.
+            const px = Math.max(w / 2 + 1, Math.min(W - w / 2 - 1, xs(v)));
             if (px - w / 2 < lastRight + 6) continue;      // sin solapes entre etiquetas del eje X
             lastRight = px + w / 2;
             svgEl("text", { x: f1(px), y: MT + plotH + ts + 4, "text-anchor": "middle", "font-family": font, "font-size": ts, fill: tc, "data-o": "ticks" }, gAxes, lbl);
         }
         yTicks.forEach((v, i) => svgEl("text", { x: ML - 6, y: f1(ys(v) + ts * 0.35), "text-anchor": "end", "font-family": font, "font-size": ts, fill: tc, "data-o": "ticks" }, gAxes, yLabels[i]));
         const ttc = hc ? fg : s.axes.titleColor.value.value;
-        if (xTitle) svgEl("text", { x: f1(ML + plotW / 2), y: f1(MT + plotH + ts + 10 + tts), "text-anchor": "middle", "font-family": font, "font-size": tts, fill: ttc, "data-o": "titles" }, gAxes, xTitle);
+        if (xTitle) svgEl("text", { x: f1(ML + plotW / 2), y: f1(MT + plotH + ts + 10 + tts), "text-anchor": "middle", "font-family": font, "font-size": tts, fill: ttc, "data-o": "titles" },
+            gAxes, sinTitulo(xTitle, W - 8, tts));
         if (yTitle) {
             const cx = tts, cy = MT + plotH / 2;
-            svgEl("text", { transform: `rotate(-90,${cx},${f1(cy)})`, x: cx, y: f1(cy), "text-anchor": "middle", "font-family": font, "font-size": tts, fill: ttc, "data-o": "titles" }, gAxes, yTitle);
+            svgEl("text", { transform: `rotate(-90,${cx},${f1(cy)})`, x: cx, y: f1(cy), "text-anchor": "middle", "font-family": font, "font-size": tts, fill: ttc, "data-o": "titles" },
+                gAxes, sinTitulo(yTitle, Math.max(plotH + MT, 20), tts));
         }
 
         if (this.logFallback && this.editing) {
-            svgEl("text", { x: ML + plotW - 4, y: MT + plotH - 6, "text-anchor": "end", "font-family": font, "font-size": 10,
+            svgEl("text", { x: ML + plotW - 4, y: MT + plotH - 6, "text-anchor": "end", "font-family": font, "font-size": fz(10),
                 fill: hc ? fg : "#A4262C", "pointer-events": "none" }, gAxes, this.t("UI_LogFallback", "Log scale needs values above 0: shown linear"));
         }
 
@@ -713,20 +943,24 @@ export class Visual implements IVisual {
         };
         // Orden de dibujo: las grandes primero, las pequeñas encima (no quedan tapadas).
         const order = points.map((_p, i) => i).sort((a, b) => points[b].r - points[a].r);
+        // El color de cada punto se guarda: la ayuda emergente lo enseña junto al grupo (mismo color que burbuja y leyenda).
+        // En el orden de dibujo, como la 1.1: la paleta del host reparte por orden de llamada ("Each category").
+        this.pointColor = new Array(points.length);
+        for (const i of order) this.pointColor[i] = colorOf(points[i]);
         for (const i of order) {
             const p = points[i];
             let op = baseOp;
             if (hasHl && !p.highlighted) op *= 0.25;
             if (sel.size && !sel.has(i)) op *= 0.25;
             const isSel = sel.has(i);
-            svgEl("circle", { "data-idx": i, "data-o": "points", cx: f1(xs(p.x)), cy: f1(ys(p.y)), r: f1(rad(p)), fill: colorOf(p),
+            svgEl("circle", { "data-idx": i, "data-o": "points", cx: f1(xs(p.x)), cy: f1(ys(p.y)), r: f1(rad(p)), fill: this.pointColor[i],
                 "fill-opacity": op.toFixed(2), stroke: isSel && hc ? fgSel : bc, "stroke-width": isSel ? Math.max(2, bw) : bw,
                 "stroke-opacity": Math.min(1, op + 0.15).toFixed(2) }, gPoints);
         }
 
         // ── Etiquetas de datos (sin solapes) ──────────────────────────────────
         if (s.dataPoints.showLabels.value && points.length) {
-            const lfs = s.dataPoints.labelSize.value;
+            const lfs = fz(s.dataPoints.labelSize.value);
             const lc = hc ? fg : s.dataPoints.labelColor.value.value;
             const cell = 48, grid = new Map<string, number[][]>();
             const choque = (b: number[]) => {
@@ -749,7 +983,7 @@ export class Visual implements IVisual {
                 const p = points[i];
                 if (!p.label) continue;
                 const cx = xs(p.x), cy = ys(p.y) - rad(p) - 3;
-                const w = p.label.length * lfs * 0.56;
+                const w = medir(p.label, lfs, font);
                 const box = [cx - w / 2, cy - lfs, cx + w / 2, cy + 2];
                 if (box[0] < ML || box[2] > ML + plotW || box[1] < MT || choque(box)) continue;
                 poner(box);
@@ -781,7 +1015,7 @@ export class Visual implements IVisual {
                 if (pts.length > 1) svgEl("polyline", at, gTrend);
                 if (s.trendLine.showR2.value && syy > 0 && n > 2) {
                     const r2 = (sxy * sxy) / (sxx * syy);
-                    svgEl("text", { x: ML + plotW - 6, y: MT + 14, "text-anchor": "end", "font-family": font, "font-size": 11, fill: tcol,
+                    svgEl("text", { x: ML + plotW - 6, y: MT + 4 + fz(11), "text-anchor": "end", "font-family": font, "font-size": fz(11), fill: tcol,
                         "font-weight": 600, "data-o": "trend" }, gTrend, "R² " + r2.toLocaleString(this.host.locale || undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                 }
             }
@@ -789,7 +1023,7 @@ export class Visual implements IVisual {
 
         // ── Recuentos por zona (Pro) ──────────────────────────────────────────
         if (on("cards") && s.zoneCards.show.value) {
-            const cfs = s.zoneCards.fontSize.value;
+            const cfs = fz(s.zoneCards.fontSize.value);
             const pct = s.zoneCards.showPercent.value;
             const total = points.length || 1;
             const put = (isUpper: boolean, lines: Line[]) => {
@@ -802,7 +1036,7 @@ export class Visual implements IVisual {
                     const k = (isUpper ? "U" : "L") + i, c = zoneCounts[k] ?? 0;
                     const loc = this.host.locale || undefined;
                     const txt = pct ? `${c.toLocaleString(loc)} · ${Math.round(c * 100 / total)}%` : c.toLocaleString(loc);
-                    const w = Math.max(24, txt.length * cfs * 0.62 + 12), h = cfs + 9;
+                    const w = Math.max(24, medir(txt, cfs, font, "600") + 12), h = cfs + 9;
                     svgEl("rect", { x: f1(x0 + 5), y: f1(top + 5), width: f1(w), height: h, rx: 4, fill: hc ? bg : "rgba(0,0,0,0.6)",
                         stroke: hc ? fg : "none", "data-o": "cards", "aria-hidden": "true", "pointer-events": "none" }, gCards);
                     svgEl("text", { x: f1(x0 + 5 + w / 2), y: f1(top + 5 + h / 2 + cfs * 0.35), "text-anchor": "middle", "font-family": font,
@@ -884,11 +1118,11 @@ export class Visual implements IVisual {
     }
 
     /** Reparte los nombres de la leyenda en filas (como mucho 2; el resto se corta con "…"). */
-    private legendRows(series: string[], width: number, fs: number, shares: Map<string, string> | null, lead: string): LegItem[][] {
+    private legendRows(series: string[], width: number, fs: number, shares: Map<string, string> | null, lead: string, font: string): LegItem[][] {
         const rows: LegItem[][] = [[]];
         let x = 0;
         if (lead) {
-            const w = lead.length * fs * 0.6 + 10;
+            const w = medir(lead, fs, font, "600") + 10;
             rows[0].push({ name: "", text: lead, w, lead: true });
             x = w;
         }
@@ -896,7 +1130,7 @@ export class Visual implements IVisual {
             let text = name || this.t("UI_Blank", "(Blank)");
             if (text.length > 24) text = text.slice(0, 23) + "…";
             const share = shares?.get(name) ?? "";
-            const w = fs + 4 + (text.length + (share ? share.length + 1 : 0)) * fs * 0.58 + 14;
+            const w = fs + 4 + medir(text, fs, font) + (share ? medir(share, fs, font, "600") + 4 : 0) + 14;
             if (x + w > width && rows[rows.length - 1].length) {
                 if (rows.length === 2) { rows[1].push({ name: "", text: "…", w: fs * 2, lead: true }); break; }
                 rows.push([]);
@@ -944,7 +1178,7 @@ export class Visual implements IVisual {
         const color = o.hc ? o.fg : s.legend.color.value.value;
         caja.style.color = color;
         caja.style.fontFamily = o.font;
-        caja.style.fontSize = s.zoneTable.fontSize.value + "px";
+        caja.style.fontSize = this.fz(s.zoneTable.fontSize.value) + "px";
         if (o.hc) caja.style.background = o.bg;
         const tabla = document.createElement("table");
         const cap = document.createElement("caption");
@@ -984,7 +1218,9 @@ export class Visual implements IVisual {
             th.scope = "row";
             th.textContent = f === null ? this.t("UI_All", "All") : (f || this.t("UI_Blank", "(Blank)"));
             if (f !== null) {
-                if (!o.hc) th.style.borderLeft = "3px solid " + this.host.colorPalette.getColor(f).value;
+                // El mismo color que su burbuja y su leyenda (el elegido en el panel, el del estilo o el del tema).
+                th.setAttribute("data-fila", f);
+                if (!o.hc) th.style.borderLeft = "3px solid " + this.colorSerie(f);
                 pulsable(th, () => { this.selectedZone = null; this.selectPoints(pts.map((p, i) => p.series === f ? i : -1).filter(i => i >= 0), false); });
             }
             tr.appendChild(th);
@@ -1040,8 +1276,8 @@ export class Visual implements IVisual {
 
     // ── Plantillas ────────────────────────────────────────────────────────────
 
-    private applyTemplateDefaults(tpl: string, objs: any): void {
-        const tp = TEMPLATES[tpl];
+    /** Pone los valores de la plantilla (o de Report theme) donde el autor no ha fijado nada: lo guardado siempre gana. */
+    private applyTemplateDefaults(tp: Record<string, Record<string, string | number | boolean>>, objs: any): void {
         if (!tp) return;
         Object.keys(tp).forEach(obj => {
             const card: any = (this.settings.cards as any[]).find(c => c.name === obj);
@@ -1081,24 +1317,21 @@ export class Visual implements IVisual {
 
     // ── Vista previa Pro: marca de agua ───────────────────────────────────────
 
-    /** "Pro preview" y debajo lo que la ha encendido. Con DOM y textContent, nunca innerHTML. */
+    /**
+     * "Pro preview" y debajo las funciones Pro que la encienden: la pieza común de la cartera (utillaje/comun/watermark),
+     * nunca una propia. El pintado vacía el contenedor: la marca se vuelve a poner encima cada vez.
+     */
     private renderWatermark(labels: string[]): void {
-        this.root.querySelectorAll(".bs-watermark").forEach(n => n.remove());
-        if (!labels.length) return;
-        const capa = document.createElement("div");
-        capa.className = "bs-watermark";
-        capa.setAttribute("aria-hidden", "true");
-        const w = this.root.clientWidth || 300, h = this.root.clientHeight || 200;
-        const fs = Math.round(Math.max(20, Math.min(72, w / 8, h / 3.5)));
-        const linea = (texto: string, px: number) => {
-            const el = document.createElement("div");
-            el.textContent = texto;
-            el.style.fontSize = px + "px";
-            capa.appendChild(el);
-        };
-        linea(this.t("UI_ProPreview", "Pro preview"), fs);
-        linea(labels.join(" · "), Math.round(fs * 0.34));
-        this.root.appendChild(capa);
+        this.root.appendChild(this.wm);   // siempre la última: encima de la tabla y del gráfico
+        if (!labels.length) { renderProWatermark(this.wm, null); return; }
+        const vp = this.lastOptions?.viewport;
+        renderProWatermark(this.wm, {
+            width: this.root.clientWidth || vp?.width || 300,
+            height: this.root.clientHeight || vp?.height || 200,
+            title: this.t("UI_ProPreview", "Pro preview"),
+            features: labels,
+            highContrast: this.hc.on ? { foreground: this.hc.fg, background: this.hc.bg } : null,
+        });
     }
 
     // ── Consejos de configuración (solo editando) ─────────────────────────────
@@ -1113,15 +1346,15 @@ export class Visual implements IVisual {
         const s = this.settings;
         if (!this.editing || this.formatMode || !s.style.guide.value || !this.interactionsAllowed()) return;
         if (!vp || vp.width < 360 || vp.height < 220) return;
-        const pal: any = this.host.colorPalette;
-        const hc = !!pal?.isHighContrast;
-        const azul = hc ? (pal.foregroundSelected?.value || "#FFFF00") : "#2B6CB0";
-        const fg = hc ? (pal.foreground?.value || "#FFF") : "";
+        const hc = this.hc.on;
+        const azul = hc ? this.hc.sel : "#2B6CB0";
+        const fg = hc ? this.hc.fg : "";
         const g = document.createElement("div");
         g.className = "bs-guide";
         g.setAttribute("role", "region");
         g.setAttribute("aria-label", this.t("Guide_Title", "Setup tips"));
-        if (hc) Object.assign(g.style, { background: pal.background?.value || "#000", color: fg, borderColor: azul });
+        g.style.fontSize = this.fz(11.5) + "px";
+        if (hc) Object.assign(g.style, { background: this.hc.bg, color: fg, borderColor: azul });
         g.onclick = e => e.stopPropagation();
         g.onkeydown = e => e.stopPropagation();
         const fila = (titulo: string) => {
@@ -1141,15 +1374,21 @@ export class Visual implements IVisual {
             b.textContent = texto;
             b.setAttribute("aria-pressed", String(on));
             b.style.borderColor = azul;
-            if (on) { b.style.background = azul; b.style.color = hc ? (pal.background?.value || "#000") : "#FFFFFF"; } else b.style.color = azul;
+            if (on) { b.style.background = azul; b.style.color = hc ? this.hc.bg : "#FFFFFF"; } else b.style.color = azul;
             b.addEventListener("click", accion);
             f.appendChild(b);
         };
         const objs: any = this.lastOptions?.dataViews?.[0]?.metadata?.objects ?? {};
         const f1r = fila(this.t("Guide_TryStyle", "Try a style:"));
         const actual = String((s.style.template.value as any)?.value ?? "classic");
-        ([["classic", "Classic"], ["quadrant", "Four quadrants"], ["minimal", "Minimal"], ["soft", "Soft"], ["dark", "Dark background"]] as [string, string][])
+        ([["report", "Report theme"], ["classic", "Classic"], ["quadrant", "Four quadrants"], ["minimal", "Minimal"], ["soft", "Soft"], ["dark", "Dark background"]] as [string, string][])
             .forEach(([v, d]) => boton(f1r, this.t("Enum_" + v, d), v === actual, () => this.persistir([{ objectName: "style", properties: { template: v } }])));
+        // Los seis estilos de la colección (Pro), con sitio: sin licencia se ven al momento bajo la marca de agua.
+        if (vp.width >= 560) {
+            const fe = fila(this.t("Guide_ProStyles", "Pro styles:"));
+            PRO_STYLES.forEach(v => boton(fe, v.charAt(0).toUpperCase() + v.slice(1), v === actual,
+                () => this.persistir([{ objectName: "style", properties: { template: v } }])));
+        }
         const enMedia = (s.referenceLines.yRefMode.value as any)?.value === "average" && (s.upperZones.line1Mode.value as any)?.value === "average";
         boton(f1r, this.t("Guide_Average", "Quadrants at the average"), enMedia, () => this.persistir(enMedia
             ? [{ objectName: "referenceLines", properties: { yRefMode: "fixed" } }, { objectName: "upperZones", properties: { line1Mode: "fixed" } }]
@@ -1203,12 +1442,11 @@ export class Visual implements IVisual {
         this.clear();
         const w = vp?.width || this.root.clientWidth || 0, h = vp?.height || this.root.clientHeight || 0;
         const size = (w >= 560 && h >= 300) ? "l" : (w >= 320 && h >= 200) ? "m" : "s";
-        const pal: any = this.host.colorPalette;
-        const hc = !!pal?.isHighContrast;
-        const fg = hc ? (pal.foreground?.value || "#FFFFFF") : "";
+        const hc = this.hc.on;
+        const fg = hc ? this.hc.fg : "";
         const el = document.createElement("div");
         el.className = "bs-landing bs-landing-" + size;
-        if (hc) el.style.background = pal.background?.value || "#000000";
+        if (hc) el.style.background = this.hc.bg;
         const mk = (tag: string, cls?: string, text?: string): HTMLElement => {
             const n = document.createElement(tag);
             if (cls) n.className = cls;
@@ -1393,10 +1631,16 @@ export class Visual implements IVisual {
         const p = this.points[Number(pt.getAttribute("data-idx"))];
         if (!p) return;
         const rect = this.root.getBoundingClientRect();
+        // El color del punto (el mismo de la burbuja y de su grupo en la leyenda y la tabla) junto al grupo; sin
+        // leyenda, junto a la primera línea.
+        const i = Number(pt.getAttribute("data-idx"));
+        const color = this.pointColor[i];
+        const fila = p.series !== null ? p.tips.findIndex(tp => tp.displayName === this.names.legend) : 0;
+        const dataItems = p.tips.map((tp, k) => k === Math.max(0, fila) && color ? { ...tp, color } : tp);
         this.host.tooltipService.show({
             coordinates: [e.clientX - rect.left, e.clientY - rect.top],
             identities: [p.id],
-            dataItems: p.tips,
+            dataItems,
             isTouchEvent: false
         });
     }
@@ -1538,6 +1782,8 @@ export class Visual implements IVisual {
         s.axes.xTitle.visible = s.axes.yTitle.visible = s.axes.titleSize.visible = s.axes.titleColor.visible = !!s.axes.showTitles.value;
         s.axes.gridColor.visible = !!s.axes.showGridlines.value;
         s.dataPoints.labelSize.visible = s.dataPoints.labelColor.visible = !!s.dataPoints.showLabels.value;
+        s.legend.order.visible = !!this.legendCol;
+        s.legend.shareBy.visible = !!s.legend.showShare.value;
         (s.cards as any[]).forEach(c => (c.groups ?? []).forEach((g: any) => {
             if (g.displayNameKey) { g.displayName = this.t(g.displayNameKey, g.displayName); g.displayNameKey = undefined; }
         }));
@@ -1548,7 +1794,44 @@ export class Visual implements IVisual {
             const d = sl?.control?.properties?.descriptor;
             if (d?.objectName === "dataPoints" && d?.propertyName === "fill") d.altConstantValueSelector = null;
         })));
+        const series = this.seriesCard();
+        if (series) {
+            const i = model.cards.findIndex((c: any) => c.uid === "dataPoints-card");
+            model.cards.splice(i >= 0 ? i + 1 : model.cards.length, 0, series);
+        }
         return model;
+    }
+
+    /**
+     * Series colours (1.2, gratis): una muestra por grupo de la leyenda, en el orden de la leyenda, guardada con el
+     * selector de la primera fila del grupo (patrón de dataPoints por categoría; igual que Marimekko). Sin nada guardado,
+     * el color de siempre (tema del informe) o el del estilo. Solo con Legend y "Colour by = Auto", que es cuando se usa.
+     * Se construye a mano: FormattingSettingsService daría el mismo uid a todas las muestras.
+     */
+    private seriesCard(): powerbi.visuals.FormattingCard | null {
+        const col = this.legendCol;
+        const colorBy = String((this.settings.dataPoints.colorBy.value as any)?.value ?? "auto");
+        if (!col || !this.seriesData.length || colorBy !== "auto") return null;
+        const slices: powerbi.visuals.FormattingSlice[] = [];
+        this.ordenarSeries(this.seriesData).slice(0, 100).forEach((nm, k) => {
+            const row = this.seriesRow.get(nm);
+            if (row === undefined) return;
+            const selector = (this.host.createSelectionIdBuilder().withCategory(col, row).createSelectionId() as any).getSelector?.();
+            if (!selector) return;
+            slices.push({
+                uid: "seriesColors-fill-" + k,
+                displayName: nm || this.t("UI_Blank", "(Blank)"),
+                control: { type: powerbi.visuals.FormattingComponent.ColorPicker, properties: {
+                    descriptor: { objectName: "seriesColors", propertyName: "fill", selector }, value: { value: this.colorSerie(nm) } } },
+            } as powerbi.visuals.FormattingSlice);
+        });
+        if (!slices.length) return null;
+        return {
+            uid: "seriesColors-card",
+            displayName: this.t("card_seriesColors", "Series colours"),
+            groups: [{ uid: "seriesColors-group", displayName: "", slices }],
+            revertToDefaultDescriptors: slices.map((sl: any) => sl.control.properties.descriptor),
+        } as powerbi.visuals.FormattingCard;
     }
 
     /** Power BI recrea el visual al cambiar de página: un temporizador vivo levantaría el Upgrade sobre la nada. */
