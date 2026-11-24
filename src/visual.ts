@@ -179,6 +179,8 @@ export class Visual implements IVisual {
     /** Lo que de verdad necesita la tabla de zonas (ancho a la derecha, alto debajo), medido en el pintado anterior. */
     private tableFit = 0;
     private refitting = false;
+    /** La tabla pedida a la derecha no cabe ni apretada: en este tamaño va debajo. Se recalcula en cada update(). */
+    private tablaAbajo = false;
 
     // Rango aprendido para "ejes fijos" (Pro): solo crece.
     private fixedDomain: { xMin: number; xMax: number; yMin: number; yMax: number } | null = null;
@@ -365,6 +367,8 @@ export class Visual implements IVisual {
             if (firma !== this.fieldSignature) { this.fixedDomain = null; this.fieldSignature = firma; }
             this.selected = this.indicesFrom(this.selectionManager.getSelectionIds() as ISelectionId[]);
         }
+        this.tablaAbajo = false;
+        this.tableFit = 0;
         this.draw();
     }
 
@@ -642,9 +646,11 @@ export class Visual implements IVisual {
         const fullW = Math.max(60, vp.width), fullH = Math.max(60, vp.height);
         // Tabla de zonas (Pro): a la derecha o debajo; el gráfico ocupa el resto.
         const tableOn = on("table") && s.zoneTable.show.value && fullW >= 240 && fullH >= 160;
-        const tableRight = (s.zoneTable.position.value as any)?.value !== "bottom";
+        const tableRight = (s.zoneTable.position.value as any)?.value !== "bottom" && !this.tablaAbajo;
         // El % del panel es un MÁXIMO: la tabla ocupa lo que necesita y el gráfico se queda con el resto (sin hueco).
-        const tableMax = Math.round((tableRight ? fullW : fullH) * s.zoneTable.sizePct.value / 100);
+        // Si la pasamos debajo nosotros (a la derecha no cabía), el % del autor era de ancho: debajo se le deja hasta un 45 % del alto.
+        const tablePct = this.tablaAbajo ? Math.max(45, s.zoneTable.sizePct.value) : s.zoneTable.sizePct.value;
+        const tableMax = Math.round((tableRight ? fullW : fullH) * tablePct / 100);
         const tableSize = tableOn ? (this.tableFit > 0 ? Math.min(tableMax, this.tableFit) : tableMax) : 0;
         const W = tableRight ? fullW - tableSize : fullW, H = tableRight ? fullH : fullH - tableSize;
 
@@ -760,6 +766,11 @@ export class Visual implements IVisual {
         const ts = fz(s.axes.tickSize.value);
         const td = Math.round(s.axes.tickDecimals.value);
         const tickFmt = (v: number, isX: boolean) => {
+            // El cero sin unidad: "€0", no "€0M" (la unidad del eje no le aplica).
+            if (v === 0) {
+                try { return valueFormatter.create({ format: isX ? this.fmtXcol : this.fmtYcol, value: 0, cultureSelector: this.host.locale }).format(0); }
+                catch { return "0"; }
+            }
             // En un eje logarítmico cada marca lleva su propia unidad (1K, 10K, 1M): una sola para todo el eje se lee mal.
             if (td < 0 && (isX ? logX : logY)) {
                 // La unidad por magnitud: 100.000 sale "100K" y no "0,1M" (el formateador pasa a millones antes de tiempo).
@@ -1080,9 +1091,9 @@ export class Visual implements IVisual {
             for (let i = 0; i <= Math.min(4, upper.length); i++) zonas.push("U" + i);
             for (let i = 0; i <= Math.min(4, lower.length); i++) zonas.push("L" + i);
             const nat = this.renderZoneTable(zonas, series, zoneOf, zoneFill, { right: tableRight, size: tableSize, W, H, hc, fg, bg, font, dark: darkPlot });
-            // Si la tabla necesita otro tamaño del que se le dio, un segundo pintado con la medida (una sola vez).
-            if (!this.refitting && Math.abs(Math.min(tableMax, nat) - tableSize) > 2) {
-                this.tableFit = nat;
+            // Si la tabla necesita otro tamaño del que se le dio, o pasa debajo, un segundo pintado (una sola vez).
+            if (!this.refitting && (Math.abs(Math.min(tableMax, nat) - tableSize) > 2 || (this.tablaAbajo && tableRight))) {
+                this.tableFit = this.tablaAbajo && tableRight ? 0 : nat;   // al pasar debajo, la medida era un ancho
                 this.refitting = true;
                 try { this.draw(); } finally { this.refitting = false; }
                 return;
@@ -1260,7 +1271,26 @@ export class Visual implements IVisual {
         caja.appendChild(tabla);
         this.root.appendChild(caja);
         // Tamaño natural (con el relleno de la caja): ancho si va a la derecha, alto si va debajo.
-        return Math.ceil(o.right ? tabla.offsetWidth + 22 : tabla.offsetHeight + 14);
+        const natural = Math.ceil(o.right ? tabla.offsetWidth + 22 : tabla.offsetHeight + 14);
+        // Que quepa en su hueco escalando, no quitando (1.2.0.0): a tamaño de informe la tabla perdía columnas y el
+        // Total. Primero se parten las cabeceras y se aprieta el relleno; luego baja la letra hasta el mínimo de
+        // Accesibilidad. Solo si aun así no cabe queda el desplazamiento. Se devuelve el tamaño natural, no el apretado,
+        // para que el segundo pintado no encoja el hueco.
+        const anchoDisp = (o.right ? o.size : o.W) - 22, altoDisp = (o.right ? o.H : o.size) - 14;
+        const noCabe = () => tabla.offsetWidth > anchoDisp + 1 || tabla.offsetHeight > altoDisp + 1;
+        if (noCabe()) {
+            caja.classList.add("bs-table-fit");
+            const minimo = this.minTexto();
+            const base = parseFloat(caja.style.fontSize) || 11;
+            let fs = base;
+            while (noCabe() && fs > minimo) {
+                fs = Math.max(minimo, Math.round((fs - 0.5) * 10) / 10);
+                caja.style.fontSize = fs + "px";
+            }
+            // A la derecha, si no cabe ni al mínimo o hay que encogerla mucho, mejor debajo, donde tiene todo el ancho.
+            if (o.right && (noCabe() || fs < base * 0.8)) this.tablaAbajo = true;
+        }
+        return natural;
     }
 
     /** Nombre visible de una zona ("U0", "L1"…), el mismo que se pinta en ella. */

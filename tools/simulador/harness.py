@@ -344,6 +344,26 @@ async def main():
                 check(f"{W}×{H}: el texto encoge (marcas {i['tickSize']} < {grande['tickSize']})", i["tickSize"] < grande["tickSize"], "")
             await eventos(pg, f"{W}×{H}")
             await pg.close()
+
+        print("Tabla de zonas con 5 zonas y nombres largos a tamaño de informe (debe caber sin perder columnas)")
+        largo = {"zoneTable": {"show": True}, "upperZones": {"lineCount": 2, "line1Value": 50000, "line2Value": 150000,
+                 "zone1Label": "Small & profitable", "zone2Label": "Stars of the year", "zone3Label": "Big accounts"},
+                 "lowerZones": {"layout": "own", "lineCount": 1, "line1Value": 80000, "zone1Label": "Long tail", "zone2Label": "Sell a lot, earn little"},
+                 "referenceLines": {"yRef": 0.2}}
+        for W, H in [(1100, 640), (700, 420), (500, 320)]:
+            pg = await page(b, dataview(largo), W=W, H=H, name=f"20_tabla_larga_{W}")
+            r = await pg.evaluate("""() => { const c = document.querySelector('.bs-table'); if (!c) return null; const t = c.querySelector('table');
+                const fs = parseFloat(getComputedStyle(c).fontSize);
+                return { cabe: t.offsetWidth <= c.clientWidth + 1 && t.offsetHeight <= c.clientHeight + 1, w: t.offsetWidth, cw: c.clientWidth, fs,
+                         cols: c.querySelectorAll('thead th').length }; }""")
+            check(f"{W}×{H}: la tabla de zonas cabe entera (sin columnas cortadas)", r and r["cabe"], str(r))
+            await pg.close()
+
+        print("Cero del eje sin unidad")
+        pg = await page(b, dataview({"axes": {"logX": False}}), name="21_cero")
+        z = await pg.evaluate("() => [...document.querySelectorAll('svg text')].map(t => t.textContent).filter(t => /^\D*0\D*$/.test(t) || /0M|0K/.test(t))")
+        check("el 0 del eje no lleva unidad (nada de '0M')", not any(t.strip().endswith(("0M", "0K")) and t.strip().rstrip("MK").strip("€$ ") == "0" for t in z), str(z[:6]))
+        await pg.close()
         for est in ("ledger", "aurora"):
             pg = await page(b, dataview({**lleno, "style": {"template": est}}), W=380, H=260, name=f"11_mosaico_380_{est}")
             i = await info(pg)

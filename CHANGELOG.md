@@ -19,6 +19,9 @@ Matrix; it keeps the same ID, so reports made with it keep working.
 - **Text that scales with the visual.** Ticks, titles, labels, legend, zone names, counts, R² and the zone table shrink
   in a small tile instead of overflowing; the first and last X ticks are no longer cut, and a long axis title ends in "…".
 - **Dynamic format strings** of the measures in tooltips and, when every row shares one, on the axes.
+- **The zone table fits its space.** Headers wrap and the text shrinks down to the minimum text size; when a table on
+  the right cannot fit even so, it moves below the chart. At report size it no longer loses columns or the Total.
+- The axis zero reads "0" (or "€0"), not "0M".
 
 ### Changed
 - **New Pro price: USD 1.99/month or 19/year** on a new AppSource plan. Licences bought on the earlier plan keep Pro.

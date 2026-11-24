@@ -27,6 +27,8 @@
     }
     // Debajo: columnas con su ancho natural y pegadas a la izquierda; a todo lo ancho, las cifras quedan lejos de su fila.
     .bs-table-b { padding: 6px 10px; th, td { padding: 4px 12px; } }
+    // Sin sitio: cabeceras en varias líneas y relleno justo (renderZoneTable baja además la letra).
+    .bs-table.bs-table-fit { thead th { white-space: normal; max-width: 6.5em; } th, td { padding: 3px 4px; } tbody th { max-width: 90px; } }
     .bs-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #8A8886; font-size: 12px; }
     .bs-build { position: absolute; left: 4px; bottom: 2px; z-index: 30; pointer-events: none; font: 9px Segoe UI, sans-serif; color: #B0A0C0; opacity: .8; }
 
