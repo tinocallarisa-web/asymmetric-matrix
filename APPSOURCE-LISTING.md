@@ -109,9 +109,9 @@ Offer listing → Videos.
 ## Imágenes
 
 - Logo 300×300: `assets/icon_300x300.png` (icono de la serie)
-- Capturas 1366×768: **pendientes de hacer** con la 1.2 (las de `assets/Screenshot*.png` son de la 1.0)
-- Infografía: `docs/infographic.html` está en 1.2 (comprobado: cabe en 1366×768). Comprobar que
-  `assets/bubble-scatter-infographic.png` se ha exportado desde ella (botón "Download PNG") antes de subirla.
+- Capturas 1366×768 (1.2, hechas 24-11): `assets/Screenshot.png`, `assets/Screenshot_2.png`, `assets/Screenshot_3.png`
+- Infografías: `assets/bubble-scatter-infographic.png` (exportada de docs/infographic.html 1.2) y
+  `assets/infographic-styles.png` (estilos).
 
 ## URLs
 
