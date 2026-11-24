@@ -7,7 +7,7 @@ newline as CRLF; the field truncates at 2,500 without warning and is cleared on 
 Bubble & Scatter Chart 1.2.0.0 (formerly Asymmetric Matrix) - GUID asymmetricMatrixTCVIZ
 Repo, branch certification: https://github.com/tinocallarisa-web/asymmetric-matrix/tree/certification
 Docs: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
-Video: https://www.youtube.com/watch?v=5esHnUDLUok
+Video: https://www.youtube.com/watch?v=gXInY9wfsrA
 
 WHY THIS SUBMISSION
 Replaces 1.1.0.0. Same GUID; nothing removed or renamed. New:
@@ -61,7 +61,7 @@ state Active or Warning. Never blocks render; failure = Free. No licensing UI of
 | Privacy | https://tinocallarisa-web.github.io/asymmetric-matrix/privacy.html |
 | Terms | https://tinocallarisa-web.github.io/asymmetric-matrix/terms.html |
 | Changelog | https://tinocallarisa-web.github.io/asymmetric-matrix/changelog.html |
-| Video | https://www.youtube.com/watch?v=5esHnUDLUok |
+| Video | https://www.youtube.com/watch?v=gXInY9wfsrA |
 
 ---
 

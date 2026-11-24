@@ -102,9 +102,9 @@ Asymmetric Matrix") para que quien tenga la versión 1.0 la reconozca.
 
 ## Vídeo
 
-URL canónica (nunca acortadores, `/shorts/` ni `/embed/`): `https://www.youtube.com/watch?v=5esHnUDLUok` (vídeo de la
-1.1). **Se queda** hasta que exista el vídeo de la 1.2; entonces se cambia aquí, en todos los ficheros del repo y en
-Offer listing → Videos.
+URL canónica (nunca acortadores, `/shorts/` ni `/embed/`): `https://www.youtube.com/watch?v=gXInY9wfsrA` (vídeo de la
+1.2, 24-11-2026). Pegarla en Offer listing → Videos. El enlace dentro del visual sigue llevando al vídeo de la 1.1
+hasta la próxima versión.
 
 ## Imágenes
 

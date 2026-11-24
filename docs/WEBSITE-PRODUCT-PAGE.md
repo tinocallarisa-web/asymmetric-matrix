@@ -7,7 +7,7 @@ Content for https://tcviz.com/product/asymmetric-matrix/ — **the slug stays `a
 - Short line: *Scatter and bubble chart with quadrants at the average, your own zones, series colours and a zone table.*
 - Version: 1.2.0.0 · Price: free, with an optional Pro plan — USD 1.99 per user per month or USD 19 per year (plan
   `bubble-scatter-pro`; licences on the earlier plan `pro` keep Pro)
-- Video: https://www.youtube.com/watch?v=5esHnUDLUok (the 1.1 video; it stays until the 1.2 video exists)
+- Video: https://www.youtube.com/watch?v=gXInY9wfsrA
 - Support: https://tinocallarisa-web.github.io/asymmetric-matrix/support.html
 
 ---
